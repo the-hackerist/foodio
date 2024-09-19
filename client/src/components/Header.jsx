@@ -12,7 +12,7 @@ function Header() {
   const handleActiveLink = (link) => setActiveLink(link);
 
   return (
-    <header className="flex justify-between px-48 2xl:px-60 lg:px-40 py-8">
+    <header className="flex justify-between px-48 2xl:px-60 lg:px-40 py-8 bg-transparent absolute w-full">
       <div className="flex gap-2 items-center">
         <div className="bg-[#F54748] rounded-full rotate-[-20deg] flex items-center justify-center h-10 w-10">
           <span className="p-2 text-white font-semibold text-xl">F</span>
@@ -66,9 +66,8 @@ function Header() {
           </li>
         </ul>
       </div>
-
       <div className="flex items-center gap-4 justify-between">
-        <div className="bg-red-100 p-3 rounded-full">
+        <div className="bg-red-300 p-3 rounded-full text-slate-100">
           <MdOutlineShoppingCart />
         </div>
         <button className="px-8 py-3 text-white font-semibold  text-sm bg-[#F54748] rounded-xl">
