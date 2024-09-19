@@ -12,7 +12,7 @@ function Header() {
   const handleActiveLink = (link) => setActiveLink(link);
 
   return (
-    <header className="flex justify-between px-48 py-8">
+    <header className="flex justify-between px-48 2xl:px-60 lg:px-40 py-8">
       <div className="flex gap-2 items-center">
         <div className="bg-[#F54748] rounded-full rotate-[-20deg] flex items-center justify-center h-10 w-10">
           <span className="p-2 text-white font-semibold text-xl">F</span>
@@ -26,7 +26,8 @@ function Header() {
         <div className="lg:hidden">
           <GiHamburgerMenu />
         </div>
-        <ul className="hidden lg:flex text-sm gap-6 items-center">
+
+        <ul className="hidden lg:flex lg:text-xs lg:gap-3 text-sm gap-6 items-center">
           <li
             onClick={() => handleActiveLink("home")}
             className={activeLink === "home" && activeLinkStyle}
