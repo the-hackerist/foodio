@@ -4,11 +4,11 @@ function Hero() {
   return (
     <div className="bg-gradient-to-b from-[#F8DBDC] via-[#F8E7E7]to-[#F9F9F9] h-screen pt-52 px-24 flex items-center justify-center gap-2">
       <div className="flex justify-center flex-col">
-        <p className="text-5xl font-bold leading-snug">
+        <h1 className="text-5xl font-bold leading-snug">
           Best Restaurant
           <br />
           In <span className="text-red-500">Town.</span>
-        </p>
+        </h1>
         <p className="w-[440px] text-[#5C4429] mt-6 text-lg">
           We provide best food in town, we provide home delivery and dine in
           services.
