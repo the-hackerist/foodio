@@ -67,7 +67,7 @@ function Header() {
         </ul>
       </div>
       <div className="flex items-center gap-4 justify-between">
-        <div className="bg-red-300 p-3 rounded-full text-slate-100">
+        <div className="bg-white p-3 rounded-full text-slate-700">
           <MdOutlineShoppingCart />
         </div>
         <button className="px-8 py-3 text-white font-semibold  text-sm bg-[#F54748] rounded-xl">
