@@ -16,7 +16,7 @@ function Hero() {
         </p>
 
         <div className="flex gap-4 mt-10 md:gap-2">
-          <button className="text-white px-4 font-semibold text-lg bg-red-500 py-3 rounded-xl md:px-4 md:text-base lg:px-4 lg:text-lg">
+          <button className="text-white px-4 font-semibold text-lg bg-red-500 py-3 rounded-xl md:px-4 md:text-base lg:px-10 lg:text-lg">
             Order now
           </button>
           <button className="text-red-500 px-4 font-semibold text-lg bg-[#F9E1E1] py-3 rounded-xl md:px-4 md:text-base lg:px-10 lg:text-lg">
