@@ -2,7 +2,7 @@ import img from "../../assets/pasta.png";
 
 function Hero() {
   return (
-    <div className="bg-gradient-to-b from-[#F8DBDC] via-[#F8E7E7]to-[#F9F9F9] h-screen py-20 flex items-center justify-center gap-2 lg:gap-10 md:px-20">
+    <div className="bg-gradient-to-b from-[#F8DBDC] via-[#F8E7E7]to-[#F9F9F9] h-screen py-20 flex items-center justify-center gap-2 lg:gap-10 xl:gap-20 md:px-20">
       <div className="flex justify-center flex-col">
         <h1 className="text-5xl font-bold leading-snug lg:text-6xl">
           Best Restaurant
