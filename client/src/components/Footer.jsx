@@ -21,13 +21,13 @@ function Footer() {
 
           <div className="mt-6">
             <ul className="flex gap-6 text-black">
-              <li className="bg-slate-200 p-3 text-2xl rounded-full">
+              <li className="bg-slate-200 p-3 text-2xl rounded-full cursor-pointer">
                 <FaTwitter />
               </li>
-              <li className="bg-slate-200 p-3 text-2xl rounded-full">
+              <li className="bg-slate-200 p-3 text-2xl rounded-full cursor-pointer">
                 <FaInstagram />
               </li>
-              <li className="bg-slate-200 p-3 text-2xl rounded-full">
+              <li className="bg-slate-200 p-3 text-2xl rounded-full cursor-pointer">
                 <FaFacebookF />
               </li>
             </ul>
@@ -37,17 +37,17 @@ function Footer() {
         <div>
           <h3 className="text-xl font-bold text-red-500 mb-6">Page</h3>
           <ul className="flex flex-col gap-3">
-            <li>Home</li>
-            <li>Menu</li>
-            <li>Order</li>
-            <li>Reservation</li>
+            <li className="cursor-pointer">Home</li>
+            <li className="cursor-pointer">Menu</li>
+            <li className="cursor-pointer">Order</li>
+            <li className="cursor-pointer">Reservation</li>
           </ul>
         </div>
 
         <div>
           <h3 className="text-xl font-bold text-red-500 mb-6">Information</h3>
           <ul>
-            <li>About us</li>
+            <li className="cursor-pointer">About us</li>
           </ul>
         </div>
 

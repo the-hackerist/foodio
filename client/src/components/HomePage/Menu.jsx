@@ -18,7 +18,7 @@ function Menu() {
         <li onClick={() => setCategory("all")}>
           <button
             className={`${
-              category === "all" && activeCategoryStyle
+              category === "all" ? activeCategoryStyle : "border"
             } px-8 py-4 rounded-lg`}
           >
             All category
@@ -28,7 +28,7 @@ function Menu() {
         <li onClick={() => setCategory("dinner")}>
           <button
             className={`${
-              category === "dinner" && activeCategoryStyle
+              category === "dinner" ? activeCategoryStyle : "border"
             } px-8 py-4 rounded-lg`}
           >
             Dinner
@@ -38,7 +38,7 @@ function Menu() {
         <li onClick={() => setCategory("lunch")}>
           <button
             className={`${
-              category === "lunch" && activeCategoryStyle
+              category === "lunch" ? activeCategoryStyle : "border"
             } px-8 py-4 rounded-lg`}
           >
             Lunch
@@ -48,7 +48,7 @@ function Menu() {
         <li onClick={() => setCategory("dessert")}>
           <button
             className={`${
-              category === "dessert" && activeCategoryStyle
+              category === "dessert" ? activeCategoryStyle : "border"
             } px-8 py-4 rounded-lg`}
           >
             Dessert
@@ -58,7 +58,7 @@ function Menu() {
         <li onClick={() => setCategory("drink")}>
           <button
             className={`${
-              category === "drink" && activeCategoryStyle
+              category === "drink" ? activeCategoryStyle : "border"
             } px-8 py-4 rounded-lg`}
           >
             Drink
