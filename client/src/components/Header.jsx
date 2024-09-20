@@ -38,7 +38,7 @@ function Header() {
 
         {isMenuOpen && (
           <div className="shadow-md bg-white rounded-lg p-4 absolute top-10 right-1 w-[150px] lg:hidden">
-            <ul className="lg:flex text-md lg:text-xs lg:gap-3 gap-6 items-center divide-y space-y-2 divide-solid divide-slate-300">
+            <ul className="lg:flex text-md lg:text-xs lg:gap-3 gap-6 items-center divide-y space-y-2 divide-solid divide-slate-200">
               <li
                 onClick={() => handleActiveLink("home")}
                 className={
@@ -90,6 +90,25 @@ function Header() {
                 }
               >
                 <Link to="/contact-us">Contact us</Link>
+              </li>
+
+              <li
+                onClick={() => handleActiveLink("cart")}
+                className={
+                  activeLink === "cart" && `${activeLinkStyle} border-none pb-0`
+                }
+              >
+                <Link to="/cart">Check cart</Link>
+              </li>
+
+              <li
+                onClick={() => handleActiveLink("log-in")}
+                className={
+                  activeLink === "log-in" &&
+                  `${activeLinkStyle} border-none pb-0`
+                }
+              >
+                <Link to="/log-in">Log in</Link>
               </li>
             </ul>
           </div>
