@@ -12,14 +12,15 @@ function Menu() {
   const activePageStyle = "text-white bg-black";
 
   return (
-    <div className="p-20 pt-40 flex items-center flex-col gap-10 bg-[#F9F9F9]">
-      <h2 className="text-5xl font-bold">Our Popular Menu</h2>
-      <ul className="flex items-center gap-6 text-lg mt-4">
+    <div className="p-20 flex items-center flex-col gap-10 bg-[#F9F9F9]">
+      <h2 className="text-5xl font-bold">Our Menu</h2>
+
+      <ul className="flex items-center gap-6 text-lg mt-4 flex-wrap">
         <li onClick={() => setCategory("all")}>
           <button
             className={`${
               category === "all" ? activeCategoryStyle : "border"
-            } px-8 py-4 rounded-lg`}
+            } px-4 py-4 rounded-lg`}
           >
             All category
           </button>
@@ -29,7 +30,7 @@ function Menu() {
           <button
             className={`${
               category === "dinner" ? activeCategoryStyle : "border"
-            } px-8 py-4 rounded-lg`}
+            } px-4 py-4 rounded-lg`}
           >
             Dinner
           </button>
@@ -39,7 +40,7 @@ function Menu() {
           <button
             className={`${
               category === "lunch" ? activeCategoryStyle : "border"
-            } px-8 py-4 rounded-lg`}
+            } px-4 py-4 rounded-lg`}
           >
             Lunch
           </button>
@@ -49,7 +50,7 @@ function Menu() {
           <button
             className={`${
               category === "dessert" ? activeCategoryStyle : "border"
-            } px-8 py-4 rounded-lg`}
+            } px-4 py-4 rounded-lg`}
           >
             Dessert
           </button>
@@ -59,7 +60,7 @@ function Menu() {
           <button
             className={`${
               category === "drink" ? activeCategoryStyle : "border"
-            } px-8 py-4 rounded-lg`}
+            } px-4 py-4 rounded-lg`}
           >
             Drink
           </button>
