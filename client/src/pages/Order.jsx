@@ -13,7 +13,7 @@ function Order() {
   const activePageStyle = "text-white bg-black";
 
   return (
-    <div className="px-20 pb-20 pt-60 flex items-center flex-col gap-10 bg-[#F9F9F9]">
+    <div className="px-20 pb-20 pt-40 flex items-center flex-col gap-10 bg-[#F9F9F9]">
       <h2 className="text-5xl font-bold">Our Popular Menu</h2>
       <ul className="flex items-center gap-6 text-lg mt-4">
         <li onClick={() => setCategory("all categories")}>
