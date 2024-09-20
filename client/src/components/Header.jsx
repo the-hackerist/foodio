@@ -3,16 +3,22 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { FaTimes } from "react-icons/fa";
 
 function Header() {
   const [activeLink, setActiveLink] = useState("home");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const activeLinkStyle = "border-b border-red-500 text-red-500 pb-1";
+  const activeLinkStyle =
+    "border-b border-red-500 text-red-500 pb-1 font-semibold";
 
-  const handleActiveLink = (link) => setActiveLink(link);
+  const handleActiveLink = (link) => {
+    setActiveLink(link);
+    setIsMenuOpen(false);
+  };
 
   return (
-    <header className="flex justify-between px-48 2xl:px-60 lg:px-40 py-8 bg-transparent absolute w-full">
+    <header className="flex justify-between px-10 md:px-32 xl:px-72 2xl:px-[24rem] py-8 bg-transparent absolute w-full">
       <div className="flex gap-2 items-center">
         <div className="bg-[#F54748] rounded-full rotate-[-20deg] flex items-center justify-center h-10 w-10">
           <span className="p-2 text-white font-semibold text-xl">F</span>
@@ -22,12 +28,74 @@ function Header() {
         </p>
       </div>
 
-      <div className="flex items-center">
-        <div className="lg:hidden">
-          <GiHamburgerMenu />
+      <div className="flex items-center relative">
+        <div
+          className="lg:hidden p-1 rounded-lg text-3xl"
+          onClick={() => setIsMenuOpen((prev) => !prev)}
+        >
+          {isMenuOpen ? <FaTimes /> : <GiHamburgerMenu />}
         </div>
 
-        <ul className="hidden lg:flex lg:text-xs lg:gap-3 text-sm gap-6 items-center">
+        {isMenuOpen && (
+          <div className="shadow-md bg-white rounded-lg p-4 absolute top-10 right-1 w-[150px] lg:hidden">
+            <ul className="lg:flex text-md lg:text-xs lg:gap-3 gap-6 items-center divide-y space-y-2 divide-solid divide-slate-300">
+              <li
+                onClick={() => handleActiveLink("home")}
+                className={
+                  activeLink === "home" && `${activeLinkStyle} border-none pb-0`
+                }
+              >
+                <Link to="/">Home</Link>
+              </li>
+              <li
+                onClick={() => handleActiveLink("menu")}
+                className={
+                  activeLink === "menu" && `${activeLinkStyle} border-none pb-0`
+                }
+              >
+                <Link to="/menu">Menu</Link>
+              </li>
+              <li
+                onClick={() => handleActiveLink("about-us")}
+                className={
+                  activeLink === "about-us" &&
+                  `${activeLinkStyle} border-none pb-0`
+                }
+              >
+                <Link to="/about-us">About us</Link>
+              </li>
+              <li
+                onClick={() => handleActiveLink("order")}
+                className={
+                  activeLink === "order" &&
+                  `${activeLinkStyle} border-none pb-0`
+                }
+              >
+                <Link to="/order">Order online</Link>
+              </li>
+              <li
+                onClick={() => handleActiveLink("reservation")}
+                className={
+                  activeLink === "reservation" &&
+                  `${activeLinkStyle} border-none pb-0`
+                }
+              >
+                <Link to="/reservation">Reservation</Link>
+              </li>
+              <li
+                onClick={() => handleActiveLink("contact-us")}
+                className={
+                  activeLink === "contact-us" &&
+                  `${activeLinkStyle} border-none pb-0`
+                }
+              >
+                <Link to="/contact-us">Contact us</Link>
+              </li>
+            </ul>
+          </div>
+        )}
+
+        <ul className="hidden lg:flex text-sm 2xl:text-base 2xl:gap-4 gap-3  items-center">
           <li
             onClick={() => handleActiveLink("home")}
             className={activeLink === "home" && activeLinkStyle}
@@ -66,7 +134,8 @@ function Header() {
           </li>
         </ul>
       </div>
-      <div className="flex items-center gap-4 justify-between">
+
+      <div className="hidden lg:flex items-center gap-4 justify-between">
         <div className="bg-white p-3 rounded-full text-slate-700">
           <MdOutlineShoppingCart />
         </div>

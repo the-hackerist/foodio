@@ -3,6 +3,7 @@ import { RiStarSLine, RiStarSFill } from "react-icons/ri";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { IoIosArrowBack } from "react-icons/io";
 import { FaRegTrashAlt } from "react-icons/fa";
+
 import food_img from "../assets/pasta.png";
 
 function Order() {
