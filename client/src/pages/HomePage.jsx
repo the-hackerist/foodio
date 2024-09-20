@@ -1,8 +1,8 @@
-import Action from "../components/Action";
-import Chef from "../components/Chef";
-import Hero from "../components/Hero";
-import Menu from "../components/Menu";
-import Popular from "../components/Popular";
+import Action from "../components/HomePage/Action";
+import Chef from "../components/HomePage/Chef";
+import Hero from "../components/HomePage/Hero";
+import Menu from "../components/HomePage/Menu";
+import Popular from "../components/HomePage/Popular";
 
 function HomePage() {
   return (

@@ -1,8 +1,8 @@
-import img from "../assets/pasta.png";
+import img from "../../assets/pasta.png";
 
 function Hero() {
   return (
-    <div className="bg-gradient-to-b from-[#F8DBDC] via-[#F8E7E7]to-[#F9F9F9] h-screen pt-52 px-24 flex items-center justify-center gap-2">
+    <div className="bg-gradient-to-b from-[#F8DBDC] via-[#F8E7E7]to-[#F9F9F9] h-screen py-20 flex items-center justify-center gap-2">
       <div className="flex justify-center flex-col">
         <h1 className="text-5xl font-bold leading-snug">
           Best Restaurant

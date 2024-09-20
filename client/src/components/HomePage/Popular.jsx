@@ -1,4 +1,4 @@
-import popular_img from "../assets/popular_pasta.png";
+import popular_img from "../../assets/popular_pasta.png";
 
 function Popular() {
   return (

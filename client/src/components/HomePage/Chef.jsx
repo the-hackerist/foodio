@@ -1,6 +1,6 @@
-import chef_1 from "../assets/chef_1.jpg";
-import chef_2 from "../assets/chef_2.jpg";
-import chef_3 from "../assets/chef_3.jpg";
+import chef_1 from "../../assets/chef_1.jpg";
+import chef_2 from "../../assets/chef_2.jpg";
+import chef_3 from "../../assets/chef_3.jpg";
 
 function Chef() {
   return (

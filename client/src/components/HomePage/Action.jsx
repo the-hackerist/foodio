@@ -1,6 +1,6 @@
 function Action() {
   return (
-    <div className="h-[300px] bg-[#F9F9F9] flex items-center justify-center p-20">
+    <div className="bg-[#F9F9F9] flex items-center justify-center p-20">
       <div className="flex items-center justify-center flex-col gap-10 border py-16 px-44 rounded-2xl bg-[#FDD9D9]">
         <h2 className="font-bold text-4xl text-[#311F09]">
           Hungry? We are open now..

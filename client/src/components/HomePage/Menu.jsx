@@ -1,5 +1,5 @@
 import { useState } from "react";
-import img from "../assets/pasta.png";
+import img from "../../assets/pasta.png";
 import { RiStarSLine, RiStarSFill } from "react-icons/ri";
 import { IoIosArrowBack } from "react-icons/io";
 
