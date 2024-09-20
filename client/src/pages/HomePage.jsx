@@ -1,3 +1,4 @@
+import Action from "../components/Action";
 import Chef from "../components/Chef";
 import Hero from "../components/Hero";
 import Menu from "../components/Menu";
@@ -10,6 +11,7 @@ function HomePage() {
       <Popular />
       <Menu />
       <Chef />
+      <Action />
     </main>
   );
 }

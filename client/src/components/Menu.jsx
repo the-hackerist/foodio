@@ -65,7 +65,7 @@ function Menu() {
           </button>
         </li>
       </ul>
-      <div className="flex items-center justify-center gap-4 flex-wrap w-[1200px]">
+      <div className="flex items-center justify-center gap-4 flex-wrap max-w-[1000px]">
         <div className="flex flex-col w-[300px] bg-white p-6 rounded-3xl gap-2 items-center">
           <img className="w-[250px]" src={img} alt="food img" />
           <h3 className="text-2xl font-bold">Spaghetti</h3>
@@ -203,24 +203,24 @@ function Menu() {
         <span
           onClick={() => setActivePage(1)}
           className={`${
-            activePage === 1 && activePageStyle
-          } h-6 w-6 flex cursor-pointer items-center justify-center text-xs font-semibold bg-slate-200 rounded-sm`}
+            activePage === 1 ? activePageStyle : "bg-slate-200"
+          } h-6 w-6 flex cursor-pointer items-center justify-center text-xs font-semibold rounded-sm`}
         >
           1
         </span>
         <span
           onClick={() => setActivePage(2)}
           className={`${
-            activePage === 2 && activePageStyle
-          } h-6 w-6 flex cursor-pointer items-center justify-center text-xs font-semibold bg-slate-200 rounded-sm`}
+            activePage === 2 ? activePageStyle : "bg-slate-200"
+          } h-6 w-6 flex cursor-pointer items-center justify-center text-xs font-semibold rounded-sm`}
         >
           2
         </span>
         <span
           onClick={() => setActivePage(3)}
           className={`${
-            activePage === 3 && activePageStyle
-          } h-6 w-6 flex cursor-pointer items-center justify-center text-xs font-semibold bg-slate-200 rounded-sm`}
+            activePage === 3 ? activePageStyle : "bg-slate-200"
+          } h-6 w-6 flex cursor-pointer items-center justify-center text-xs font-semibold rounded-sm `}
         >
           3
         </span>

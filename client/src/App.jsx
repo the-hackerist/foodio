@@ -6,6 +6,7 @@ import AboutUs from "./pages/AboutUs";
 import Order from "./pages/Order";
 import Reservation from "./pages/Reservation";
 import ContactUs from "./pages/ContactUs";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/reservation" element={<Reservation />} />
         <Route path="/contact-us" element={<ContactUs />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }
