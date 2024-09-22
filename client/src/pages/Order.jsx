@@ -5,6 +5,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import { FaRegTrashAlt } from "react-icons/fa";
 
 import food_img from "../assets/pasta.png";
+import { Link } from "react-router-dom";
 
 function Order() {
   const [category, setCategory] = useState("all categories");
@@ -563,9 +564,13 @@ function Order() {
                 <p className="text-slate-500 font-semibold">$78.3</p>
               </div>
             </div>
-            <button className="text-2xl text-white w-full bg-red-500 rounded-lg font-bold p-2 mt-10 mb-2">
+
+            <Link
+              to="/cart"
+              className="text-2xl text-white w-full bg-red-500 rounded-lg font-bold p-2 mt-10 mb-2 cursor-pointer text-center"
+            >
               Checkout
-            </button>
+            </Link>
           </div>
         </div>
       </div>
