@@ -3,7 +3,7 @@ import food from "../assets/food-2.jpg";
 function Reservation() {
   return (
     <div className="pt-20">
-      <div className="p-10 md:pt-20  flex flex-row items-center justify-center gap-10">
+      <div className="p-10 pt-20  flex flex-row items-center justify-center gap-10">
         <div className="w-[450px] h-[550px] overflow-hidden rounded-3xl hidden lg:inline-block">
           <img className="object-contain" src={food} alt="restaurant image" />
         </div>

@@ -16,11 +16,11 @@ function Order() {
 
   return (
     <div className="px-20 pb-20 pt-40 flex items-center flex-col gap-10 bg-[#F9F9F9]">
-      <h2 className="text-4xl text-center md:text-start md:text-5xl font-bold">
+      <h2 className="text-5xl text-center md:text-start font-bold leading-snug">
         Our Popular Menu
       </h2>
 
-      <ul className="flex items-center gap-2 text-lg mt-4 flex-wrap sm:gap-4 md:gap-6">
+      <ul className="flex items-center gap-2 text-lg mt-4 flex-wrap sm:gap-4 md:gap-6 ">
         <li onClick={() => setCategory("all categories")}>
           <button
             className={`${

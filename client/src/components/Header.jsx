@@ -18,7 +18,7 @@ function Header() {
   };
 
   return (
-    <header className="flex justify-between px-10 md:px-32 xl:px-72 2xl:px-[24rem] py-8 bg-transparent absolute w-full">
+    <header className="flex justify-between px-10 md:px-32 xl:px-48 2xl:px-80 py-8 bg-transparent absolute w-full">
       <div className="flex gap-2 items-center">
         <div className="bg-[#F54748] rounded-full rotate-[-20deg] flex items-center justify-center h-10 w-10">
           <span className="p-2 text-white font-semibold text-xl">F</span>

@@ -4,7 +4,7 @@ import owner from "../assets/owner.jpg";
 
 function AboutUs() {
   return (
-    <div className="bg-[#F9F9F9] px-20 md:px-4 lg:px-20 pt-20 pb-20 flex flex-col gap-10">
+    <div className="bg-[#F9F9F9] px-10 md:px-4 lg:px-20 pt-40 pb-20 flex flex-col gap-10">
       <div className="flex items-center gap-4 lg:gap-20 justify-center flex-col md:flex-row">
         <div className="lg:w-[475px] lg:h-[475px] w-[350px] h-[350px] bg-[#F5F5F5] flex items-center justify-center rounded-full">
           <div className="lg:w-[400px] lg:h-[400px] w-[300px] h-[300px] bg-[#EEEDEC] flex items-center justify-center rounded-full ">
@@ -19,7 +19,7 @@ function AboutUs() {
             About Our <br />
             <span className="text-red-500">Restaurant</span>
           </h2>
-          <p className="text-xl md:text-lg w-[350px] mt-4 text-[#5C4429] text-center md:text-start">
+          <p className="text-xl md:text-lg max-w-[350px] mt-4 text-[#5C4429] text-center md:text-start">
             This dish is full of flavor and nutrition! Quinoa is a complete
             protein, providing all the essential amino acids your body needs,
             and is also a good source of fiber.
@@ -31,7 +31,7 @@ function AboutUs() {
       </div>
 
       <div className="flex items-center gap-4 lg:gap-20 justify-center flex-col md:flex-row">
-        <p className="w-[350px] mt-4 text-[#5C4429] text-center md:text-start text-xl md:text-lg">
+        <p className="max-w-[350px] mt-4 text-[#5C4429] text-center md:text-start text-xl md:text-lg">
           Sed ut perspiciatis unde omnis iste natus error sit voluptatem
           accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae
           ab illo inventore veritatis et quasi architecto beatae vitae dicta
