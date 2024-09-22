@@ -10,6 +10,7 @@ import Footer from "./components/Footer";
 import Login from "./pages/Login";
 import Cart from "./pages/Cart";
 import SignUp from "./pages/SignUp";
+import PrivateRoute from "./pages/PrivateRoute";
 
 function App() {
   return (
@@ -19,12 +20,14 @@ function App() {
         <Route index element={<HomePage />} />
         <Route path="/menu" element={<Menu />} />
         <Route path="/about-us" element={<AboutUs />} />
-        <Route path="/order" element={<Order />} />
-        <Route path="/reservation" element={<Reservation />} />
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/log-in" element={<Login />} />
         <Route path="/sign-up" element={<SignUp />} />
-        <Route path="/cart" element={<Cart />} />
+        <Route path="/order" element={<Order />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="/reservation" element={<Reservation />} />
+          <Route path="/cart" element={<Cart />} />
+        </Route>
       </Routes>
       <Footer />
     </BrowserRouter>
