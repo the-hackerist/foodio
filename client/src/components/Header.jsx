@@ -13,6 +13,8 @@ function Header() {
     "border-b border-red-500 text-red-500 pb-1 font-semibold";
 
   const handleActiveLink = (link) => {
+    if (link === "none") setActiveLink(link);
+
     setActiveLink(link);
     setIsMenuOpen(false);
   };
@@ -155,12 +157,21 @@ function Header() {
       </div>
 
       <div className="hidden lg:flex items-center gap-4 justify-between">
-        <div className="bg-white p-3 rounded-full text-slate-700">
+        <Link
+          onClick={() => handleActiveLink("none")}
+          to="/cart"
+          className="bg-white p-3 rounded-full text-slate-700"
+        >
           <MdOutlineShoppingCart />
-        </div>
-        <button className="px-8 py-3 text-white font-semibold  text-sm bg-[#F54748] rounded-xl">
+        </Link>
+
+        <Link
+          onClick={() => handleActiveLink("none")}
+          to="/log-in"
+          className="px-8 py-3 text-white font-semibold  text-sm bg-[#F54748] rounded-xl"
+        >
           Log in
-        </button>
+        </Link>
       </div>
     </header>
   );

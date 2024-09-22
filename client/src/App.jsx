@@ -9,6 +9,7 @@ import ContactUs from "./pages/ContactUs";
 import Footer from "./components/Footer";
 import Login from "./pages/Login";
 import Cart from "./pages/Cart";
+import SignUp from "./pages/SignUp";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/reservation" element={<Reservation />} />
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/log-in" element={<Login />} />
+        <Route path="/sign-up" element={<SignUp />} />
         <Route path="/cart" element={<Cart />} />
       </Routes>
       <Footer />
