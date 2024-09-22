@@ -5,7 +5,7 @@ function ContactUs() {
         <h2 className="text-5xl text-[#311F09] font-bold text-center md:text-start">
           Contact us
         </h2>
-        <p className="text-[#6F5439] text-lg md:text-xl text-center mb-10">
+        <p className="text-[#6F5439] text-lg md:text-xl text-center mb-10 max-w-[400px]">
           We love hearing from our customers. Feel free to share your experience
           or ask
           <br /> any questions you may have.
@@ -38,7 +38,7 @@ function ContactUs() {
           placeholder="Subject"
         />
         <textarea
-          className="py-2 px-6 border text-base rounded-lg"
+          className="py-2 px-6 border text-base rounded-lg min-h-[150px] max-h-[200px]"
           id="message"
           type="text"
           rows={5}
