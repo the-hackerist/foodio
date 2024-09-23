@@ -1,15 +1,33 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 function Login() {
+  const [formData, setFormData] = useState({ email: "", password: "" });
+
+  const { email, password } = formData;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
+  const handleFormData = (e) => {
+    setFormData((data) => ({ ...data, [e.target.id]: e.target.value }));
+  };
+
   return (
     <div className="via-[#F8E7E7]to-[#F9F9F9] flex justify-center bg-gradient-to-b from-[#F8DBDC] px-10 py-20 pt-40">
       <div className="flex w-screen flex-col items-center">
         <h2 className="text-5xl font-bold text-[#311F09]">Log in</h2>
 
-        <form className="flex w-full max-w-[500px] flex-col gap-6 py-10 md:gap-8">
+        <form
+          onSubmit={handleSubmit}
+          className="flex w-full max-w-[500px] flex-col gap-6 py-10 md:gap-8"
+        >
           <input
             className="rounded-lg border p-4"
             type="email"
+            value={email}
+            onChange={handleFormData}
             placeholder="email"
             id="email"
           />
@@ -18,6 +36,8 @@ function Login() {
             className="rounded-lg border p-4"
             type="password"
             placeholder="password"
+            value={password}
+            onChange={handleFormData}
             id="password"
           />
 
