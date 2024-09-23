@@ -1,15 +1,15 @@
 function Action() {
   return (
-    <div className="bg-[#F9F9F9] flex items-center justify-center p-20 ">
-      <div className="flex items-center justify-center flex-col gap-10 border p-10 lg:px-40 lg:py-20 rounded-2xl bg-[#FDD9D9]">
-        <h2 className="font-bold text-3xl text-[#311F09] text-center md:text-start">
+    <div className="flex items-center justify-center bg-[#F9F9F9] p-20">
+      <div className="flex flex-col items-center justify-center gap-10 rounded-2xl border bg-[#FDD9D9] p-10 lg:px-40 lg:py-20">
+        <h2 className="text-center text-3xl font-bold text-[#311F09] md:text-start">
           Hungry? We are open now...
         </h2>
-        <div className="flex items-center justify-center gap-2 sm:gap-10 flex-wrap">
-          <button className="text-white px-4 sm:px-10 font-semibold text-lg bg-red-500 py-3 rounded-xl w-full md:w-fit">
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-10">
+          <button className="w-full rounded-xl bg-red-500 px-4 py-3 text-lg font-semibold text-white sm:px-10 md:w-fit">
             Order now
           </button>
-          <button className="text-red-500 px-4 sm:px-10 font-semibold text-lg bg-[#FEECEC] py-3 rounded-xl w-full md:w-fit">
+          <button className="w-full rounded-xl bg-[#FEECEC] px-4 py-3 text-lg font-semibold text-red-500 sm:px-10 md:w-fit">
             Reservation
           </button>
         </div>
