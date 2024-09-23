@@ -5,12 +5,12 @@ import { MdOutlineShoppingCart } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { FaTimes } from "react-icons/fa";
 
+const activeLinkStyle =
+  "border-b border-red-500 text-red-500 pb-1 font-semibold";
+
 function Header() {
   const [activeLink, setActiveLink] = useState("home");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const activeLinkStyle =
-    "border-b border-red-500 text-red-500 pb-1 font-semibold";
 
   const handleActiveLink = (link) => {
     if (link === "none") setActiveLink(link);
@@ -25,6 +25,7 @@ function Header() {
         <div className="flex h-10 w-10 rotate-[-20deg] items-center justify-center rounded-full bg-[#F54748]">
           <span className="p-2 text-xl font-semibold text-white">F</span>
         </div>
+
         <p className="font-bold text-[#523E2C]">
           Foodio<span className="text-red-500">.</span>
         </p>
@@ -39,7 +40,7 @@ function Header() {
         </div>
 
         {isMenuOpen && (
-          <div className="absolute right-1 top-10 w-[150px] rounded-lg bg-white p-4 shadow-md lg:hidden">
+          <div className="absolute right-1 top-10 w-[150px] max-w-[150px] rounded-lg bg-white p-4 shadow-md lg:hidden">
             <ul className="text-md items-center gap-6 space-y-2 divide-y divide-solid divide-slate-200 lg:flex lg:gap-3 lg:text-xs">
               <li
                 onClick={() => handleActiveLink("home")}

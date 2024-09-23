@@ -20,7 +20,7 @@ function Menu() {
           <button
             className={`${
               category === "all" ? activeCategoryStyle : "border"
-            } rounded-lg px-4 py-4`}
+            } rounded-lg p-4 lg:min-w-[150px]`}
           >
             All category
           </button>
@@ -30,7 +30,7 @@ function Menu() {
           <button
             className={`${
               category === "dinner" ? activeCategoryStyle : "border"
-            } rounded-lg px-4 py-4`}
+            } rounded-lg p-4 lg:min-w-[150px]`}
           >
             Dinner
           </button>
@@ -40,7 +40,7 @@ function Menu() {
           <button
             className={`${
               category === "lunch" ? activeCategoryStyle : "border"
-            } rounded-lg px-4 py-4`}
+            } rounded-lg p-4 lg:min-w-[150px]`}
           >
             Lunch
           </button>
@@ -50,7 +50,7 @@ function Menu() {
           <button
             className={`${
               category === "dessert" ? activeCategoryStyle : "border"
-            } rounded-lg px-4 py-4`}
+            } rounded-lg p-4 lg:min-w-[150px]`}
           >
             Dessert
           </button>
@@ -60,7 +60,7 @@ function Menu() {
           <button
             className={`${
               category === "drink" ? activeCategoryStyle : "border"
-            } rounded-lg px-4 py-4`}
+            } rounded-lg p-4 lg:min-w-[150px]`}
           >
             Drink
           </button>

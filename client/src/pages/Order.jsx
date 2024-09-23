@@ -26,7 +26,7 @@ function Order() {
           <button
             className={`${
               category === "all categories" ? activeCategoryStyle : "border"
-            } rounded-lg px-3 py-4 sm:px-6 md:px-8`}
+            } rounded-lg px-3 py-4 sm:px-6 md:px-8 lg:min-w-[150px]`}
           >
             All categories
           </button>
@@ -36,7 +36,7 @@ function Order() {
           <button
             className={`${
               category === "pasta" ? activeCategoryStyle : "border"
-            } rounded-lg px-3 py-4 sm:px-6 md:px-8`}
+            } rounded-lg px-3 py-4 sm:px-6 md:px-8 lg:min-w-[150px]`}
           >
             Pasta
           </button>
@@ -46,7 +46,7 @@ function Order() {
           <button
             className={`${
               category === "pizza" ? activeCategoryStyle : "border"
-            } rounded-lg px-3 py-4 sm:px-6 md:px-8`}
+            } rounded-lg px-3 py-4 sm:px-6 md:px-8 lg:min-w-[150px]`}
           >
             Pizza
           </button>
@@ -56,7 +56,7 @@ function Order() {
           <button
             className={`${
               category === "dessert" ? activeCategoryStyle : "border"
-            } rounded-lg px-3 py-4 sm:px-6 md:px-8`}
+            } rounded-lg px-3 py-4 sm:px-6 md:px-8 lg:min-w-[150px]`}
           >
             Dessert
           </button>
@@ -66,7 +66,7 @@ function Order() {
           <button
             className={`${
               category === "drink" ? activeCategoryStyle : "border"
-            } rounded-lg px-3 py-4 sm:px-6 md:px-8`}
+            } rounded-lg px-3 py-4 sm:px-6 md:px-8 lg:min-w-[150px]`}
           >
             Drink
           </button>
