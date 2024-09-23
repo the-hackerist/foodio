@@ -6,26 +6,26 @@ function Cart() {
   const [isCheckingOut, setIsCheckingOut] = useState(false);
 
   return (
-    <div className="px-10 py-20 pt-40 bg-[#F9F9F9] flex items-center justify-center">
+    <div className="flex items-center justify-center bg-[#F9F9F9] px-10 py-20 pt-40">
       {!isCheckingOut && (
-        <div className="w-[300px] border bg-red-100 rounded-2xl h-fit lg:flex items-center justify-center flex-col p-6">
-          <h3 className="text-4xl font-bold p-10 text-center">Order list</h3>
+        <div className="h-fit w-[300px] flex-col items-center justify-center rounded-2xl border bg-red-100 p-6 lg:flex">
+          <h3 className="p-10 text-center text-4xl font-bold">Order list</h3>
 
-          <div className="bg-slate-500 h-[1px] w-full mb-10"></div>
+          <div className="mb-10 h-[1px] w-full bg-slate-500"></div>
 
           <div className="flex flex-col gap-4 py-4">
             <div className="flex items-center justify-between">
               <p className="text-xl font-bold">Spaghetti</p>
-              <FaRegTrashAlt className="text-red-500 text-lg cursor-pointer" />
+              <FaRegTrashAlt className="cursor-pointer text-lg text-red-500" />
             </div>
-            <div className="flex items-center gap-20 justify-between">
-              <div className="flex items-center justify-center font-thin gap-6">
-                <div className="p-1 bg-slate-100 shadow-md rounded-full flex items-center justify-center">
-                  <FaMinus className="text-xs text-red-300 cursor-pointer" />
+            <div className="flex items-center justify-between gap-20">
+              <div className="flex items-center justify-center gap-6 font-thin">
+                <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
+                  <FaMinus className="cursor-pointer text-xs text-red-300" />
                 </div>
                 <span>1</span>
-                <div className="p-1 bg-slate-100 shadow-md rounded-full flex items-center justify-center">
-                  <FaPlus className="text-xs text-green-300 cursor-pointer" />
+                <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
+                  <FaPlus className="cursor-pointer text-xs text-green-300" />
                 </div>
               </div>
               <span>$35.7</span>
@@ -35,16 +35,16 @@ function Cart() {
           <div className="flex flex-col gap-4 py-4">
             <div className="flex items-center justify-between">
               <p className="text-xl font-bold">Spaghetti</p>
-              <FaRegTrashAlt className="text-red-500 text-lg cursor-pointer" />
+              <FaRegTrashAlt className="cursor-pointer text-lg text-red-500" />
             </div>
-            <div className="flex items-center gap-20 justify-between">
-              <div className="flex items-center justify-center font-thin gap-6">
-                <div className="p-1 bg-slate-100 shadow-md rounded-full flex items-center justify-center">
-                  <FaMinus className="text-xs text-red-300 cursor-pointer" />
+            <div className="flex items-center justify-between gap-20">
+              <div className="flex items-center justify-center gap-6 font-thin">
+                <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
+                  <FaMinus className="cursor-pointer text-xs text-red-300" />
                 </div>
                 <span>1</span>
-                <div className="p-1 bg-slate-100 shadow-md rounded-full flex items-center justify-center">
-                  <FaPlus className="text-xs text-green-300 cursor-pointer" />
+                <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
+                  <FaPlus className="cursor-pointer text-xs text-green-300" />
                 </div>
               </div>
               <span>$35.7</span>
@@ -54,16 +54,16 @@ function Cart() {
           <div className="flex flex-col gap-4 py-4">
             <div className="flex items-center justify-between">
               <p className="text-xl font-bold">Spaghetti</p>
-              <FaRegTrashAlt className="text-red-500 text-lg cursor-pointer" />
+              <FaRegTrashAlt className="cursor-pointer text-lg text-red-500" />
             </div>
-            <div className="flex items-center gap-20 justify-between">
-              <div className="flex items-center justify-center font-thin gap-6">
-                <div className="p-1 bg-slate-100 shadow-md rounded-full flex items-center justify-center">
-                  <FaMinus className="text-xs text-red-300 cursor-pointer" />
+            <div className="flex items-center justify-between gap-20">
+              <div className="flex items-center justify-center gap-6 font-thin">
+                <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
+                  <FaMinus className="cursor-pointer text-xs text-red-300" />
                 </div>
                 <span>1</span>
-                <div className="p-1 bg-slate-100 shadow-md rounded-full flex items-center justify-center">
-                  <FaPlus className="text-xs text-green-300 cursor-pointer" />
+                <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
+                  <FaPlus className="cursor-pointer text-xs text-green-300" />
                 </div>
               </div>
               <span>$35.7</span>
@@ -73,16 +73,16 @@ function Cart() {
           <div className="flex flex-col gap-4 py-4">
             <div className="flex items-center justify-between">
               <p className="text-xl font-bold">Spaghetti</p>
-              <FaRegTrashAlt className="text-red-500 text-lg cursor-pointer" />
+              <FaRegTrashAlt className="cursor-pointer text-lg text-red-500" />
             </div>
-            <div className="flex items-center gap-20 justify-between">
-              <div className="flex items-center justify-center font-thin gap-6">
-                <div className="p-1 bg-slate-100 shadow-md rounded-full flex items-center justify-center">
-                  <FaMinus className="text-xs text-red-300 cursor-pointer" />
+            <div className="flex items-center justify-between gap-20">
+              <div className="flex items-center justify-center gap-6 font-thin">
+                <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
+                  <FaMinus className="cursor-pointer text-xs text-red-300" />
                 </div>
                 <span>1</span>
-                <div className="p-1 bg-slate-100 shadow-md rounded-full flex items-center justify-center">
-                  <FaPlus className="text-xs text-green-300 cursor-pointer" />
+                <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
+                  <FaPlus className="cursor-pointer text-xs text-green-300" />
                 </div>
               </div>
               <span>$35.7</span>
@@ -92,62 +92,62 @@ function Cart() {
           <div className="flex flex-col gap-4 py-4">
             <div className="flex items-center justify-between">
               <p className="text-xl font-bold">Spaghetti</p>
-              <FaRegTrashAlt className="text-red-500 text-lg cursor-pointer" />
+              <FaRegTrashAlt className="cursor-pointer text-lg text-red-500" />
             </div>
-            <div className="flex items-center gap-20 justify-between">
-              <div className="flex items-center justify-center font-thin gap-6">
-                <div className="p-1 bg-slate-100 shadow-md rounded-full flex items-center justify-center">
-                  <FaMinus className="text-xs text-red-300 cursor-pointer" />
+            <div className="flex items-center justify-between gap-20">
+              <div className="flex items-center justify-center gap-6 font-thin">
+                <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
+                  <FaMinus className="cursor-pointer text-xs text-red-300" />
                 </div>
                 <span>1</span>
-                <div className="p-1 bg-slate-100 shadow-md rounded-full flex items-center justify-center">
-                  <FaPlus className="text-xs text-green-300 cursor-pointer" />
+                <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
+                  <FaPlus className="cursor-pointer text-xs text-green-300" />
                 </div>
               </div>
               <span>$35.7</span>
             </div>
           </div>
 
-          <div className="bg-slate-500 h-[1px] w-full mb-10"></div>
+          <div className="mb-10 h-[1px] w-full bg-slate-500"></div>
 
-          <div className="flex items-center flex-col justify-center gap-2">
-            <p className="text-xl font-bold self-start">Voucher Code</p>
+          <div className="flex flex-col items-center justify-center gap-2">
+            <p className="self-start text-xl font-bold">Voucher Code</p>
             <div className="flex items-center gap-2">
               <input
-                className="p-2 rounded-lg"
+                className="rounded-lg p-2"
                 type="text"
                 placeholder="FREETOEAT"
               />
-              <button className="bg-blue-400 text-white font-thin p-3 rounded-lg">
+              <button className="rounded-lg bg-blue-400 p-3 font-thin text-white">
                 <FaPlus />
               </button>
             </div>
           </div>
 
-          <div className="bg-slate-500 h-[1px] w-full m-10"></div>
+          <div className="m-10 h-[1px] w-full bg-slate-500"></div>
 
-          <div className="flex flex-col items-center gap-4 w-full">
-            <div className="text-xl font-bold flex justify-between w-full">
+          <div className="flex w-full flex-col items-center gap-4">
+            <div className="flex w-full justify-between text-xl font-bold">
               <p className="">Subtotal</p>
-              <p className="text-slate-500 font-semibold">$78.3</p>
+              <p className="font-semibold text-slate-500">$78.3</p>
             </div>
-            <div className="text-xl font-bold flex justify-between w-full">
+            <div className="flex w-full justify-between text-xl font-bold">
               <p className="">Tax fee</p>
-              <p className="text-slate-500 font-semibold">$3.5</p>
+              <p className="font-semibold text-slate-500">$3.5</p>
             </div>
-            <div className="text-xl font-bold flex justify-between w-full">
+            <div className="flex w-full justify-between text-xl font-bold">
               <p className="">Voucher</p>
-              <p className="text-slate-500 font-semibold">$5.0</p>
+              <p className="font-semibold text-slate-500">$5.0</p>
             </div>
-            <div className="text-xl font-bold flex justify-between w-full">
+            <div className="flex w-full justify-between text-xl font-bold">
               <p className="">Subtotal</p>
-              <p className="text-slate-500 font-semibold">$78.3</p>
+              <p className="font-semibold text-slate-500">$78.3</p>
             </div>
           </div>
 
           <button
             onClick={() => setIsCheckingOut(true)}
-            className="text-2xl text-white w-full bg-red-500 rounded-lg font-bold p-2 mt-10 mb-2"
+            className="mb-2 mt-10 w-full rounded-lg bg-red-500 p-2 text-2xl font-bold text-white"
           >
             Checkout
           </button>
@@ -155,18 +155,18 @@ function Cart() {
       )}
 
       {isCheckingOut && (
-        <div className="flex flex-col items-center justify-center  gap-6 w-screen max-w-[500px]">
-          <h2 className="text-5xl font-bold text-[#311F09] mb-8">Checkout</h2>
+        <div className="flex w-screen max-w-[500px] flex-col items-center justify-center gap-6">
+          <h2 className="mb-8 text-5xl font-bold text-[#311F09]">Checkout</h2>
           <p
             onClick={() => setIsCheckingOut(false)}
-            className="text-slate-700 self-start text-lg hover:underline font-semibold"
+            className="self-start text-lg font-semibold text-slate-700 hover:underline"
           >
             Back to order list
           </p>
 
-          <form className="flex flex-col w-full  gap-4">
+          <form className="flex w-full flex-col gap-4">
             <input
-              className="p-3 border rounded-lg"
+              className="rounded-lg border p-3"
               type="text"
               id="address"
               placeholder="address"
@@ -174,7 +174,7 @@ function Cart() {
             />
 
             <input
-              className="p-3 border rounded-lg"
+              className="rounded-lg border p-3"
               type="text"
               id="firstName"
               placeholder="first name"
@@ -182,7 +182,7 @@ function Cart() {
             />
 
             <input
-              className="p-3 border rounded-lg"
+              className="rounded-lg border p-3"
               type="text"
               id="lastName"
               placeholder="last name"
@@ -190,18 +190,18 @@ function Cart() {
             />
 
             <input
-              className="p-3 border rounded-lg"
+              className="rounded-lg border p-3"
               type="email"
               id="email"
               placeholder="email"
               required
             />
 
-            <div className="flex items-center border rounded-lg">
-              <p className="text-sm text-slate-500 font-semibold p-3">+63</p>
+            <div className="flex items-center rounded-lg border">
+              <p className="p-3 text-sm font-semibold text-slate-500">+63</p>
 
               <input
-                className="bg-transparent w-full p-3"
+                className="w-full bg-transparent p-3"
                 type="tel"
                 id="phone"
                 placeholder="123-456-7890"
@@ -211,20 +211,20 @@ function Cart() {
             </div>
 
             <textarea
-              className="p-3 border rounded-lg w-full min-h-[75px] max-h-[150px]"
+              className="max-h-[150px] min-h-[75px] w-full rounded-lg border p-3"
               id="message"
               type="text"
               rows={4}
               placeholder="landmarks near you..."
             />
 
-            <div className="flex flex-col justify-center gap-4 my-4">
+            <div className="my-4 flex flex-col justify-center gap-4">
               <h3 className="font-semibold">Mode of payment:</h3>
-              <div className="flex gap-2 items-center">
+              <div className="flex items-center gap-2">
                 <input
                   id="payment"
                   type="checkbox"
-                  className="w-6 h-6 border-gray-300 bg-white cursor-pointer"
+                  className="h-6 w-6 cursor-pointer border-gray-300 bg-white"
                 />
                 <label htmlFor="payment" className="text-sm">
                   Cash on Delivery
@@ -232,7 +232,7 @@ function Cart() {
               </div>
             </div>
 
-            <button className="p-4 uppercase bg-red-500 text-white font-bold rounded-lg">
+            <button className="rounded-lg bg-red-500 p-4 font-bold uppercase text-white">
               Order now
             </button>
           </form>

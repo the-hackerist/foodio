@@ -20,27 +20,27 @@ function Header() {
   };
 
   return (
-    <header className="flex justify-between px-10 md:px-32 xl:px-48 2xl:px-80 py-8 bg-transparent absolute w-full">
-      <div className="flex gap-2 items-center">
-        <div className="bg-[#F54748] rounded-full rotate-[-20deg] flex items-center justify-center h-10 w-10">
-          <span className="p-2 text-white font-semibold text-xl">F</span>
+    <header className="absolute flex w-full justify-between bg-transparent px-10 py-8 md:px-32 xl:px-48 2xl:px-80">
+      <div className="flex items-center gap-2">
+        <div className="flex h-10 w-10 rotate-[-20deg] items-center justify-center rounded-full bg-[#F54748]">
+          <span className="p-2 text-xl font-semibold text-white">F</span>
         </div>
-        <p className="text-[#523E2C] font-bold">
+        <p className="font-bold text-[#523E2C]">
           Foodio<span className="text-red-500">.</span>
         </p>
       </div>
 
-      <div className="flex items-center relative">
+      <div className="relative flex items-center">
         <div
-          className="lg:hidden p-1 rounded-lg text-3xl"
+          className="rounded-lg p-1 text-3xl lg:hidden"
           onClick={() => setIsMenuOpen((prev) => !prev)}
         >
           {isMenuOpen ? <FaTimes /> : <GiHamburgerMenu />}
         </div>
 
         {isMenuOpen && (
-          <div className="shadow-md bg-white rounded-lg p-4 absolute top-10 right-1 w-[150px] lg:hidden">
-            <ul className="lg:flex text-md lg:text-xs lg:gap-3 gap-6 items-center divide-y space-y-2 divide-solid divide-slate-200">
+          <div className="absolute right-1 top-10 w-[150px] rounded-lg bg-white p-4 shadow-md lg:hidden">
+            <ul className="text-md items-center gap-6 space-y-2 divide-y divide-solid divide-slate-200 lg:flex lg:gap-3 lg:text-xs">
               <li
                 onClick={() => handleActiveLink("home")}
                 className={
@@ -116,7 +116,7 @@ function Header() {
           </div>
         )}
 
-        <ul className="hidden lg:flex text-sm 2xl:text-base 2xl:gap-4 gap-3  items-center">
+        <ul className="hidden items-center gap-3 text-sm lg:flex 2xl:gap-4 2xl:text-base">
           <li
             onClick={() => handleActiveLink("home")}
             className={activeLink === "home" && activeLinkStyle}
@@ -156,11 +156,11 @@ function Header() {
         </ul>
       </div>
 
-      <div className="hidden lg:flex items-center gap-4 justify-between">
+      <div className="hidden items-center justify-between gap-4 lg:flex">
         <Link
           onClick={() => handleActiveLink("none")}
           to="/cart"
-          className="bg-white p-3 rounded-full text-slate-700"
+          className="rounded-full bg-white p-3 text-slate-700"
         >
           <MdOutlineShoppingCart />
         </Link>
@@ -168,7 +168,7 @@ function Header() {
         <Link
           onClick={() => handleActiveLink("none")}
           to="/log-in"
-          className="px-8 py-3 text-white font-semibold  text-sm bg-[#F54748] rounded-xl"
+          className="rounded-xl bg-[#F54748] px-8 py-3 text-sm font-semibold text-white"
         >
           Log in
         </Link>

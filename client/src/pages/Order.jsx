@@ -16,17 +16,17 @@ function Order() {
   const activePageStyle = "text-white bg-black";
 
   return (
-    <div className="px-20 pb-20 pt-40 flex items-center flex-col gap-10 bg-[#F9F9F9]">
-      <h2 className="text-5xl text-center md:text-start font-bold leading-snug">
+    <div className="flex flex-col items-center gap-10 bg-[#F9F9F9] px-20 pb-20 pt-40">
+      <h2 className="text-center text-5xl font-bold leading-snug md:text-start">
         Our Popular Menu
       </h2>
 
-      <ul className="flex items-center gap-2 text-lg mt-4 flex-wrap sm:gap-4 md:gap-6 ">
+      <ul className="mt-4 flex flex-wrap items-center gap-2 text-lg sm:gap-4 md:gap-6">
         <li onClick={() => setCategory("all categories")}>
           <button
             className={`${
               category === "all categories" ? activeCategoryStyle : "border"
-            } md:px-8 sm:px-6 px-3 py-4 rounded-lg `}
+            } rounded-lg px-3 py-4 sm:px-6 md:px-8`}
           >
             All categories
           </button>
@@ -36,7 +36,7 @@ function Order() {
           <button
             className={`${
               category === "pasta" ? activeCategoryStyle : "border"
-            } md:px-8 sm:px-6 px-3 py-4 rounded-lg `}
+            } rounded-lg px-3 py-4 sm:px-6 md:px-8`}
           >
             Pasta
           </button>
@@ -46,7 +46,7 @@ function Order() {
           <button
             className={`${
               category === "pizza" ? activeCategoryStyle : "border"
-            } md:px-8 sm:px-6 px-3 py-4 rounded-lg `}
+            } rounded-lg px-3 py-4 sm:px-6 md:px-8`}
           >
             Pizza
           </button>
@@ -56,7 +56,7 @@ function Order() {
           <button
             className={`${
               category === "dessert" ? activeCategoryStyle : "border"
-            } md:px-8 sm:px-6 px-3 py-4 rounded-lg `}
+            } rounded-lg px-3 py-4 sm:px-6 md:px-8`}
           >
             Dessert
           </button>
@@ -66,20 +66,20 @@ function Order() {
           <button
             className={`${
               category === "drink" ? activeCategoryStyle : "border"
-            } md:px-8 sm:px-6 px-3 py-4 rounded-lg `}
+            } rounded-lg px-3 py-4 sm:px-6 md:px-8`}
           >
             Drink
           </button>
         </li>
       </ul>
 
-      <h3 className="text-2xl uppercase font-bold border-b border-b-red-500 pb-3">
+      <h3 className="border-b border-b-red-500 pb-3 text-2xl font-bold uppercase">
         {category}
       </h3>
 
       {!isOrderListOpen && (
         <p
-          className="hover:underline lg:hidden text-base sm:text-lg font-semibold text-slate-500"
+          className="text-base font-semibold text-slate-500 hover:underline sm:text-lg lg:hidden"
           onClick={() => setIsOrderListOpen(true)}
         >
           Check Order List
@@ -88,21 +88,21 @@ function Order() {
 
       {isOrderListOpen && (
         <p
-          className="hover:underline lg:hidden text-base sm:text-lg font-semibold text-red-500"
+          className="text-base font-semibold text-red-500 hover:underline sm:text-lg lg:hidden"
           onClick={() => setIsOrderListOpen(false)}
         >
           Close Order List
         </p>
       )}
 
-      <div className="flex gap-6 sm:border-2 rounded-3xl p-4 sm:border-red-100 flex-col">
-        <div className="flex gap-3 items-center justify-center mt-6">
+      <div className="flex flex-col gap-6 rounded-3xl p-4 sm:border-2 sm:border-red-100">
+        <div className="mt-6 flex items-center justify-center gap-3">
           <IoIosArrowBack className="cursor-pointer" />
           <span
             onClick={() => setActivePage(1)}
             className={`${
               activePage === 1 ? activePageStyle : "bg-slate-200"
-            } h-6 w-6 flex cursor-pointer items-center justify-center text-xs font-semibold rounded-sm`}
+            } flex h-6 w-6 cursor-pointer items-center justify-center rounded-sm text-xs font-semibold`}
           >
             1
           </span>
@@ -110,7 +110,7 @@ function Order() {
             onClick={() => setActivePage(2)}
             className={`${
               activePage === 2 ? activePageStyle : "bg-slate-200"
-            } h-6 w-6 flex cursor-pointer items-center justify-center text-xs font-semibold rounded-sm`}
+            } flex h-6 w-6 cursor-pointer items-center justify-center rounded-sm text-xs font-semibold`}
           >
             2
           </span>
@@ -118,31 +118,31 @@ function Order() {
             onClick={() => setActivePage(3)}
             className={`${
               activePage === 3 ? activePageStyle : "bg-slate-200"
-            } h-6 w-6 flex cursor-pointer items-center justify-center text-xs font-semibold rounded-sm `}
+            } flex h-6 w-6 cursor-pointer items-center justify-center rounded-sm text-xs font-semibold`}
           >
             3
           </span>
-          <span className="cursor-pointer h-6 w-6 flex items-center justify-center text-xs font-semibold bg-slate-200 rounded-sm">
+          <span className="flex h-6 w-6 cursor-pointer items-center justify-center rounded-sm bg-slate-200 text-xs font-semibold">
             ...
           </span>
-          <IoIosArrowBack className="cursor-pointer rotate-180" />
+          <IoIosArrowBack className="rotate-180 cursor-pointer" />
         </div>
 
         <div className="flex gap-6">
           <div
             className={`${
               isOrderListOpen ? "hidden" : "flex"
-            } sm:flex items-center justify-center gap-4 flex-wrap max-w-[700px]`}
+            } max-w-[700px] flex-wrap items-center justify-center gap-4 sm:flex`}
           >
-            <div className="flex flex-col items-center border w-[200px] h-[400px] p-6 rounded-3xl gap-2">
+            <div className="flex h-[400px] w-[200px] flex-col items-center gap-2 rounded-3xl border p-6">
               <img
-                className="w-[180px] h-[180px]"
+                className="h-[180px] w-[180px]"
                 src={food_img}
                 alt="food image"
               />
-              <h3 className="font-bold text-xl">Spaghetti</h3>
+              <h3 className="text-xl font-bold">Spaghetti</h3>
 
-              <div className="flex text-red-500 gap-2 text-xs">
+              <div className="flex gap-2 text-xs text-red-500">
                 <RiStarSFill />
                 <RiStarSFill />
                 <RiStarSFill />
@@ -154,28 +154,28 @@ function Order() {
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Egestas
                 consequat
               </p>
-              <p className="font-semibold text-base mt-4">$12.05</p>
+              <p className="mt-4 text-base font-semibold">$12.05</p>
 
-              <div className="flex items-center justify-center font-thin gap-6">
-                <div className="p-1 bg-slate-100 shadow-md rounded-full flex items-center justify-center">
-                  <FaMinus className="text-xs text-red-300 cursor-pointer" />
+              <div className="flex items-center justify-center gap-6 font-thin">
+                <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
+                  <FaMinus className="cursor-pointer text-xs text-red-300" />
                 </div>
                 <span>1</span>
-                <div className="p-1 bg-slate-100 shadow-md rounded-full flex items-center justify-center">
-                  <FaPlus className="text-xs text-green-300 cursor-pointer" />
+                <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
+                  <FaPlus className="cursor-pointer text-xs text-green-300" />
                 </div>
               </div>
             </div>
 
-            <div className="flex flex-col items-center border w-[200px] h-[400px] p-6 rounded-3xl gap-2">
+            <div className="flex h-[400px] w-[200px] flex-col items-center gap-2 rounded-3xl border p-6">
               <img
-                className="w-[180px] h-[180px]"
+                className="h-[180px] w-[180px]"
                 src={food_img}
                 alt="food image"
               />
-              <h3 className="font-bold text-xl">Spaghetti</h3>
+              <h3 className="text-xl font-bold">Spaghetti</h3>
 
-              <div className="flex text-red-500 gap-2 text-xs">
+              <div className="flex gap-2 text-xs text-red-500">
                 <RiStarSFill />
                 <RiStarSFill />
                 <RiStarSFill />
@@ -187,27 +187,27 @@ function Order() {
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Egestas
                 consequat
               </p>
-              <p className="font-semibold text-base mt-4">$12.05</p>
-              <div className="flex items-center justify-center font-thin gap-6">
-                <div className="p-1 bg-slate-100 shadow-md rounded-full flex items-center justify-center">
-                  <FaMinus className="text-xs text-red-300 cursor-pointer" />
+              <p className="mt-4 text-base font-semibold">$12.05</p>
+              <div className="flex items-center justify-center gap-6 font-thin">
+                <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
+                  <FaMinus className="cursor-pointer text-xs text-red-300" />
                 </div>
                 <span>1</span>
-                <div className="p-1 bg-slate-100 shadow-md rounded-full flex items-center justify-center">
-                  <FaPlus className="text-xs text-green-300 cursor-pointer" />
+                <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
+                  <FaPlus className="cursor-pointer text-xs text-green-300" />
                 </div>
               </div>
             </div>
 
-            <div className="flex flex-col items-center border w-[200px] h-[400px] p-6 rounded-3xl gap-2">
+            <div className="flex h-[400px] w-[200px] flex-col items-center gap-2 rounded-3xl border p-6">
               <img
-                className="w-[180px] h-[180px]"
+                className="h-[180px] w-[180px]"
                 src={food_img}
                 alt="food image"
               />
-              <h3 className="font-bold text-xl">Spaghetti</h3>
+              <h3 className="text-xl font-bold">Spaghetti</h3>
 
-              <div className="flex text-red-500 gap-2 text-xs">
+              <div className="flex gap-2 text-xs text-red-500">
                 <RiStarSFill />
                 <RiStarSFill />
                 <RiStarSFill />
@@ -219,27 +219,27 @@ function Order() {
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Egestas
                 consequat
               </p>
-              <p className="font-semibold text-base mt-4">$12.05</p>
-              <div className="flex items-center justify-center font-thin gap-6">
-                <div className="p-1 bg-slate-100 shadow-md rounded-full flex items-center justify-center">
-                  <FaMinus className="text-xs text-red-300 cursor-pointer" />
+              <p className="mt-4 text-base font-semibold">$12.05</p>
+              <div className="flex items-center justify-center gap-6 font-thin">
+                <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
+                  <FaMinus className="cursor-pointer text-xs text-red-300" />
                 </div>
                 <span>1</span>
-                <div className="p-1 bg-slate-100 shadow-md rounded-full flex items-center justify-center">
-                  <FaPlus className="text-xs text-green-300 cursor-pointer" />
+                <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
+                  <FaPlus className="cursor-pointer text-xs text-green-300" />
                 </div>
               </div>
             </div>
 
-            <div className="flex flex-col items-center border w-[200px] h-[400px] p-6 rounded-3xl gap-2">
+            <div className="flex h-[400px] w-[200px] flex-col items-center gap-2 rounded-3xl border p-6">
               <img
-                className="w-[180px] h-[180px]"
+                className="h-[180px] w-[180px]"
                 src={food_img}
                 alt="food image"
               />
-              <h3 className="font-bold text-xl">Spaghetti</h3>
+              <h3 className="text-xl font-bold">Spaghetti</h3>
 
-              <div className="flex text-red-500 gap-2 text-xs">
+              <div className="flex gap-2 text-xs text-red-500">
                 <RiStarSFill />
                 <RiStarSFill />
                 <RiStarSFill />
@@ -251,27 +251,27 @@ function Order() {
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Egestas
                 consequat
               </p>
-              <p className="font-semibold text-base mt-4">$12.05</p>
-              <div className="flex items-center justify-center font-thin gap-6">
-                <div className="p-1 bg-slate-100 shadow-md rounded-full flex items-center justify-center">
-                  <FaMinus className="text-xs text-red-300 cursor-pointer" />
+              <p className="mt-4 text-base font-semibold">$12.05</p>
+              <div className="flex items-center justify-center gap-6 font-thin">
+                <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
+                  <FaMinus className="cursor-pointer text-xs text-red-300" />
                 </div>
                 <span>1</span>
-                <div className="p-1 bg-slate-100 shadow-md rounded-full flex items-center justify-center">
-                  <FaPlus className="text-xs text-green-300 cursor-pointer" />
+                <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
+                  <FaPlus className="cursor-pointer text-xs text-green-300" />
                 </div>
               </div>
             </div>
 
-            <div className="flex flex-col items-center border w-[200px] h-[400px] p-6 rounded-3xl gap-2">
+            <div className="flex h-[400px] w-[200px] flex-col items-center gap-2 rounded-3xl border p-6">
               <img
-                className="w-[180px] h-[180px]"
+                className="h-[180px] w-[180px]"
                 src={food_img}
                 alt="food image"
               />
-              <h3 className="font-bold text-xl">Spaghetti</h3>
+              <h3 className="text-xl font-bold">Spaghetti</h3>
 
-              <div className="flex text-red-500 gap-2 text-xs">
+              <div className="flex gap-2 text-xs text-red-500">
                 <RiStarSFill />
                 <RiStarSFill />
                 <RiStarSFill />
@@ -283,27 +283,27 @@ function Order() {
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Egestas
                 consequat
               </p>
-              <p className="font-semibold text-base mt-4">$12.05</p>
-              <div className="flex items-center justify-center font-thin gap-6">
-                <div className="p-1 bg-slate-100 shadow-md rounded-full flex items-center justify-center">
-                  <FaMinus className="text-xs text-red-300 cursor-pointer" />
+              <p className="mt-4 text-base font-semibold">$12.05</p>
+              <div className="flex items-center justify-center gap-6 font-thin">
+                <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
+                  <FaMinus className="cursor-pointer text-xs text-red-300" />
                 </div>
                 <span>1</span>
-                <div className="p-1 bg-slate-100 shadow-md rounded-full flex items-center justify-center">
-                  <FaPlus className="text-xs text-green-300 cursor-pointer" />
+                <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
+                  <FaPlus className="cursor-pointer text-xs text-green-300" />
                 </div>
               </div>
             </div>
 
-            <div className="flex flex-col items-center border w-[200px] h-[400px] p-6 rounded-3xl gap-2">
+            <div className="flex h-[400px] w-[200px] flex-col items-center gap-2 rounded-3xl border p-6">
               <img
-                className="w-[180px] h-[180px]"
+                className="h-[180px] w-[180px]"
                 src={food_img}
                 alt="food image"
               />
-              <h3 className="font-bold text-xl">Spaghetti</h3>
+              <h3 className="text-xl font-bold">Spaghetti</h3>
 
-              <div className="flex text-red-500 gap-2 text-xs">
+              <div className="flex gap-2 text-xs text-red-500">
                 <RiStarSFill />
                 <RiStarSFill />
                 <RiStarSFill />
@@ -315,27 +315,27 @@ function Order() {
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Egestas
                 consequat
               </p>
-              <p className="font-semibold text-base mt-4">$12.05</p>
-              <div className="flex items-center justify-center font-thin gap-6">
-                <div className="p-1 bg-slate-100 shadow-md rounded-full flex items-center justify-center">
-                  <FaMinus className="text-xs text-red-300 cursor-pointer" />
+              <p className="mt-4 text-base font-semibold">$12.05</p>
+              <div className="flex items-center justify-center gap-6 font-thin">
+                <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
+                  <FaMinus className="cursor-pointer text-xs text-red-300" />
                 </div>
                 <span>1</span>
-                <div className="p-1 bg-slate-100 shadow-md rounded-full flex items-center justify-center">
-                  <FaPlus className="text-xs text-green-300 cursor-pointer" />
+                <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
+                  <FaPlus className="cursor-pointer text-xs text-green-300" />
                 </div>
               </div>
             </div>
 
-            <div className="flex flex-col items-center border w-[200px] h-[400px] p-6 rounded-3xl gap-2">
+            <div className="flex h-[400px] w-[200px] flex-col items-center gap-2 rounded-3xl border p-6">
               <img
-                className="w-[180px] h-[180px]"
+                className="h-[180px] w-[180px]"
                 src={food_img}
                 alt="food image"
               />
-              <h3 className="font-bold text-xl">Spaghetti</h3>
+              <h3 className="text-xl font-bold">Spaghetti</h3>
 
-              <div className="flex text-red-500 gap-2 text-xs">
+              <div className="flex gap-2 text-xs text-red-500">
                 <RiStarSFill />
                 <RiStarSFill />
                 <RiStarSFill />
@@ -347,27 +347,27 @@ function Order() {
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Egestas
                 consequat
               </p>
-              <p className="font-semibold text-base mt-4">$12.05</p>
-              <div className="flex items-center justify-center font-thin gap-6">
-                <div className="p-1 bg-slate-100 shadow-md rounded-full flex items-center justify-center">
-                  <FaMinus className="text-xs text-red-300 cursor-pointer" />
+              <p className="mt-4 text-base font-semibold">$12.05</p>
+              <div className="flex items-center justify-center gap-6 font-thin">
+                <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
+                  <FaMinus className="cursor-pointer text-xs text-red-300" />
                 </div>
                 <span>1</span>
-                <div className="p-1 bg-slate-100 shadow-md rounded-full flex items-center justify-center">
-                  <FaPlus className="text-xs text-green-300 cursor-pointer" />
+                <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
+                  <FaPlus className="cursor-pointer text-xs text-green-300" />
                 </div>
               </div>
             </div>
 
-            <div className="flex flex-col items-center border w-[200px] h-[400px] p-6 rounded-3xl gap-2">
+            <div className="flex h-[400px] w-[200px] flex-col items-center gap-2 rounded-3xl border p-6">
               <img
-                className="w-[180px] h-[180px]"
+                className="h-[180px] w-[180px]"
                 src={food_img}
                 alt="food image"
               />
-              <h3 className="font-bold text-xl">Spaghetti</h3>
+              <h3 className="text-xl font-bold">Spaghetti</h3>
 
-              <div className="flex text-red-500 gap-2 text-xs">
+              <div className="flex gap-2 text-xs text-red-500">
                 <RiStarSFill />
                 <RiStarSFill />
                 <RiStarSFill />
@@ -379,27 +379,27 @@ function Order() {
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Egestas
                 consequat
               </p>
-              <p className="font-semibold text-base mt-4">$12.05</p>
-              <div className="flex items-center justify-center font-thin gap-6">
-                <div className="p-1 bg-slate-100 shadow-md rounded-full flex items-center justify-center">
-                  <FaMinus className="text-xs text-red-300 cursor-pointer" />
+              <p className="mt-4 text-base font-semibold">$12.05</p>
+              <div className="flex items-center justify-center gap-6 font-thin">
+                <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
+                  <FaMinus className="cursor-pointer text-xs text-red-300" />
                 </div>
                 <span>1</span>
-                <div className="p-1 bg-slate-100 shadow-md rounded-full flex items-center justify-center">
-                  <FaPlus className="text-xs text-green-300 cursor-pointer" />
+                <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
+                  <FaPlus className="cursor-pointer text-xs text-green-300" />
                 </div>
               </div>
             </div>
 
-            <div className="flex flex-col items-center border w-[200px] h-[400px] p-6 rounded-3xl gap-2">
+            <div className="flex h-[400px] w-[200px] flex-col items-center gap-2 rounded-3xl border p-6">
               <img
-                className="w-[180px] h-[180px]"
+                className="h-[180px] w-[180px]"
                 src={food_img}
                 alt="food image"
               />
-              <h3 className="font-bold text-xl">Spaghetti</h3>
+              <h3 className="text-xl font-bold">Spaghetti</h3>
 
-              <div className="flex text-red-500 gap-2 text-xs">
+              <div className="flex gap-2 text-xs text-red-500">
                 <RiStarSFill />
                 <RiStarSFill />
                 <RiStarSFill />
@@ -411,14 +411,14 @@ function Order() {
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Egestas
                 consequat
               </p>
-              <p className="font-semibold text-base mt-4">$12.05</p>
-              <div className="flex items-center justify-center font-thin gap-6">
-                <div className="p-1 bg-slate-100 shadow-md rounded-full flex items-center justify-center">
-                  <FaMinus className="text-xs text-red-300 cursor-pointer" />
+              <p className="mt-4 text-base font-semibold">$12.05</p>
+              <div className="flex items-center justify-center gap-6 font-thin">
+                <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
+                  <FaMinus className="cursor-pointer text-xs text-red-300" />
                 </div>
                 <span>1</span>
-                <div className="p-1 bg-slate-100 shadow-md rounded-full flex items-center justify-center">
-                  <FaPlus className="text-xs text-green-300 cursor-pointer" />
+                <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
+                  <FaPlus className="cursor-pointer text-xs text-green-300" />
                 </div>
               </div>
             </div>
@@ -427,25 +427,25 @@ function Order() {
           <div
             className={`${
               !isOrderListOpen ? "hidden" : "flex"
-            } w-[300px] border bg-red-100 rounded-2xl h-fit lg:flex items-center justify-center flex-col p-6`}
+            } h-fit w-[300px] flex-col items-center justify-center rounded-2xl border bg-red-100 p-6 lg:flex`}
           >
-            <h3 className="text-2xl font-bold p-10">Order list</h3>
+            <h3 className="p-10 text-2xl font-bold">Order list</h3>
 
-            <div className="bg-slate-500 h-[1px] w-full mb-10"></div>
+            <div className="mb-10 h-[1px] w-full bg-slate-500"></div>
 
             <div className="flex flex-col gap-4 py-4">
               <div className="flex items-center justify-between">
                 <p className="text-xl font-bold">Spaghetti</p>
-                <FaRegTrashAlt className="text-red-500 text-lg cursor-pointer" />
+                <FaRegTrashAlt className="cursor-pointer text-lg text-red-500" />
               </div>
               <div className="flex items-center gap-20">
-                <div className="flex items-center justify-center font-thin gap-6">
-                  <div className="p-1 bg-slate-100 shadow-md rounded-full flex items-center justify-center">
-                    <FaMinus className="text-xs text-red-300 cursor-pointer" />
+                <div className="flex items-center justify-center gap-6 font-thin">
+                  <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
+                    <FaMinus className="cursor-pointer text-xs text-red-300" />
                   </div>
                   <span>1</span>
-                  <div className="p-1 bg-slate-100 shadow-md rounded-full flex items-center justify-center">
-                    <FaPlus className="text-xs text-green-300 cursor-pointer" />
+                  <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
+                    <FaPlus className="cursor-pointer text-xs text-green-300" />
                   </div>
                 </div>
                 <span>$35.7</span>
@@ -455,16 +455,16 @@ function Order() {
             <div className="flex flex-col gap-4 py-4">
               <div className="flex items-center justify-between">
                 <p className="text-xl font-bold">Spaghetti</p>
-                <FaRegTrashAlt className="text-red-500 text-lg cursor-pointer" />
+                <FaRegTrashAlt className="cursor-pointer text-lg text-red-500" />
               </div>
               <div className="flex items-center gap-20">
-                <div className="flex items-center justify-center font-thin gap-6">
-                  <div className="p-1 bg-slate-100 shadow-md rounded-full flex items-center justify-center">
-                    <FaMinus className="text-xs text-red-300 cursor-pointer" />
+                <div className="flex items-center justify-center gap-6 font-thin">
+                  <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
+                    <FaMinus className="cursor-pointer text-xs text-red-300" />
                   </div>
                   <span>1</span>
-                  <div className="p-1 bg-slate-100 shadow-md rounded-full flex items-center justify-center">
-                    <FaPlus className="text-xs text-green-300 cursor-pointer" />
+                  <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
+                    <FaPlus className="cursor-pointer text-xs text-green-300" />
                   </div>
                 </div>
                 <span>$35.7</span>
@@ -474,16 +474,16 @@ function Order() {
             <div className="flex flex-col gap-4 py-4">
               <div className="flex items-center justify-between">
                 <p className="text-xl font-bold">Spaghetti</p>
-                <FaRegTrashAlt className="text-red-500 text-lg cursor-pointer" />
+                <FaRegTrashAlt className="cursor-pointer text-lg text-red-500" />
               </div>
               <div className="flex items-center gap-20">
-                <div className="flex items-center justify-center font-thin gap-6">
-                  <div className="p-1 bg-slate-100 shadow-md rounded-full flex items-center justify-center">
-                    <FaMinus className="text-xs text-red-300 cursor-pointer" />
+                <div className="flex items-center justify-center gap-6 font-thin">
+                  <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
+                    <FaMinus className="cursor-pointer text-xs text-red-300" />
                   </div>
                   <span>1</span>
-                  <div className="p-1 bg-slate-100 shadow-md rounded-full flex items-center justify-center">
-                    <FaPlus className="text-xs text-green-300 cursor-pointer" />
+                  <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
+                    <FaPlus className="cursor-pointer text-xs text-green-300" />
                   </div>
                 </div>
                 <span>$35.7</span>
@@ -493,16 +493,16 @@ function Order() {
             <div className="flex flex-col gap-4 py-4">
               <div className="flex items-center justify-between">
                 <p className="text-xl font-bold">Spaghetti</p>
-                <FaRegTrashAlt className="text-red-500 text-lg cursor-pointer" />
+                <FaRegTrashAlt className="cursor-pointer text-lg text-red-500" />
               </div>
               <div className="flex items-center gap-20">
-                <div className="flex items-center justify-center font-thin gap-6">
-                  <div className="p-1 bg-slate-100 shadow-md rounded-full flex items-center justify-center">
-                    <FaMinus className="text-xs text-red-300 cursor-pointer" />
+                <div className="flex items-center justify-center gap-6 font-thin">
+                  <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
+                    <FaMinus className="cursor-pointer text-xs text-red-300" />
                   </div>
                   <span>1</span>
-                  <div className="p-1 bg-slate-100 shadow-md rounded-full flex items-center justify-center">
-                    <FaPlus className="text-xs text-green-300 cursor-pointer" />
+                  <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
+                    <FaPlus className="cursor-pointer text-xs text-green-300" />
                   </div>
                 </div>
                 <span>$35.7</span>
@@ -512,62 +512,62 @@ function Order() {
             <div className="flex flex-col gap-4 py-4">
               <div className="flex items-center justify-between">
                 <p className="text-xl font-bold">Spaghetti</p>
-                <FaRegTrashAlt className="text-red-500 text-lg cursor-pointer" />
+                <FaRegTrashAlt className="cursor-pointer text-lg text-red-500" />
               </div>
               <div className="flex items-center gap-20">
-                <div className="flex items-center justify-center font-thin gap-6">
-                  <div className="p-1 bg-slate-100 shadow-md rounded-full flex items-center justify-center">
-                    <FaMinus className="text-xs text-red-300 cursor-pointer" />
+                <div className="flex items-center justify-center gap-6 font-thin">
+                  <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
+                    <FaMinus className="cursor-pointer text-xs text-red-300" />
                   </div>
                   <span>1</span>
-                  <div className="p-1 bg-slate-100 shadow-md rounded-full flex items-center justify-center">
-                    <FaPlus className="text-xs text-green-300 cursor-pointer" />
+                  <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
+                    <FaPlus className="cursor-pointer text-xs text-green-300" />
                   </div>
                 </div>
                 <span>$35.7</span>
               </div>
             </div>
 
-            <div className="bg-slate-500 h-[1px] w-full mb-10"></div>
+            <div className="mb-10 h-[1px] w-full bg-slate-500"></div>
 
-            <div className="flex items-center flex-col justify-center gap-2">
-              <p className="text-xl font-bold self-start">Voucher Code</p>
+            <div className="flex flex-col items-center justify-center gap-2">
+              <p className="self-start text-xl font-bold">Voucher Code</p>
               <div className="flex items-center gap-2">
                 <input
-                  className="p-2 rounded-lg"
+                  className="rounded-lg p-2"
                   type="text"
                   placeholder="FREETOEAT"
                 />
-                <button className="bg-blue-400 text-white font-thin p-3 rounded-lg">
+                <button className="rounded-lg bg-blue-400 p-3 font-thin text-white">
                   <FaPlus />
                 </button>
               </div>
             </div>
 
-            <div className="bg-slate-500 h-[1px] w-full m-10"></div>
+            <div className="m-10 h-[1px] w-full bg-slate-500"></div>
 
-            <div className="flex flex-col items-center gap-4 w-full">
-              <div className="text-xl font-bold flex justify-between w-full">
+            <div className="flex w-full flex-col items-center gap-4">
+              <div className="flex w-full justify-between text-xl font-bold">
                 <p className="">Subtotal</p>
-                <p className="text-slate-500 font-semibold">$78.3</p>
+                <p className="font-semibold text-slate-500">$78.3</p>
               </div>
-              <div className="text-xl font-bold flex justify-between w-full">
+              <div className="flex w-full justify-between text-xl font-bold">
                 <p className="">Tax fee</p>
-                <p className="text-slate-500 font-semibold">$3.5</p>
+                <p className="font-semibold text-slate-500">$3.5</p>
               </div>
-              <div className="text-xl font-bold flex justify-between w-full">
+              <div className="flex w-full justify-between text-xl font-bold">
                 <p className="">Voucher</p>
-                <p className="text-slate-500 font-semibold">$5.0</p>
+                <p className="font-semibold text-slate-500">$5.0</p>
               </div>
-              <div className="text-xl font-bold flex justify-between w-full">
+              <div className="flex w-full justify-between text-xl font-bold">
                 <p className="">Subtotal</p>
-                <p className="text-slate-500 font-semibold">$78.3</p>
+                <p className="font-semibold text-slate-500">$78.3</p>
               </div>
             </div>
 
             <Link
               to="/cart"
-              className="text-2xl text-white w-full bg-red-500 rounded-lg font-bold p-2 mt-10 mb-2 cursor-pointer text-center"
+              className="mb-2 mt-10 w-full cursor-pointer rounded-lg bg-red-500 p-2 text-center text-2xl font-bold text-white"
             >
               Checkout
             </Link>

@@ -4,36 +4,36 @@ import chef_3 from "../../assets/chef_3.jpg";
 
 function Chef() {
   return (
-    <div className="w-full flex items-center justify-center flex-col p-20 bg-[#F9F9F9]">
-      <h2 className="text-5xl font-bold mb-10 text-center sm:text-start">
+    <div className="flex w-full flex-col items-center justify-center bg-[#F9F9F9] p-20">
+      <h2 className="mb-10 text-center text-5xl font-bold sm:text-start">
         Our Popular Chef
       </h2>
-      <div className="flex items-center justify-center gap-10 mt-6 flex-wrap">
+      <div className="mt-6 flex flex-wrap items-center justify-center gap-10">
         <div className="flex flex-col items-center justify-center text-lg">
-          <div className="w-[300px] h-[400px] overflow-hidden rounded-lg mb-4">
+          <div className="mb-4 h-[400px] w-[300px] overflow-hidden rounded-lg">
             <img className="object-cover" src={chef_1} alt="chef" />
           </div>
           <p className="font-bold">Betran Komar</p>
-          <p className="text-slate-500 font-semibold">Head chef</p>
+          <p className="font-semibold text-slate-500">Head chef</p>
         </div>
 
         <div className="flex flex-col items-center justify-center text-lg">
-          <div className="w-[300px] h-[400px] overflow-hidden rounded-lg mb-4">
+          <div className="mb-4 h-[400px] w-[300px] overflow-hidden rounded-lg">
             <img className="object-cover" src={chef_3} alt="chef" />
           </div>
           <p className="font-bold">Iswan Dracho</p>
-          <p className="text-slate-500 font-semibold">Chef</p>
+          <p className="font-semibold text-slate-500">Chef</p>
         </div>
 
         <div className="flex flex-col items-center justify-center text-lg">
-          <div className="w-[300px] h-[400px] overflow-hidden rounded-lg mb-4">
+          <div className="mb-4 h-[400px] w-[300px] overflow-hidden rounded-lg">
             <img className="object-cover" src={chef_2} alt="chef" />
           </div>
           <p className="font-bold">Ferry Sauwi</p>
-          <p className="text-slate-500 font-semibold">Chef</p>
+          <p className="font-semibold text-slate-500">Chef</p>
         </div>
       </div>
-      <button className="px-16 py-4 bg-red-500 text-lg font-bold text-white mt-12 rounded-lg w-full md:w-[300px]">
+      <button className="mt-12 w-full rounded-lg bg-red-500 px-16 py-4 text-lg font-bold text-white md:w-[300px]">
         View all
       </button>
     </div>
