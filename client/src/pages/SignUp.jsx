@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaEyeSlash, FaRegEye } from "react-icons/fa";
+
 function SignUp() {
   const [formData, setFormData] = useState({
     username: "",
@@ -22,33 +23,45 @@ function SignUp() {
 
   const { username, email, password, confirmPassword } = formData;
 
-  const validateFormData = () => {
-    setError(null);
-
-    if (!username) return setError("Username should not be empty");
-
-    if (username.length < 4)
-      return setError("Username must be at least 4 characters long");
-
-    if (!email) return setError("Email should not be empty");
-
-    if (!password) return setError("Password should not be empty");
-
-    if (password.length < 8)
-      return setError("Password must be at least 8 characters long");
-
-    if (!confirmPassword)
-      return setError("Confirm password should not be empty");
-
-    if (confirmPassword !== password) return setError("Password do not match");
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    validateFormData();
 
-    setLoading(false);
+    try {
+      setLoading(true);
+      setError(null);
+
+      if (confirmPassword !== password) {
+        setError("Password do not match");
+        setLoading(false);
+        return;
+      }
+
+      const res = await fetch("http://localhost:3000/api/v1/auth/sign-up", {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({ username, email, password }),
+      });
+
+      const data = await res.json();
+
+      if (data.success === false) {
+        setLoading(false);
+        setError(data.message);
+        return;
+      }
+
+      setFormData({
+        username: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      setError(error.message);
+      return;
+    }
   };
 
   const handleFormData = (e) => {
@@ -65,6 +78,7 @@ function SignUp() {
           className="flex w-full max-w-[500px] flex-col gap-6 py-10 md:gap-8"
         >
           <input
+            required
             className="rounded-lg border p-4"
             type="text"
             value={username}
@@ -75,6 +89,7 @@ function SignUp() {
           />
 
           <input
+            required
             className="rounded-lg border p-4"
             type="email"
             value={email}
@@ -84,55 +99,62 @@ function SignUp() {
           />
 
           <div className="relative">
-            <p
-              className="absolute bottom-3 right-3 top-3 flex cursor-pointer items-center justify-center rounded-full p-2 text-lg hover:bg-slate-200"
-              onMouseDown={() =>
-                setTogglePasswordVisibility((prev) => ({
-                  ...prev,
-                  passwordVisibility: true,
-                }))
-              }
-              onMouseUp={() =>
-                setTogglePasswordVisibility((prev) => ({
-                  ...prev,
-                  passwordVisibility: false,
-                }))
-              }
-              onMouseLeave={() =>
-                setTogglePasswordVisibility((prev) => ({
-                  ...prev,
-                  passwordVisibility: false,
-                }))
-              }
-              onTouchCancel={() =>
-                setTogglePasswordVisibility((prev) => ({
-                  ...prev,
-                  passwordVisibility: false,
-                }))
-              }
-              onTouchEnd={() =>
-                setTogglePasswordVisibility((prev) => ({
-                  ...prev,
-                  passwordVisibility: false,
-                }))
-              }
-              onTouchMove={() =>
-                setTogglePasswordVisibility((prev) => ({
-                  ...prev,
-                  passwordVisibility: false,
-                }))
-              }
-              onTouchStart={() =>
-                setTogglePasswordVisibility((prev) => ({
-                  ...prev,
-                  passwordVisibility: true,
-                }))
-              }
-            >
-              {!passwordVisibility ? <FaEyeSlash className="" /> : <FaRegEye />}
-            </p>
+            {password.length > 0 && (
+              <p
+                className="absolute bottom-3 right-3 top-3 flex cursor-pointer items-center justify-center rounded-full p-2 text-lg hover:bg-slate-200"
+                onMouseDown={() =>
+                  setTogglePasswordVisibility((prev) => ({
+                    ...prev,
+                    passwordVisibility: true,
+                  }))
+                }
+                onMouseUp={() =>
+                  setTogglePasswordVisibility((prev) => ({
+                    ...prev,
+                    passwordVisibility: false,
+                  }))
+                }
+                onMouseLeave={() =>
+                  setTogglePasswordVisibility((prev) => ({
+                    ...prev,
+                    passwordVisibility: false,
+                  }))
+                }
+                onTouchCancel={() =>
+                  setTogglePasswordVisibility((prev) => ({
+                    ...prev,
+                    passwordVisibility: false,
+                  }))
+                }
+                onTouchEnd={() =>
+                  setTogglePasswordVisibility((prev) => ({
+                    ...prev,
+                    passwordVisibility: false,
+                  }))
+                }
+                onTouchMove={() =>
+                  setTogglePasswordVisibility((prev) => ({
+                    ...prev,
+                    passwordVisibility: false,
+                  }))
+                }
+                onTouchStart={() =>
+                  setTogglePasswordVisibility((prev) => ({
+                    ...prev,
+                    passwordVisibility: true,
+                  }))
+                }
+              >
+                {!passwordVisibility ? (
+                  <FaEyeSlash className="" />
+                ) : (
+                  <FaRegEye />
+                )}
+              </p>
+            )}
 
             <input
+              required
               className="w-full rounded-lg border p-4 pr-14"
               type={!passwordVisibility ? "password" : "text"}
               value={password}
@@ -144,58 +166,61 @@ function SignUp() {
           </div>
 
           <div className="relative">
-            <p
-              className="absolute bottom-3 right-3 top-3 flex cursor-pointer items-center justify-center rounded-full p-2 text-lg hover:bg-slate-200"
-              onMouseDown={() =>
-                setTogglePasswordVisibility((prev) => ({
-                  ...prev,
-                  confirmPasswordVisibility: true,
-                }))
-              }
-              onMouseUp={() =>
-                setTogglePasswordVisibility((prev) => ({
-                  ...prev,
-                  confirmPasswordVisibility: false,
-                }))
-              }
-              onMouseLeave={() =>
-                setTogglePasswordVisibility((prev) => ({
-                  ...prev,
-                  confirmPasswordVisibility: false,
-                }))
-              }
-              onTouchCancel={() =>
-                setTogglePasswordVisibility((prev) => ({
-                  ...prev,
-                  confirmPasswordVisibility: false,
-                }))
-              }
-              onTouchEnd={() =>
-                setTogglePasswordVisibility((prev) => ({
-                  ...prev,
-                  confirmPasswordVisibility: false,
-                }))
-              }
-              onTouchMove={() =>
-                setTogglePasswordVisibility((prev) => ({
-                  ...prev,
-                  confirmPasswordVisibility: false,
-                }))
-              }
-              onTouchStart={() =>
-                setTogglePasswordVisibility((prev) => ({
-                  ...prev,
-                  confirmPasswordVisibility: true,
-                }))
-              }
-            >
-              {!confirmPasswordVisibility ? (
-                <FaEyeSlash className="" />
-              ) : (
-                <FaRegEye />
-              )}
-            </p>
+            {confirmPassword.length > 0 && (
+              <p
+                className="absolute bottom-3 right-3 top-3 flex cursor-pointer items-center justify-center rounded-full p-2 text-lg hover:bg-slate-200"
+                onMouseDown={() =>
+                  setTogglePasswordVisibility((prev) => ({
+                    ...prev,
+                    confirmPasswordVisibility: true,
+                  }))
+                }
+                onMouseUp={() =>
+                  setTogglePasswordVisibility((prev) => ({
+                    ...prev,
+                    confirmPasswordVisibility: false,
+                  }))
+                }
+                onMouseLeave={() =>
+                  setTogglePasswordVisibility((prev) => ({
+                    ...prev,
+                    confirmPasswordVisibility: false,
+                  }))
+                }
+                onTouchCancel={() =>
+                  setTogglePasswordVisibility((prev) => ({
+                    ...prev,
+                    confirmPasswordVisibility: false,
+                  }))
+                }
+                onTouchEnd={() =>
+                  setTogglePasswordVisibility((prev) => ({
+                    ...prev,
+                    confirmPasswordVisibility: false,
+                  }))
+                }
+                onTouchMove={() =>
+                  setTogglePasswordVisibility((prev) => ({
+                    ...prev,
+                    confirmPasswordVisibility: false,
+                  }))
+                }
+                onTouchStart={() =>
+                  setTogglePasswordVisibility((prev) => ({
+                    ...prev,
+                    confirmPasswordVisibility: true,
+                  }))
+                }
+              >
+                {!confirmPasswordVisibility ? (
+                  <FaEyeSlash className="" />
+                ) : (
+                  <FaRegEye />
+                )}
+              </p>
+            )}
             <input
+              required
               className="w-full rounded-lg border p-4 pr-14"
               type={!confirmPasswordVisibility ? "password" : "text"}
               value={confirmPassword}

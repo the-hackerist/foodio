@@ -9,7 +9,12 @@ function AboutUs() {
         <div className="flex h-[350px] w-[350px] items-center justify-center rounded-full bg-[#F5F5F5] lg:h-[475px] lg:w-[475px]">
           <div className="flex h-[300px] w-[300px] items-center justify-center rounded-full bg-[#EEEDEC] lg:h-[400px] lg:w-[400px]">
             <div className="flex h-[250px] w-[250px] items-center overflow-hidden rounded-full lg:h-[325px] lg:w-[325px]">
-              <img className="" src={img} alt="restaurant image" />
+              <img
+                className=""
+                src={img}
+                alt="restaurant image"
+                loading="lazy"
+              />
             </div>
           </div>
         </div>
@@ -46,6 +51,7 @@ function AboutUs() {
                 className="scale-150 bg-red-400"
                 src={food}
                 alt="restaurant image"
+                loading="lazy"
               />
             </div>
           </div>
@@ -57,6 +63,7 @@ function AboutUs() {
           className="h-[425px] w-[375px] rounded-xl object-cover shadow-md"
           src={owner}
           alt="owner image"
+          loading="lazy"
         />
 
         <div className="flex flex-col items-center text-center md:w-[350px] md:text-start">
