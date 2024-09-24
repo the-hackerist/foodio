@@ -10,6 +10,7 @@ function SignUp() {
   });
 
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const [togglePasswordVisibility, setTogglePasswordVisibility] = useState({
     passwordVisibility: false,
@@ -44,8 +45,10 @@ function SignUp() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    setLoading(true);
     validateFormData();
+
+    setLoading(false);
   };
 
   const handleFormData = (e) => {
@@ -101,6 +104,30 @@ function SignUp() {
                   passwordVisibility: false,
                 }))
               }
+              onTouchCancel={() =>
+                setTogglePasswordVisibility((prev) => ({
+                  ...prev,
+                  passwordVisibility: false,
+                }))
+              }
+              onTouchEnd={() =>
+                setTogglePasswordVisibility((prev) => ({
+                  ...prev,
+                  passwordVisibility: false,
+                }))
+              }
+              onTouchMove={() =>
+                setTogglePasswordVisibility((prev) => ({
+                  ...prev,
+                  passwordVisibility: false,
+                }))
+              }
+              onTouchStart={() =>
+                setTogglePasswordVisibility((prev) => ({
+                  ...prev,
+                  passwordVisibility: true,
+                }))
+              }
             >
               {!passwordVisibility ? <FaEyeSlash className="" /> : <FaRegEye />}
             </p>
@@ -137,6 +164,30 @@ function SignUp() {
                   confirmPasswordVisibility: false,
                 }))
               }
+              onTouchCancel={() =>
+                setTogglePasswordVisibility((prev) => ({
+                  ...prev,
+                  confirmPasswordVisibility: false,
+                }))
+              }
+              onTouchEnd={() =>
+                setTogglePasswordVisibility((prev) => ({
+                  ...prev,
+                  confirmPasswordVisibility: false,
+                }))
+              }
+              onTouchMove={() =>
+                setTogglePasswordVisibility((prev) => ({
+                  ...prev,
+                  confirmPasswordVisibility: false,
+                }))
+              }
+              onTouchStart={() =>
+                setTogglePasswordVisibility((prev) => ({
+                  ...prev,
+                  confirmPasswordVisibility: true,
+                }))
+              }
             >
               {!confirmPasswordVisibility ? (
                 <FaEyeSlash className="" />
@@ -167,8 +218,13 @@ function SignUp() {
             </Link>
           </p>
 
-          <button className="w-full cursor-pointer rounded-lg bg-red-500 p-4 text-center font-bold uppercase text-white hover:opacity-95">
-            <Link to="/sign-up">create account</Link>
+          <button
+            className="w-full cursor-pointer rounded-lg bg-red-500 p-4 text-center font-bold uppercase text-white hover:opacity-95"
+            disabled={loading}
+          >
+            <Link to="/sign-up">
+              {loading ? "creating account..." : "create account"}
+            </Link>
           </button>
         </form>
       </div>
