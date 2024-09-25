@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaEyeSlash, FaRegEye } from "react-icons/fa";
 
 function SignUp() {
@@ -22,6 +22,8 @@ function SignUp() {
     togglePasswordVisibility;
 
   const { username, email, password, confirmPassword } = formData;
+
+  const navigate = useNavigate("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -56,7 +58,9 @@ function SignUp() {
         password: "",
         confirmPassword: "",
       });
+
       setLoading(false);
+      navigate("/log-in");
     } catch (error) {
       setLoading(false);
       setError(error.message);

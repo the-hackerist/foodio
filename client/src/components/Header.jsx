@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { FaTimes } from "react-icons/fa";
+import { useAuth } from "../contexts/UserContext";
 
 const activeLinkStyle =
   "border-b border-red-500 text-red-500 pb-1 font-semibold";
@@ -11,6 +12,8 @@ const activeLinkStyle =
 function Header() {
   const [activeLink, setActiveLink] = useState("home");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const { user, signOut } = useAuth();
 
   const handleActiveLink = (link) => {
     if (link === "none") setActiveLink(link);
@@ -40,7 +43,7 @@ function Header() {
         </div>
 
         {isMenuOpen && (
-          <div className="absolute right-1 top-10 w-[150px] max-w-[150px] rounded-lg bg-white p-4 shadow-md lg:hidden">
+          <div className="absolute right-1 top-10 w-[150px] max-w-[150px] rounded-lg bg-white p-4 shadow-md lg:flex">
             <ul className="text-md items-center gap-6 space-y-2 divide-y divide-solid divide-slate-200 lg:flex lg:gap-3 lg:text-xs">
               <li
                 onClick={() => handleActiveLink("home")}
@@ -157,7 +160,9 @@ function Header() {
         </ul>
       </div>
 
-      <div className="hidden items-center justify-between gap-4 lg:flex">
+      <div
+        className={`hidden items-center justify-between gap-4 lg:${user ? "hidden" : "flex"}`}
+      >
         <Link
           onClick={() => handleActiveLink("none")}
           to="/cart"
@@ -172,6 +177,35 @@ function Header() {
           className="rounded-xl bg-[#F54748] px-8 py-3 text-sm font-semibold text-white"
         >
           Log in
+        </Link>
+        {user && <p className="w-full text-lg font-bold">{user.username}</p>}
+      </div>
+
+      <div
+        className={`hidden items-center justify-between gap-4 lg:${user ? "flex" : "hidden"}`}
+      >
+        {user && (
+          <p>
+            Hey, <span className="text-lg font-bold">{user.username}</span>
+          </p>
+        )}
+        <Link
+          onClick={() => handleActiveLink("none")}
+          to="/cart"
+          className="rounded-full bg-white p-3 text-slate-700"
+        >
+          <MdOutlineShoppingCart />
+        </Link>
+
+        <Link
+          onClick={() => {
+            handleActiveLink("none");
+            signOut();
+          }}
+          to="/log-in"
+          className="rounded-xl bg-[#F54748] px-8 py-3 text-sm font-semibold text-white"
+        >
+          Log out
         </Link>
       </div>
     </header>
