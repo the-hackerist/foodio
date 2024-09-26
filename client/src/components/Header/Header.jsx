@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { FaTimes } from "react-icons/fa";
-import { useAuth } from "../contexts/UserContext";
+import { useAuth } from "../../contexts/UserContext";
 
 const activeLinkStyle =
   "border-b border-red-500 text-red-500 pb-1 font-semibold";

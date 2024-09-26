@@ -5,11 +5,10 @@ import jwt from "jsonwebtoken";
 
 export const signIn = async (req, res, next) => {
   const { email, password } = req.body;
-
   try {
     const validUser = await User.findOne({ email });
     if (!validUser)
-      return next({ statusCode: 404, message: "User not found!" });
+      return next({ statusCode: 404, message: "This user does not exist!" });
 
     const validPassword = bcryptjs.compareSync(password, validUser.password);
     if (!validPassword)
@@ -19,14 +18,10 @@ export const signIn = async (req, res, next) => {
 
     const { password: pass, access_level, ...rest } = validUser._doc;
 
-    console.log(rest);
-
     res
       .cookie("access_token", token, { httpOnly: true })
       .status(200)
       .json(rest);
-
-    // ---------------------------- todo ----------------------------
   } catch (error) {
     next(error);
   }
@@ -34,6 +29,10 @@ export const signIn = async (req, res, next) => {
 
 export const signUp = async (req, res, next) => {
   const { username, email, password } = req.body;
+
+  if (!password)
+    return next({ statusCode: 404, message: "Password is required!" });
+
   const hashedPassword = bcryptjs.hashSync(password, 10);
   const newUser = new User({ username, email, password: hashedPassword });
 
