@@ -4,11 +4,6 @@
 
 A website application of a restaurant where you can order food and book reservation.
 
-## Authors
-
-- [@the-hackerist](https://www.github.com/the-hackerist)
-- [@vincedp](https://www.github.com/vincedp)
-
 ## Tech Used
 
 **Client:** React, Context, TailwindCSS
@@ -16,3 +11,10 @@ A website application of a restaurant where you can order food and book reservat
 **Server:** Node, Express, Mongoose
 
 **Database:** MongoDB
+
+## Authors
+
+- [@the-hackerist](https://www.github.com/the-hackerist)
+- [@vincedp](https://www.github.com/vincedp)
+
+
