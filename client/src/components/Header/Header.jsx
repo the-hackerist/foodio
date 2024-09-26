@@ -7,6 +7,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { FaTimes } from "react-icons/fa";
 
 import { useAuth } from "../../contexts/UserContext";
+import { useCart } from "../../contexts/CartContext";
 
 const activeLinkStyle =
   "border-b border-red-500 text-red-500 pb-1 font-semibold";
@@ -16,6 +17,7 @@ function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const { user, signOut } = useAuth();
+  const { resetCart } = useCart();
 
   const handleActiveLink = (link) => {
     if (link === "none") setActiveLink(link);
@@ -213,6 +215,7 @@ function Header() {
           onClick={() => {
             handleActiveLink("none");
             signOut();
+            resetCart();
           }}
           to="/log-in"
           className="rounded-xl bg-[#F54748] px-8 py-3 text-sm font-semibold text-white"

@@ -25,6 +25,9 @@ function reducer(state, action) {
         error: action.payload,
       };
 
+    case "cart/get-cart/reset":
+      return initialState;
+
     default:
       throw new Error("Unknown action!");
   }
@@ -42,6 +45,12 @@ function CartProvider({ children }) {
     try {
       dispatch({ type: "cart/get-cart/start" });
 
+      if (!user)
+        dispatch({
+          type: "cart/get-cart/fail",
+          payload: "There is no user logged in.",
+        });
+
       const res = await fetch("http://localhost:3000/api/v1/cart/get-cart", {
         method: "POST",
         headers: { "Content-type": "application/json" },
@@ -55,11 +64,13 @@ function CartProvider({ children }) {
         return;
       }
 
-      dispatch({ type: "cart/get-cart", data });
+      dispatch({ type: "cart/get-cart", payload: data.cart });
     } catch (error) {
       dispatch({ type: "cart/get-cart/fail", payload: error.message });
     }
   };
+
+  const resetCart = () => dispatch({ type: "cart/get-cart/reset" });
 
   return (
     <CartContext.Provider
@@ -68,6 +79,7 @@ function CartProvider({ children }) {
         loading,
         error,
         getCart,
+        resetCart,
       }}
     >
       {children}
