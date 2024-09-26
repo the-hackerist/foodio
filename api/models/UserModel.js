@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema(
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     access_level: { type: String, default: "user" },
+    cart: { type: [Object], default: [] },
   },
   { timestamps: true }
 );

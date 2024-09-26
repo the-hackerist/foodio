@@ -5,7 +5,11 @@ import { useNavigate } from "react-router-dom";
 
 const UserContext = createContext();
 
-const initialState = { user: null, error: "", loading: false };
+const initialState = JSON.parse(localStorage.getItem("auth")) || {
+  user: null,
+  error: "",
+  loading: false,
+};
 
 function reducer(state, action) {
   switch (action.type) {
@@ -61,7 +65,7 @@ function reducer(state, action) {
       };
 
     case "auth/sign-out":
-      return initialState;
+      return { user: null, loading: false, error: "" };
 
     default:
       throw new Error("Unknown action");
@@ -102,6 +106,11 @@ function UserProvider({ children }) {
       }
 
       dispatch({ type: "auth/sign-in", payload: data });
+
+      localStorage.setItem(
+        "auth",
+        JSON.stringify({ user: data, loading: false, error: "" }),
+      );
       navigate("/");
     } catch (error) {
       dispatch({ type: "auth/sign-in/fail", payload: error.message });
@@ -166,7 +175,10 @@ function UserProvider({ children }) {
     }
   };
 
-  const signOut = () => dispatch({ type: "auth/sign-out" });
+  const signOut = () => {
+    localStorage.removeItem("auth");
+    dispatch({ type: "auth/sign-out" });
+  };
 
   const resetError = () => dispatch({ type: "reset-error" });
 

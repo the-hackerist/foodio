@@ -1,9 +1,11 @@
 import { useState } from "react";
 
 import { Link } from "react-router-dom";
+
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { FaTimes } from "react-icons/fa";
+
 import { useAuth } from "../../contexts/UserContext";
 
 const activeLinkStyle =
@@ -23,7 +25,7 @@ function Header() {
   };
 
   return (
-    <header className="absolute flex w-full justify-between bg-transparent px-10 py-8 md:px-32 xl:px-48 2xl:px-80">
+    <header className="absolute flex w-full justify-between bg-transparent px-10 py-8 md:px-20 lg:px-24 xl:px-48 2xl:px-80">
       <div className="flex items-center gap-2">
         <div className="flex h-10 w-10 rotate-[-20deg] items-center justify-center rounded-full bg-[#F54748]">
           <span className="p-2 text-xl font-semibold text-white">F</span>
@@ -123,37 +125,37 @@ function Header() {
         <ul className="hidden items-center gap-3 text-sm lg:flex 2xl:gap-4 2xl:text-base">
           <li
             onClick={() => handleActiveLink("home")}
-            className={activeLink === "home" && activeLinkStyle}
+            className={activeLink === "home" ? activeLinkStyle : ""}
           >
             <Link to="/">Home</Link>
           </li>
           <li
             onClick={() => handleActiveLink("menu")}
-            className={activeLink === "menu" && activeLinkStyle}
+            className={activeLink === "menu" ? activeLinkStyle : ""}
           >
             <Link to="/menu">Menu</Link>
           </li>
           <li
             onClick={() => handleActiveLink("about-us")}
-            className={activeLink === "about-us" && activeLinkStyle}
+            className={activeLink === "about-us" ? activeLinkStyle : ""}
           >
             <Link to="/about-us">About us</Link>
           </li>
           <li
             onClick={() => handleActiveLink("order")}
-            className={activeLink === "order" && activeLinkStyle}
+            className={activeLink === "order" ? activeLinkStyle : ""}
           >
             <Link to="/order">Order online</Link>
           </li>
           <li
             onClick={() => handleActiveLink("reservation")}
-            className={activeLink === "reservation" && activeLinkStyle}
+            className={activeLink === "reservation" ? activeLinkStyle : ""}
           >
             <Link to="/reservation">Reservation</Link>
           </li>
           <li
             onClick={() => handleActiveLink("contact-us")}
-            className={activeLink === "contact-us" && activeLinkStyle}
+            className={activeLink === "contact-us" ? activeLinkStyle : ""}
           >
             <Link to="/contact-us">Contact us</Link>
           </li>
@@ -178,15 +180,25 @@ function Header() {
         >
           Log in
         </Link>
-        {user && <p className="w-full text-lg font-bold">{user.username}</p>}
+        {user && (
+          <Link to="/profile" className="w-full text-lg font-bold">
+            {user.username}
+          </Link>
+        )}
       </div>
 
       <div
-        className={`hidden items-center justify-between gap-4 lg:${user ? "flex" : "hidden"}`}
+        className={`relative hidden items-center justify-between gap-4 lg:${user ? "flex" : "hidden"}`}
       >
         {user && (
-          <p>
-            Hey, <span className="text-lg font-bold">{user.username}</span>
+          <p className="text-sm font-semibold">
+            Hey,{" "}
+            <Link
+              to="/profile"
+              className="text-lg font-bold capitalize hover:underline"
+            >
+              {user.username}
+            </Link>
           </p>
         )}
         <Link

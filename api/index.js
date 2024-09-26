@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 
 import authRouter from "./routes/authRouter.js";
+import cartRouter from "./routes/cartRouter.js";
 
 dotenv.config();
 
@@ -27,6 +28,8 @@ app.get("/test", async (req, res) => {
 });
 
 app.use("/api/v1/auth", authRouter);
+
+app.use("/api/v1/cart", cartRouter);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
