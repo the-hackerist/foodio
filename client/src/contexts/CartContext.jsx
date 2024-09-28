@@ -1,31 +1,56 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-refresh/only-export-components */
 /* eslint-disable react/prop-types */
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { createContext, useReducer } from "react";
 
 import { useAuth } from "../contexts/UserContext.jsx";
 
 const CartContext = createContext();
 
-const initialState = { cart: null, loading: false, error: "" };
+const initialState = { cart: [], loading: false, error: "" };
 
 function reducer(state, action) {
   switch (action.type) {
     case "cart/get-cart":
-      return { ...state, cart: action.payload, loading: false, error: "" };
+      return {
+        ...state,
+        cart: action.payload,
+        loading: false,
+        error: "",
+      };
 
     case "cart/get-cart/start":
-      return { ...state, cart: null, loading: true, error: "" };
+      return { ...state, loading: true, cart: state.cart, error: "" };
 
     case "cart/get-cart/fail":
       return {
         ...state,
-        cart: null,
         loading: false,
+        cart: state.cart,
         error: action.payload,
       };
 
-    case "cart/get-cart/reset":
+    case "cart/update-cart":
+      return {
+        ...state,
+        cart: action.payload,
+        loading: false,
+        error: "",
+      };
+
+    case "cart/update-cart/start":
+      return { ...state, loading: true, cart: state.cart, error: "" };
+
+    case "cart/update-cart/fail":
+      return {
+        ...state,
+        loading: false,
+        cart: state.cart,
+        error: action.payload,
+      };
+
+    case "cart/reset-cart":
       return initialState;
 
     default:
@@ -39,9 +64,17 @@ function CartProvider({ children }) {
     initialState,
   );
 
+  useEffect(() => {
+    getCart();
+  }, [cart]);
+
   const { user } = useAuth();
 
+  const BASE_URL = "http://localhost:3000/api/v1";
+
   const getCart = async () => {
+    const body = { _id: user._id };
+
     try {
       dispatch({ type: "cart/get-cart/start" });
 
@@ -51,10 +84,10 @@ function CartProvider({ children }) {
           payload: "There is no user logged in.",
         });
 
-      const res = await fetch("http://localhost:3000/api/v1/cart/get-cart", {
+      const res = await fetch(`${BASE_URL}/cart/get-cart`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
-        body: JSON.stringify({ _id: user._id }),
+        body: JSON.stringify(body),
       });
 
       const data = await res.json();
@@ -67,10 +100,40 @@ function CartProvider({ children }) {
       dispatch({ type: "cart/get-cart", payload: data.cart });
     } catch (error) {
       dispatch({ type: "cart/get-cart/fail", payload: error.message });
+      return;
     }
   };
 
-  const resetCart = () => dispatch({ type: "cart/get-cart/reset" });
+  const updateCart = async (food) => {
+    const { id: foodId, foodName, stock, price } = food;
+
+    const cartList = [...cart, { foodId, foodName, stock, price }];
+
+    const body = { _id: user._id, cartList };
+
+    try {
+      dispatch({ type: "cart/update-cart/start" });
+      const res = await fetch(`${BASE_URL}/cart/update-cart`, {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      const data = await res.json();
+
+      if (data.success === false) {
+        dispatch({ type: "cart/update-cart/fail", payload: data.message });
+        return;
+      }
+
+      dispatch({ type: "cart/update-cart", payload: data });
+    } catch (error) {
+      dispatch({ type: "cart/update-cart/fail", payload: error.message });
+      return;
+    }
+  };
+
+  const resetCart = () => dispatch({ type: "cart/reset-cart" });
 
   return (
     <CartContext.Provider
@@ -79,6 +142,7 @@ function CartProvider({ children }) {
         loading,
         error,
         getCart,
+        updateCart,
         resetCart,
       }}
     >

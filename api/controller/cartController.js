@@ -15,3 +15,20 @@ export const getCart = async (req, res, next) => {
     next(error);
   }
 };
+
+export const updateCart = async (req, res, next) => {
+  const { _id, ...cart } = req.body;
+
+  const update = { cart: cart.cartList };
+
+  try {
+    const userCart = await User.findOneAndUpdate({ _id }, update, {
+      new: true,
+      runValidators: true,
+    });
+
+    res.status(200).json(userCart.cart);
+  } catch (error) {
+    next(error);
+  }
+};

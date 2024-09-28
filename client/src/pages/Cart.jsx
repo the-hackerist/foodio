@@ -1,24 +1,15 @@
 import { useState } from "react";
-import { FaMinus, FaPlus } from "react-icons/fa";
-import { FaRegTrashAlt } from "react-icons/fa";
 
-const data = [
-  { name: "spaghetti", qty: 1, cost: "35.7" },
-  { name: "spaghetti", qty: 1, cost: "35.7" },
-  { name: "spaghetti", qty: 1, cost: "35.7" },
-  { name: "spaghetti", qty: 1, cost: "35.7" },
-  { name: "spaghetti", qty: 1, cost: "35.7" },
-  { name: "spaghetti", qty: 1, cost: "35.7" },
-  { name: "spaghetti", qty: 1, cost: "35.7" },
-  { name: "spaghetti", qty: 1, cost: "35.7" },
-  { name: "spaghetti", qty: 1, cost: "35.7" },
-  { name: "spaghetti", qty: 1, cost: "35.7" },
-  { name: "spaghetti", qty: 1, cost: "35.7" },
-  { name: "spaghetti", qty: 1, cost: "35.7" },
-];
+import { FaPlus } from "react-icons/fa";
+
+import OrderListItem from "../components/UI/OrderListItem";
+
+import { useCart } from "../contexts/CartContext";
 
 function Cart() {
   const [isCheckingOut, setIsCheckingOut] = useState(false);
+
+  const { cart } = useCart();
 
   return (
     <div className="flex flex-col items-center justify-center bg-[#F9F9F9] px-10 py-20 pt-40">
@@ -34,29 +25,10 @@ function Cart() {
 
             <div className="my-10 h-[1px] w-full bg-slate-500 md:hidden"></div>
 
-            <div className="flex h-[500px] w-full flex-col divide-y divide-red-200 overflow-y-scroll rounded-lg bg-[#F5F5F5] px-6 py-2 md:h-full md:overflow-x-hidden md:overflow-y-scroll">
-              {data &&
-                data.map((data, i) => (
-                  <div key={i} className="flex flex-col gap-4 py-4">
-                    <div className="flex items-center justify-between">
-                      <p className="text-xl font-bold">{data.name}</p>
-                      <FaRegTrashAlt className="cursor-pointer text-lg text-red-500" />
-                    </div>
-
-                    <div className="flex items-center justify-between gap-20 md:gap-0">
-                      <div className="flex items-center justify-center gap-6 font-thin md:gap-2">
-                        <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
-                          <FaMinus className="cursor-pointer text-xs text-red-300" />
-                        </div>
-                        <span>{data.qty}</span>
-                        <div className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md">
-                          <FaPlus className="cursor-pointer text-xs text-green-300" />
-                        </div>
-                      </div>
-                      <span>${data.cost}</span>
-                    </div>
-                  </div>
-                ))}
+            <div className="flex h-[500px] w-full flex-col gap-2 divide-y divide-red-200 overflow-y-scroll rounded-lg bg-[#F5F5F5] px-6 py-2 md:h-full md:overflow-x-hidden md:overflow-y-scroll">
+              {cart.map((menu) => (
+                <OrderListItem key={menu.id} food={menu} />
+              ))}
             </div>
 
             <div className="my-10 h-[1px] w-full bg-slate-500 md:hidden"></div>

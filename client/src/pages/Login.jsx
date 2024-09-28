@@ -12,7 +12,7 @@ function Login() {
 
   const { email, password } = formData;
 
-  const { user, error, loading, signIn, resetError } = useAuth();
+  const { error, loading, signIn, resetError } = useAuth();
 
   const ref = useRef(null);
 
@@ -20,12 +20,13 @@ function Login() {
     resetError();
   }, []);
 
+  useEffect(() => {
+    ref.current.focus();
+  }, [error]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
     signIn(email, password);
-
-    if (!user) ref.current.focus();
   };
 
   const handleFormData = (e) => {

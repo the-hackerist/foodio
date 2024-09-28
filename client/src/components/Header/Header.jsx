@@ -47,7 +47,7 @@ function Header() {
         </div>
 
         {isMenuOpen && (
-          <div className="absolute right-1 top-10 w-[150px] max-w-[150px] rounded-lg bg-white p-4 shadow-md lg:flex">
+          <div className="absolute right-1 top-10 w-[150px] max-w-[150px] rounded-lg bg-white p-4 shadow-md lg:hidden">
             <ul className="text-md items-center gap-6 space-y-2 divide-y divide-solid divide-slate-200 lg:flex lg:gap-3 lg:text-xs">
               <li
                 onClick={() => handleActiveLink("home")}

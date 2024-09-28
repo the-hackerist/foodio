@@ -1,10 +1,26 @@
 /* eslint-disable react/prop-types */
+import { useNavigate } from "react-router-dom";
+
 import { RiStarSLine, RiStarSFill } from "react-icons/ri";
 
 import food_img from "../../assets/default_img.svg";
 
+import { useCart } from "../../contexts/CartContext.jsx";
+
 function MenuItem({ food }) {
-  const handleOrder = () => {};
+  const { updateCart } = useCart();
+
+  const navigate = useNavigate();
+
+  const handleOrder = () => {
+    updateCart(food);
+    navigate("/order");
+  };
+
+  const stars = [
+    ...new Array(food.starRatings).fill("star"),
+    ...new Array(5 - food.starRatings).fill("noStar"),
+  ];
 
   return (
     <div
@@ -19,20 +35,13 @@ function MenuItem({ food }) {
 
       <div className="flex flex-col items-center gap-3 text-center">
         <div className="flex gap-3 text-red-500">
-          {[
-            ...new Array(food.starRatings).fill("star"),
-            ...new Array(5 - food.starRatings).fill("noStar"),
-          ].map((star, i) =>
-            star === "star" ? (
-              <RiStarSFill key={star + i} />
-            ) : (
-              <RiStarSLine key={star + i} />
-            ),
+          {stars.map((star, i) =>
+            star === "star" ? <RiStarSFill key={i} /> : <RiStarSLine key={i} />,
           )}
         </div>
 
         <div className="flex items-center justify-center gap-4">
-          <span className="text-xl font-bold">$ {food.price}</span>
+          <p className="text-xl font-bold">$ {food.price}</p>
           <button
             onClick={handleOrder}
             className="rounded-xl bg-red-500 px-10 py-3 text-lg font-semibold text-white"
