@@ -12,10 +12,10 @@ function Profile() {
     <div className="flex items-center justify-center gap-2 bg-[#F9F9F9] px-10 py-20 pt-40 md:px-20 lg:gap-10 xl:gap-20">
       <div className="flex max-h-[550px] w-[1000px] flex-col gap-4 rounded-lg bg-[#FEE2E2] p-6 lg:flex-row">
         <div className="flex w-full flex-col items-center gap-2 rounded-lg bg-white p-4 lg:max-w-[300px]">
-          <div className="h-60 w-60">
+          <div className="h-60 w-60 overflow-hidden rounded-full">
             <img
               className="object-cover"
-              src={profile_img}
+              src="https://images.pexels.com/photos/9117796/pexels-photo-9117796.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
               alt="profile image"
             />
           </div>

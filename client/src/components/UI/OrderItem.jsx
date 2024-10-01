@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import { RiStarSLine, RiStarSFill } from "react-icons/ri";
 
-import food_img from "../../assets/default_img.svg";
 import { useCart } from "../../contexts/CartContext";
 
 function OrderItem({ food }) {
@@ -15,8 +14,10 @@ function OrderItem({ food }) {
 
   return (
     <div className="flex h-[450px] w-[220px] flex-col items-center justify-evenly gap-2 rounded-lg border p-4 text-center">
-      <div className="w-full">
-        <img className="h-[180px] w-[180px]" src={food_img} alt="food image" />
+      <div className="w-full space-y-4">
+        <div className="h-[180px] w-[180px] overflow-hidden rounded-lg">
+          <img className="object-contain" src={food.image} alt="food image" />
+        </div>
         <h3 className="text-lg font-bold">{food.foodName}</h3>
       </div>
 
@@ -39,16 +40,16 @@ function OrderItem({ food }) {
       {!isOnCart ? (
         <button
           onClick={handleAddCart}
-          className="w-full rounded-lg border-2 border-red-500 bg-red-500 p-2 text-sm font-bold uppercase text-slate-100"
+          className="w-full rounded-lg border-2 border-red-500 bg-red-500 p-2 text-xs font-bold uppercase text-slate-100"
         >
           Add to cart
         </button>
       ) : (
         <button
           disabled
-          className="w-full cursor-not-allowed rounded-lg border-2 border-red-200 bg-slate-100 p-2 text-sm font-bold uppercase text-red-300"
+          className="w-full cursor-not-allowed rounded-lg border-2 border-red-200 bg-slate-100 p-2 text-xs font-semibold uppercase text-red-300"
         >
-          Already on cart
+          check order summary
         </button>
       )}
     </div>

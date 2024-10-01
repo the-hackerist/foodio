@@ -9,7 +9,7 @@ import { useCart } from "../contexts/CartContext";
 function Cart() {
   const [isCheckingOut, setIsCheckingOut] = useState(false);
 
-  const { cart } = useCart();
+  const { cart, calculateTotal } = useCart();
 
   return (
     <div className="flex flex-col items-center justify-center bg-[#F9F9F9] px-10 py-20 pt-40">
@@ -53,24 +53,32 @@ function Cart() {
               <div className="flex w-full flex-col items-center gap-4">
                 <div className="flex w-full justify-between text-xl font-bold">
                   <p className="">Subtotal</p>
-                  <p className="font-semibold text-slate-500">$78.3</p>
+                  <p className="font-semibold text-red-500">
+                    + $ {calculateTotal().itemsTotal}
+                  </p>
                 </div>
                 <div className="flex w-full justify-between text-xl font-bold">
                   <p className="">Tax fee</p>
-                  <p className="font-semibold text-slate-500">$3.5</p>
+                  <p className="font-semibold text-red-500">
+                    + $ {calculateTotal().tax}
+                  </p>
                 </div>
                 <div className="flex w-full justify-between text-xl font-bold">
                   <p className="">Voucher</p>
-                  <p className="font-semibold text-slate-500">$5.0</p>
+                  <p className="font-semibold text-green-500">- $5.0</p>
                 </div>
                 <div className="flex w-full justify-between text-xl font-bold">
-                  <p className="">Subtotal</p>
-                  <p className="font-semibold text-slate-500">$78.3</p>
+                  <p className="">Total</p>
+                  <p className="font-semibold text-slate-500">
+                    ${calculateTotal().total}
+                  </p>
                 </div>
               </div>
 
               <button
-                onClick={() => setIsCheckingOut(true)}
+                onClick={() => {
+                  setIsCheckingOut(true);
+                }}
                 className="mb-2 mt-10 w-full rounded-lg bg-red-500 p-2 text-2xl font-bold text-white"
               >
                 Checkout
@@ -83,6 +91,104 @@ function Cart() {
       {isCheckingOut && (
         <div className="flex w-screen max-w-[500px] flex-col items-center justify-center gap-6">
           <h2 className="mb-8 text-5xl font-bold text-[#311F09]">Checkout</h2>
+
+          <div className="flex w-full flex-col gap-3 rounded-lg bg-red-200 px-6 py-4 pt-8 shadow-md">
+            <div className="flex items-center justify-between px-3">
+              <p className="font-bold">My addresses</p>
+              <button className="flex items-center gap-2 rounded-lg bg-red-500 px-4 py-2 text-sm font-bold uppercase text-white">
+                <FaPlus /> Add new address
+              </button>
+            </div>
+
+            <div className="flex flex-col gap-2 p-3">
+              <div className="flex h-full w-full justify-between gap-4 rounded-lg bg-slate-200/70 p-4">
+                <div className="flex flex-col gap-2">
+                  <div className="flex divide-x-2 divide-red-300 text-sm">
+                    <p className="pr-2 font-semibold">Vince dela Pena</p>
+                    <p className="pl-2 text-slate-500">(+63) 927 008 9269</p>
+                  </div>
+                  <p className="text-xs text-slate-500">
+                    Pioneer St. cor EDSA, Pioneer Woodlands Condominium, Tower
+                    3, unit 36D Barangka Ilaya, Mandaluyong City, Metro Manila,
+                    Metro Manila, 1554
+                  </p>
+                  <p className="w-fit border border-red-500 px-2 text-sm text-red-500">
+                    Default
+                  </p>
+                </div>
+
+                <div className="flex flex-col gap-3">
+                  <div className="flex justify-end gap-3">
+                    <button className="text-blue-500 hover:underline">
+                      Edit
+                    </button>
+                    <button className="text-red-500 hover:underline">
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex h-full w-full justify-between gap-4 rounded-lg bg-slate-200/70 p-4">
+                <div className="flex flex-col gap-2">
+                  <div className="flex divide-x-2 divide-red-300 text-sm">
+                    <p className="pr-2 font-semibold">Vince dela Pena</p>
+                    <p className="pl-2 text-slate-500">(+63) 927 008 9269</p>
+                  </div>
+                  <p className="text-xs text-slate-500">
+                    Pioneer St. cor EDSA, Pioneer Woodlands Condominium, Tower
+                    3, unit 36D Barangka Ilaya, Mandaluyong City, Metro Manila,
+                    Metro Manila, 1554
+                  </p>
+                </div>
+
+                <div className="flex flex-col gap-3">
+                  <div className="flex justify-end gap-3">
+                    <button className="text-blue-500 hover:underline">
+                      Edit
+                    </button>
+                    <button className="text-red-500 hover:underline">
+                      Delete
+                    </button>
+                  </div>
+
+                  <button className="text-nowrap border border-slate-400 px-3 text-sm text-slate-500">
+                    Set as default
+                  </button>
+                </div>
+              </div>
+
+              <div className="flex h-full w-full justify-between gap-4 rounded-lg bg-slate-200/70 p-4">
+                <div className="flex flex-col gap-2">
+                  <div className="flex divide-x-2 divide-red-300 text-sm">
+                    <p className="pr-2 font-semibold">Vince dela Pena</p>
+                    <p className="pl-2 text-slate-500">(+63) 927 008 9269</p>
+                  </div>
+                  <p className="text-xs text-slate-500">
+                    Pioneer St. cor EDSA, Pioneer Woodlands Condominium, Tower
+                    3, unit 36D Barangka Ilaya, Mandaluyong City, Metro Manila,
+                    Metro Manila, 1554
+                  </p>
+                </div>
+
+                <div className="flex flex-col gap-3">
+                  <div className="flex justify-end gap-3">
+                    <button className="text-blue-500 hover:underline">
+                      Edit
+                    </button>
+                    <button className="text-red-500 hover:underline">
+                      Delete
+                    </button>
+                  </div>
+
+                  <button className="text-nowrap border border-slate-400 px-3 text-sm text-slate-500">
+                    Set as default
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <p
             onClick={() => setIsCheckingOut(false)}
             className="self-start text-lg font-semibold text-slate-700 hover:underline"

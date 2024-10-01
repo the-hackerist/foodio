@@ -164,6 +164,24 @@ function CartProvider({ children }) {
     }
   };
 
+  const calculateTotal = () => {
+    const VALUE_ADDED_TAX_PERCENTAGE = 5;
+    const itemsTotal = cart.reduce(
+      (acc, item) => acc + item.price * item.quantity,
+      0,
+    );
+
+    const tax = (itemsTotal * VALUE_ADDED_TAX_PERCENTAGE) / 100;
+
+    const total = itemsTotal + tax;
+
+    return {
+      tax: tax.toFixed(2),
+      itemsTotal: itemsTotal.toFixed(2),
+      total: total.toFixed(2),
+    };
+  };
+
   const resetCart = () => dispatch({ type: "cart/reset-cart" });
 
   return (
@@ -175,6 +193,7 @@ function CartProvider({ children }) {
         getCart,
         updateCart,
         resetCart,
+        calculateTotal,
       }}
     >
       {children}

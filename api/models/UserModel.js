@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema(
     password: { type: String, required: true },
     access_level: { type: String, default: "user" },
     cart: { type: Array, default: [] },
+    orderDefaults: { type: Array, default: [] },
   },
   { timestamps: true }
 );

@@ -13,12 +13,11 @@ function Order() {
   const [category, setCategory] = useState("all categories");
   const [activePage, setActivePage] = useState(1);
   const [isOrderListOpen, setIsOrderListOpen] = useState(false);
-
   const { cart } = useCart();
 
-  // console.log("outermost parent re-rendered");
-
   const activeCategoryStyle = "text-white bg-red-500";
+
+  const handleOrder = () => {};
 
   return (
     <div className="flex flex-col items-center gap-10 bg-[#F9F9F9] px-20 pb-20 pt-40">
@@ -134,6 +133,7 @@ function Order() {
 
             <Link
               to="/cart"
+              onClick={handleOrder}
               className="w-full cursor-pointer rounded-lg bg-red-500 p-2 text-center text-lg font-bold uppercase text-white"
             >
               Continue

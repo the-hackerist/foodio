@@ -16,7 +16,7 @@ function Menu() {
 
       <MenuCategory setCategory={setCategory} category={category} />
 
-      <div className="flex max-w-[1000px] flex-wrap items-center justify-center gap-4">
+      <div className="flex max-w-[1000px] flex-wrap items-center justify-center gap-8">
         {menu.map((food) => (
           <MenuItem key={food.id} food={food} />
         ))}
