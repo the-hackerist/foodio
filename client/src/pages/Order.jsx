@@ -16,6 +16,8 @@ function Order() {
 
   const { cart } = useCart();
 
+  // console.log("outermost parent re-rendered");
+
   const activeCategoryStyle = "text-white bg-red-500";
 
   return (
@@ -122,52 +124,19 @@ function Order() {
                   You haven&apos;t order anything yet! 🥲
                 </p>
               ) : (
-                cart.map((menu, i) => <OrderListItem key={i} food={menu} />)
+                cart.map((menu) => (
+                  <OrderListItem key={menu.foodId} food={menu} />
+                ))
               )}
             </div>
 
             <div className="my-10 h-[1px] w-full bg-slate-500"></div>
 
-            {/* <div className="flex flex-col items-center justify-center gap-2">
-              <p className="self-start text-xl font-bold">Voucher Code</p>
-              <div className="flex items-center gap-2">
-                <input
-                  className="rounded-lg p-2"
-                  type="text"
-                  placeholder="FREETOEAT"
-                />
-                <button className="rounded-lg bg-blue-400 p-3 font-thin text-white">
-                  <FaPlus />
-                </button>
-              </div>
-            </div>
-
-            <div className="my-10 h-[1px] w-full bg-slate-500"></div>
-
-            <div className="flex w-full flex-col items-center gap-4">
-              <div className="flex w-full justify-between text-xl font-bold">
-                <p className="">Subtotal</p>
-                <p className="font-semibold text-slate-500">$78.3</p>
-              </div>
-              <div className="flex w-full justify-between text-xl font-bold">
-                <p className="">Tax fee</p>
-                <p className="font-semibold text-slate-500">$3.5</p>
-              </div>
-              <div className="flex w-full justify-between text-xl font-bold">
-                <p className="">Voucher</p>
-                <p className="font-semibold text-slate-500">$5.0</p>
-              </div>
-              <div className="flex w-full justify-between text-xl font-bold">
-                <p className="">Subtotal</p>
-                <p className="font-semibold text-slate-500">$78.3</p>
-              </div>
-            </div> */}
-
             <Link
               to="/cart"
-              className="my-5 w-full cursor-pointer rounded-lg bg-red-500 p-2 text-center text-2xl font-bold text-white"
+              className="w-full cursor-pointer rounded-lg bg-red-500 p-2 text-center text-lg font-bold uppercase text-white"
             >
-              Checkout
+              Continue
             </Link>
           </div>
         </div>

@@ -64,15 +64,17 @@ function CartProvider({ children }) {
     initialState,
   );
 
+  const { user } = useAuth();
+
   useEffect(() => {
     getCart();
-  }, [cart]);
-
-  const { user } = useAuth();
+  }, []);
 
   const BASE_URL = "http://localhost:3000/api/v1";
 
-  const getCart = async () => {
+  async function getCart() {
+    if (!user) return;
+
     const body = { _id: user._id };
 
     try {
@@ -102,17 +104,46 @@ function CartProvider({ children }) {
       dispatch({ type: "cart/get-cart/fail", payload: error.message });
       return;
     }
-  };
+  }
 
-  const updateCart = async (food) => {
-    const { id: foodId, foodName, stock, price } = food;
+  const updateCart = async (food, quantity, action = "addItem") => {
+    const { foodId: id, id: foodId, foodName, stock, price } = food;
 
-    const cartList = [...cart, { foodId, foodName, stock, price }];
+    let cartList;
+
+    console.log(1, action);
+
+    switch (action) {
+      case "addItem": {
+        console.log(2, "adding", food);
+        cartList = [...cart, { foodId, foodName, stock, price, quantity }];
+        break;
+      }
+
+      case "updateQty": {
+        console.log(2, "updating", food);
+        cartList = cart.map((item) =>
+          item.foodName === foodName ? { ...item, quantity } : item,
+        );
+        break;
+      }
+
+      case "removeItem": {
+        cartList = cart.filter((menu) => menu.foodId !== id);
+        break;
+      }
+
+      default:
+        cartList = [];
+    }
+
+    console.log(3, "cartList: ", cartList);
 
     const body = { _id: user._id, cartList };
 
     try {
       dispatch({ type: "cart/update-cart/start" });
+
       const res = await fetch(`${BASE_URL}/cart/update-cart`, {
         method: "POST",
         headers: { "Content-type": "application/json" },

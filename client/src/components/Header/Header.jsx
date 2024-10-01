@@ -15,7 +15,6 @@ const activeLinkStyle =
 function Header() {
   const [activeLink, setActiveLink] = useState("home");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   const { user, signOut } = useAuth();
   const { resetCart } = useCart();
 

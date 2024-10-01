@@ -27,7 +27,7 @@ function Cart() {
 
             <div className="flex h-[500px] w-full flex-col gap-2 divide-y divide-red-200 overflow-y-scroll rounded-lg bg-[#F5F5F5] px-6 py-2 md:h-full md:overflow-x-hidden md:overflow-y-scroll">
               {cart.map((menu) => (
-                <OrderListItem key={menu.id} food={menu} />
+                <OrderListItem key={menu.foodName} food={menu} />
               ))}
             </div>
 

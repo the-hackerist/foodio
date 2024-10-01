@@ -10,7 +10,7 @@ function OrderItem({ food }) {
   const isOnCart = cart.find((menu) => menu.foodId === food.id);
 
   const handleAddCart = () => {
-    updateCart(food);
+    updateCart(food, 1);
   };
 
   return (
