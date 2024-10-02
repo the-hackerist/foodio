@@ -5,6 +5,7 @@ import { FaPlus } from "react-icons/fa";
 import OrderListItem from "../components/UI/OrderListItem";
 
 import { useCart } from "../contexts/CartContext";
+import { useAddress } from "../contexts/AddressContext";
 
 function Cart() {
   const [isCheckingOut, setIsCheckingOut] = useState(false);
@@ -16,7 +17,7 @@ function Cart() {
     address: "",
     phone: "",
     description: "",
-    payment: "cashOnDelivery",
+    payment: "",
   });
 
   const [newAddressFormData, setNewAddressFormData] = useState({
@@ -30,11 +31,11 @@ function Cart() {
 
   const { cart, calculateTotal } = useCart();
 
+  const { createAddress } = useAddress();
+
   const { tax, total, itemsTotal } = calculateTotal();
 
   const handleNewAddressFormData = (e) => {
-    e.preventDefault();
-
     if (e.target.type === "text" || e.target.type === "textarea")
       setNewAddressFormData({
         ...newAddressFormData,
@@ -49,8 +50,6 @@ function Cart() {
   };
 
   const handleOrderFormData = (e) => {
-    e.preventDefault();
-
     if (e.target.type === "text" || e.target.type === "textarea")
       setOrderFormData({
         ...orderFormData,
@@ -64,6 +63,23 @@ function Cart() {
       });
   };
 
+  const handleNewAddress = (e) => {
+    e.preventDefault();
+    console.log("click");
+    const isAnyPropertyEmpty = Object.values(newAddressFormData).some(
+      (val) => val === "",
+    );
+
+    if (isAnyPropertyEmpty) return;
+
+    createAddress(newAddressFormData);
+    console.log("click below");
+  };
+
+  const handleOrder = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div
       className={`flex flex-col items-center justify-center bg-[#F9F9F9] px-10 py-20 pt-40`}
@@ -72,7 +88,8 @@ function Cart() {
         <div className="absolute flex h-full w-full justify-center border-black bg-black bg-opacity-30 pt-[500px]">
           <div className="flex h-fit w-[400px] flex-col gap-4 rounded-lg border bg-white p-6">
             <p className="text-lg font-semibold">New Address</p>
-            <form className="flex flex-col gap-4">
+
+            <form onSubmit={handleNewAddress} className="flex flex-col gap-4">
               <input
                 onChange={handleNewAddressFormData}
                 className="rounded-lg border p-3"
@@ -124,17 +141,18 @@ function Cart() {
                 </label>
               </div>
 
-              <div className="flex justify-end gap-4">
-                <button
-                  onClick={() => setIsAddingAddress(false)}
-                  className="px-4 py-2 text-xs font-semibold uppercase hover:bg-slate-100"
-                >
-                  Cancel
-                </button>
-                <button className="bg-red-500 px-4 py-2 text-xs font-semibold uppercase text-white">
-                  Submit
-                </button>
-              </div>
+              <input type="submit" />
+
+              <button
+                role="button"
+                onClick={() => setIsAddingAddress(false)}
+                className="px-4 py-2 text-xs font-semibold uppercase hover:bg-slate-100"
+              >
+                Cancel
+              </button>
+              <button className="bg-red-500 px-4 py-2 text-xs font-semibold uppercase text-white">
+                Submit
+              </button>
             </form>
           </div>
         </div>
@@ -320,7 +338,7 @@ function Cart() {
             Back to order list
           </p>
 
-          <form className="flex w-full flex-col gap-4">
+          <form onSubmit={handleOrder} className="flex w-full flex-col gap-4">
             <input
               onChange={handleOrderFormData}
               className="rounded-lg border p-3"

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 
 import Action from "../components/HomePage/Action";
@@ -7,12 +8,15 @@ import Menu from "../components/HomePage/Menu";
 import Popular from "../components/HomePage/Popular";
 
 import { useCart } from "../contexts/CartContext";
+import { useAddress } from "../contexts/AddressContext";
 
 function HomePage() {
   const { getCart } = useCart();
+  const { getAddress } = useAddress();
 
   useEffect(() => {
     getCart();
+    getAddress();
   }, []);
 
   return (

@@ -3,13 +3,11 @@ import { useNavigate } from "react-router-dom";
 
 import { RiStarSLine, RiStarSFill } from "react-icons/ri";
 
-// import food_img from "../../assets/default_img.svg";
-
 import { useCart } from "../../contexts/CartContext.jsx";
 
 function MenuItem({ food }) {
   const { updateCart, cart } = useCart();
-  console.log(food);
+
   const isOnCart = cart.find((menu) => menu.foodId === food.id);
 
   const navigate = useNavigate();
