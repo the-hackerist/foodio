@@ -39,6 +39,20 @@ function reducer(state, action) {
         error: action.payload,
       };
 
+    case "address/delete-address":
+      return { ...state, address: action.payload, loading: false, error: "" };
+
+    case "address/delete-address/start":
+      return { ...state, address: state.address, loading: true, error: "" };
+
+    case "address/delete-address/fail":
+      return {
+        ...state,
+        address: state.address,
+        loading: false,
+        error: action.payload,
+      };
+
     default:
       throw new Error("Unknown Action");
   }
@@ -117,9 +131,38 @@ function AddressProvider({ children }) {
     }
   };
 
+  const deleteAddress = async (addressId) => {
+    const body = { _id: user._id, addressId, addressList: address };
+
+    console.log(address);
+
+    try {
+      dispatch({ type: "address/delete-address/start" });
+
+      const res = await fetch(`${BASE_URL}/address/delete-address`, {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      const data = await res.json();
+
+      dispatch({ type: "address/delete-address", payload: data });
+    } catch (error) {
+      dispatch({ type: "address/delete-address/fail", payload: error.message });
+    }
+  };
+
   return (
     <AddressContext.Provider
-      value={{ address, loading, error, createAddress, getAddress }}
+      value={{
+        address,
+        loading,
+        error,
+        createAddress,
+        getAddress,
+        deleteAddress,
+      }}
     >
       {children}
     </AddressContext.Provider>

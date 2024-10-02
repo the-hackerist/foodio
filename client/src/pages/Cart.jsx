@@ -1,4 +1,5 @@
-import { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from "react";
 
 import { FaPlus } from "react-icons/fa";
 
@@ -6,6 +7,7 @@ import OrderListItem from "../components/UI/OrderListItem";
 
 import { useCart } from "../contexts/CartContext";
 import { useAddress } from "../contexts/AddressContext";
+import AddressItem from "../components/UI/AddressItem";
 
 function Cart() {
   const [isCheckingOut, setIsCheckingOut] = useState(false);
@@ -29,11 +31,17 @@ function Cart() {
     default: false,
   });
 
+  useEffect(() => {
+    getAddress();
+  }, []);
+
   const { cart, calculateTotal } = useCart();
 
-  const { createAddress } = useAddress();
+  const { address, createAddress, getAddress } = useAddress();
 
   const { tax, total, itemsTotal } = calculateTotal();
+
+  const defaultAddress = address.find((item) => item.default);
 
   const handleNewAddressFormData = (e) => {
     if (e.target.type === "text" || e.target.type === "textarea")
@@ -65,7 +73,7 @@ function Cart() {
 
   const handleNewAddress = (e) => {
     e.preventDefault();
-    console.log("click");
+
     const isAnyPropertyEmpty = Object.values(newAddressFormData).some(
       (val) => val === "",
     );
@@ -73,7 +81,6 @@ function Cart() {
     if (isAnyPropertyEmpty) return;
 
     createAddress(newAddressFormData);
-    console.log("click below");
   };
 
   const handleOrder = (e) => {
@@ -92,6 +99,7 @@ function Cart() {
             <form onSubmit={handleNewAddress} className="flex flex-col gap-4">
               <input
                 onChange={handleNewAddressFormData}
+                value={newAddressFormData.firstName}
                 className="rounded-lg border p-3"
                 id="firstName"
                 required
@@ -100,6 +108,7 @@ function Cart() {
               />
               <input
                 onChange={handleNewAddressFormData}
+                value={newAddressFormData.lastName}
                 className="rounded-lg border p-3"
                 id="lastName"
                 required
@@ -108,6 +117,7 @@ function Cart() {
               />
               <input
                 onChange={handleNewAddressFormData}
+                value={newAddressFormData.phone}
                 className="rounded-lg border p-3"
                 id="phone"
                 required
@@ -116,6 +126,7 @@ function Cart() {
               />
               <input
                 onChange={handleNewAddressFormData}
+                value={newAddressFormData.address}
                 className="rounded-lg border p-3"
                 id="address"
                 required
@@ -124,6 +135,7 @@ function Cart() {
               />
               <textarea
                 onChange={handleNewAddressFormData}
+                value={newAddressFormData.description}
                 id="description"
                 rows={5}
                 className="max-h-[150px] min-h-[75px] w-full rounded-lg border p-3"
@@ -133,6 +145,7 @@ function Cart() {
                 <input
                   onChange={handleNewAddressFormData}
                   id="default"
+                  checked={newAddressFormData.default}
                   type="checkbox"
                   className="h-4 w-4"
                 />
@@ -243,91 +256,13 @@ function Cart() {
             </div>
 
             <div className="flex flex-col gap-2 p-3">
-              <div className="flex h-full w-full justify-between gap-4 rounded-lg bg-slate-200/70 p-4">
-                <div className="flex flex-col gap-2">
-                  <div className="flex divide-x-2 divide-red-300 text-sm">
-                    <p className="pr-2 font-semibold">Vince dela Pena</p>
-                    <p className="pl-2 text-slate-600">(+63) 927 008 9269</p>
-                  </div>
-                  <p className="text-xs text-slate-600">
-                    Pioneer St. cor EDSA, Pioneer Woodlands Condominium, Tower
-                    3, unit 36D Barangka Ilaya, Mandaluyong City, Metro Manila,
-                    Metro Manila, 1554
-                  </p>
-                  <p className="w-fit border border-red-500 px-2 text-sm text-red-500">
-                    Default
-                  </p>
-                </div>
-
-                <div className="flex flex-col gap-3">
-                  <div className="flex justify-end gap-3">
-                    <button className="text-blue-500 hover:underline">
-                      Edit
-                    </button>
-                    <button className="text-red-500 hover:underline">
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex h-full w-full justify-between gap-4 rounded-lg bg-slate-200/70 p-4">
-                <div className="flex flex-col gap-2">
-                  <div className="flex divide-x-2 divide-red-300 text-sm">
-                    <p className="pr-2 font-semibold">Vince dela Pena</p>
-                    <p className="pl-2 text-slate-600">(+63) 927 008 9269</p>
-                  </div>
-                  <p className="text-xs text-slate-600">
-                    Pioneer St. cor EDSA, Pioneer Woodlands Condominium, Tower
-                    3, unit 36D Barangka Ilaya, Mandaluyong City, Metro Manila,
-                    Metro Manila, 1554
-                  </p>
-                </div>
-
-                <div className="flex flex-col gap-3">
-                  <div className="flex justify-end gap-3">
-                    <button className="text-blue-500 hover:underline">
-                      Edit
-                    </button>
-                    <button className="text-red-500 hover:underline">
-                      Delete
-                    </button>
-                  </div>
-
-                  <button className="text-nowrap border border-slate-400 px-3 text-sm text-slate-500">
-                    Set as default
-                  </button>
-                </div>
-              </div>
-
-              <div className="flex h-full w-full justify-between gap-4 rounded-lg bg-slate-200/70 p-4">
-                <div className="flex flex-col gap-2">
-                  <div className="flex divide-x-2 divide-red-300 text-sm">
-                    <p className="pr-2 font-semibold">Vince dela Pena</p>
-                    <p className="pl-2 text-slate-600">(+63) 927 008 9269</p>
-                  </div>
-                  <p className="text-xs text-slate-600">
-                    Pioneer St. cor EDSA, Pioneer Woodlands Condominium, Tower
-                    3, unit 36D Barangka Ilaya, Mandaluyong City, Metro Manila,
-                    Metro Manila, 1554
-                  </p>
-                </div>
-
-                <div className="flex flex-col gap-3">
-                  <div className="flex justify-end gap-3">
-                    <button className="text-blue-500 hover:underline">
-                      Edit
-                    </button>
-                    <button className="text-red-500 hover:underline">
-                      Delete
-                    </button>
-                  </div>
-
-                  <button className="text-nowrap border border-slate-400 px-3 text-sm text-slate-500">
-                    Set as default
-                  </button>
-                </div>
-              </div>
+              {address.length ? (
+                address.map((address) => (
+                  <AddressItem key={address._id} address={address} />
+                ))
+              ) : (
+                <p>No address saved</p>
+              )}
             </div>
           </div>
 
@@ -341,6 +276,7 @@ function Cart() {
           <form onSubmit={handleOrder} className="flex w-full flex-col gap-4">
             <input
               onChange={handleOrderFormData}
+              defaultValue={defaultAddress?.address || ""}
               className="rounded-lg border p-3"
               type="text"
               id="address"
@@ -350,6 +286,7 @@ function Cart() {
 
             <input
               onChange={handleOrderFormData}
+              defaultValue={defaultAddress?.firstName || ""}
               className="rounded-lg border p-3"
               type="text"
               id="firstName"
@@ -359,6 +296,7 @@ function Cart() {
 
             <input
               onChange={handleOrderFormData}
+              defaultValue={defaultAddress?.lastName || ""}
               className="rounded-lg border p-3"
               type="text"
               id="lastName"
@@ -371,6 +309,7 @@ function Cart() {
 
               <input
                 onChange={handleOrderFormData}
+                defaultValue={defaultAddress?.phone || ""}
                 className="w-full bg-transparent p-3"
                 type="text"
                 id="phone"
@@ -382,6 +321,7 @@ function Cart() {
 
             <textarea
               onChange={handleOrderFormData}
+              defaultValue={defaultAddress?.description || ""}
               className="max-h-[150px] min-h-[75px] w-full rounded-lg border p-3"
               id="description"
               type="text"
