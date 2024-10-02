@@ -8,11 +8,138 @@ import { useCart } from "../contexts/CartContext";
 
 function Cart() {
   const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [isAddingAddress, setIsAddingAddress] = useState(false);
+
+  const [orderFormData, setOrderFormData] = useState({
+    firstName: "",
+    lastName: "",
+    address: "",
+    phone: "",
+    description: "",
+    payment: "cashOnDelivery",
+  });
+
+  const [newAddressFormData, setNewAddressFormData] = useState({
+    firstName: "",
+    lastName: "",
+    address: "",
+    phone: "",
+    description: "",
+    default: false,
+  });
 
   const { cart, calculateTotal } = useCart();
 
+  const { tax, total, itemsTotal } = calculateTotal();
+
+  const handleNewAddressFormData = (e) => {
+    e.preventDefault();
+
+    if (e.target.type === "text" || e.target.type === "textarea")
+      setNewAddressFormData({
+        ...newAddressFormData,
+        [e.target.id]: e.target.value,
+      });
+
+    if (e.target.type === "checkbox")
+      setNewAddressFormData({
+        ...newAddressFormData,
+        [e.target.id]: e.target.checked,
+      });
+  };
+
+  const handleOrderFormData = (e) => {
+    e.preventDefault();
+
+    if (e.target.type === "text" || e.target.type === "textarea")
+      setOrderFormData({
+        ...orderFormData,
+        [e.target.id]: e.target.value,
+      });
+
+    if (e.target.type === "checkbox")
+      setOrderFormData({
+        ...orderFormData,
+        [e.target.id]: e.target.checked ? "cashOnDelivery" : "",
+      });
+  };
+
   return (
-    <div className="flex flex-col items-center justify-center bg-[#F9F9F9] px-10 py-20 pt-40">
+    <div
+      className={`flex flex-col items-center justify-center bg-[#F9F9F9] px-10 py-20 pt-40`}
+    >
+      {isCheckingOut && isAddingAddress && (
+        <div className="absolute flex h-full w-full justify-center border-black bg-black bg-opacity-30 pt-[500px]">
+          <div className="flex h-fit w-[400px] flex-col gap-4 rounded-lg border bg-white p-6">
+            <p className="text-lg font-semibold">New Address</p>
+            <form className="flex flex-col gap-4">
+              <input
+                onChange={handleNewAddressFormData}
+                className="rounded-lg border p-3"
+                id="firstName"
+                required
+                type="text"
+                placeholder="First Name"
+              />
+              <input
+                onChange={handleNewAddressFormData}
+                className="rounded-lg border p-3"
+                id="lastName"
+                required
+                type="text"
+                placeholder="Last Name"
+              />
+              <input
+                onChange={handleNewAddressFormData}
+                className="rounded-lg border p-3"
+                id="phone"
+                required
+                type="text"
+                placeholder="Phone Number"
+              />
+              <input
+                onChange={handleNewAddressFormData}
+                className="rounded-lg border p-3"
+                id="address"
+                required
+                type="text"
+                placeholder="Address"
+              />
+              <textarea
+                onChange={handleNewAddressFormData}
+                id="description"
+                rows={5}
+                className="max-h-[150px] min-h-[75px] w-full rounded-lg border p-3"
+                placeholder="landmarks near you..."
+              />
+              <div className="flex items-center gap-2">
+                <input
+                  onChange={handleNewAddressFormData}
+                  id="default"
+                  type="checkbox"
+                  className="h-4 w-4"
+                />
+                <label htmlFor="default" className="text-sm text-[#7f8183]">
+                  Set as Default Address
+                </label>
+              </div>
+
+              <div className="flex justify-end gap-4">
+                <button
+                  onClick={() => setIsAddingAddress(false)}
+                  className="px-4 py-2 text-xs font-semibold uppercase hover:bg-slate-100"
+                >
+                  Cancel
+                </button>
+                <button className="bg-red-500 px-4 py-2 text-xs font-semibold uppercase text-white">
+                  Submit
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
       {!isCheckingOut && (
         <>
           <h3 className="mb-8 hidden px-10 pb-10 text-center text-5xl font-bold text-[#311F09] md:inline-block">
@@ -53,15 +180,11 @@ function Cart() {
               <div className="flex w-full flex-col items-center gap-4">
                 <div className="flex w-full justify-between text-xl font-bold">
                   <p className="">Subtotal</p>
-                  <p className="font-semibold text-red-500">
-                    + $ {calculateTotal().itemsTotal}
-                  </p>
+                  <p className="font-semibold text-red-500">+ $ {itemsTotal}</p>
                 </div>
                 <div className="flex w-full justify-between text-xl font-bold">
                   <p className="">Tax fee</p>
-                  <p className="font-semibold text-red-500">
-                    + $ {calculateTotal().tax}
-                  </p>
+                  <p className="font-semibold text-red-500">+ $ {tax}</p>
                 </div>
                 <div className="flex w-full justify-between text-xl font-bold">
                   <p className="">Voucher</p>
@@ -69,9 +192,7 @@ function Cart() {
                 </div>
                 <div className="flex w-full justify-between text-xl font-bold">
                   <p className="">Total</p>
-                  <p className="font-semibold text-slate-500">
-                    ${calculateTotal().total}
-                  </p>
+                  <p className="font-semibold text-slate-500">${total}</p>
                 </div>
               </div>
 
@@ -95,7 +216,10 @@ function Cart() {
           <div className="flex w-full flex-col gap-3 rounded-lg bg-red-200 px-6 py-4 pt-8 shadow-md">
             <div className="flex items-center justify-between px-3">
               <p className="font-bold">My addresses</p>
-              <button className="flex items-center gap-2 rounded-lg bg-red-500 px-4 py-2 text-sm font-bold uppercase text-white">
+              <button
+                onClick={() => setIsAddingAddress(true)}
+                className="flex items-center gap-2 rounded-lg bg-red-500 px-4 py-2 text-sm font-bold uppercase text-white"
+              >
                 <FaPlus /> Add new address
               </button>
             </div>
@@ -105,9 +229,9 @@ function Cart() {
                 <div className="flex flex-col gap-2">
                   <div className="flex divide-x-2 divide-red-300 text-sm">
                     <p className="pr-2 font-semibold">Vince dela Pena</p>
-                    <p className="pl-2 text-slate-500">(+63) 927 008 9269</p>
+                    <p className="pl-2 text-slate-600">(+63) 927 008 9269</p>
                   </div>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-slate-600">
                     Pioneer St. cor EDSA, Pioneer Woodlands Condominium, Tower
                     3, unit 36D Barangka Ilaya, Mandaluyong City, Metro Manila,
                     Metro Manila, 1554
@@ -133,9 +257,9 @@ function Cart() {
                 <div className="flex flex-col gap-2">
                   <div className="flex divide-x-2 divide-red-300 text-sm">
                     <p className="pr-2 font-semibold">Vince dela Pena</p>
-                    <p className="pl-2 text-slate-500">(+63) 927 008 9269</p>
+                    <p className="pl-2 text-slate-600">(+63) 927 008 9269</p>
                   </div>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-slate-600">
                     Pioneer St. cor EDSA, Pioneer Woodlands Condominium, Tower
                     3, unit 36D Barangka Ilaya, Mandaluyong City, Metro Manila,
                     Metro Manila, 1554
@@ -162,9 +286,9 @@ function Cart() {
                 <div className="flex flex-col gap-2">
                   <div className="flex divide-x-2 divide-red-300 text-sm">
                     <p className="pr-2 font-semibold">Vince dela Pena</p>
-                    <p className="pl-2 text-slate-500">(+63) 927 008 9269</p>
+                    <p className="pl-2 text-slate-600">(+63) 927 008 9269</p>
                   </div>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-slate-600">
                     Pioneer St. cor EDSA, Pioneer Woodlands Condominium, Tower
                     3, unit 36D Barangka Ilaya, Mandaluyong City, Metro Manila,
                     Metro Manila, 1554
@@ -198,6 +322,7 @@ function Cart() {
 
           <form className="flex w-full flex-col gap-4">
             <input
+              onChange={handleOrderFormData}
               className="rounded-lg border p-3"
               type="text"
               id="address"
@@ -206,6 +331,7 @@ function Cart() {
             />
 
             <input
+              onChange={handleOrderFormData}
               className="rounded-lg border p-3"
               type="text"
               id="firstName"
@@ -214,6 +340,7 @@ function Cart() {
             />
 
             <input
+              onChange={handleOrderFormData}
               className="rounded-lg border p-3"
               type="text"
               id="lastName"
@@ -221,30 +348,24 @@ function Cart() {
               required
             />
 
-            <input
-              className="rounded-lg border p-3"
-              type="email"
-              id="email"
-              placeholder="email"
-              required
-            />
-
             <div className="flex items-center rounded-lg border">
               <p className="p-3 text-sm font-semibold text-slate-500">+63</p>
 
               <input
+                onChange={handleOrderFormData}
                 className="w-full bg-transparent p-3"
-                type="tel"
+                type="text"
                 id="phone"
-                placeholder="123-456-7890"
-                pattern="(\+?\d{2}?\s?\d{3}\s?\d{3}\s?\d{4})|([0]\d{3}\s?\d{3}\s?\d{4})"
+                placeholder="912 345 6789"
+                pattern="^9[0-9]{2} [0-9]{3} [0-9]{4}"
                 required
               />
             </div>
 
             <textarea
+              onChange={handleOrderFormData}
               className="max-h-[150px] min-h-[75px] w-full rounded-lg border p-3"
-              id="message"
+              id="description"
               type="text"
               rows={4}
               placeholder="landmarks near you..."
@@ -254,6 +375,7 @@ function Cart() {
               <h3 className="font-semibold">Mode of payment:</h3>
               <div className="flex items-center gap-2">
                 <input
+                  onChange={handleOrderFormData}
                   id="payment"
                   type="checkbox"
                   className="h-6 w-6 cursor-pointer border-gray-300 bg-white"
