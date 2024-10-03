@@ -110,17 +110,13 @@ function CartProvider({ children }) {
 
     let cartList;
 
-    console.log(1, action);
-
     switch (action) {
       case "addItem": {
-        console.log(2, "adding", food);
         cartList = [...cart, { foodId, foodName, stock, price, quantity }];
         break;
       }
 
       case "updateQty": {
-        console.log(2, "updating", food);
         cartList = cart.map((item) =>
           item.foodName === foodName ? { ...item, quantity } : item,
         );
@@ -135,8 +131,6 @@ function CartProvider({ children }) {
       default:
         cartList = [];
     }
-
-    console.log(3, "cartList: ", cartList);
 
     const body = { _id: user._id, cartList };
 

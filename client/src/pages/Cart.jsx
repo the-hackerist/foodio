@@ -1,18 +1,31 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 
 import { FaPlus } from "react-icons/fa";
 
 import OrderListItem from "../components/UI/OrderListItem";
+import AddressItem from "../components/UI/AddressItem";
 
 import { useCart } from "../contexts/CartContext";
 import { useAddress } from "../contexts/AddressContext";
-import AddressItem from "../components/UI/AddressItem";
+
+const initialState = {
+  firstName: "",
+  lastName: "",
+  address: "",
+  phone: "",
+  description: "",
+  default: false,
+};
 
 function Cart() {
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [isAddingAddress, setIsAddingAddress] = useState(false);
-
+  const [isEditingAddress, setIsEditingAddress] = useState(false);
+  const [currentAddressId, setCurrentAddressId] = useState(null);
+  const [newAddressFormData, setNewAddressFormData] = useState(initialState);
+  const [editAddressFormData, setEditAddressFormData] = useState(initialState);
   const [orderFormData, setOrderFormData] = useState({
     firstName: "",
     lastName: "",
@@ -22,26 +35,33 @@ function Cart() {
     payment: "",
   });
 
-  const [newAddressFormData, setNewAddressFormData] = useState({
-    firstName: "",
-    lastName: "",
-    address: "",
-    phone: "",
-    description: "",
-    default: false,
-  });
-
-  useEffect(() => {
-    getAddress();
-  }, []);
-
   const { cart, calculateTotal } = useCart();
-
-  const { address, createAddress, getAddress } = useAddress();
 
   const { tax, total, itemsTotal } = calculateTotal();
 
-  const defaultAddress = address.find((item) => item.default);
+  const { address, createAddress, getAddress, editAddress } = useAddress();
+
+  const isAnyPropertyEmpty = Object.values(newAddressFormData).some(
+    (val) => val === "",
+  );
+
+  const currentDefaultAddress = address?.find(
+    (address) => address.default === true,
+  );
+
+  const userDefaultAddress = {
+    firstName: currentDefaultAddress?.firstName,
+    lastName: currentDefaultAddress?.lastName,
+    address: currentDefaultAddress?.address,
+    phone: currentDefaultAddress?.phone,
+    description: currentDefaultAddress?.description,
+    payment: currentDefaultAddress?.payment,
+  };
+
+  useEffect(() => {
+    getAddress();
+    setOrderFormData(userDefaultAddress);
+  }, []);
 
   const handleNewAddressFormData = (e) => {
     if (e.target.type === "text" || e.target.type === "textarea")
@@ -53,6 +73,20 @@ function Cart() {
     if (e.target.type === "checkbox")
       setNewAddressFormData({
         ...newAddressFormData,
+        [e.target.id]: e.target.checked,
+      });
+  };
+
+  const handleEditAddressFormData = (e) => {
+    if (e.target.type === "text" || e.target.type === "textarea")
+      setEditAddressFormData({
+        ...editAddressFormData,
+        [e.target.id]: e.target.value,
+      });
+
+    if (e.target.type === "checkbox")
+      setEditAddressFormData({
+        ...editAddressFormData,
         [e.target.id]: e.target.checked,
       });
   };
@@ -74,32 +108,63 @@ function Cart() {
   const handleNewAddress = (e) => {
     e.preventDefault();
 
-    const isAnyPropertyEmpty = Object.values(newAddressFormData).some(
-      (val) => val === "",
-    );
-
     if (isAnyPropertyEmpty) return;
 
     createAddress(newAddressFormData);
+
+    setNewAddressFormData(initialState);
+    setIsAddingAddress(false);
+    setCurrentAddressId(null);
+  };
+
+  const handleEditAddress = (e) => {
+    e.preventDefault();
+    const updatedAddress = { _id: currentAddressId, ...editAddressFormData };
+
+    editAddress(updatedAddress);
+
+    setIsEditingAddress(false);
+    setCurrentAddressId(null);
   };
 
   const handleOrder = (e) => {
     e.preventDefault();
+    console.log("Order submitted");
+  };
+
+  const handleCancel = () => {
+    if (isAddingAddress) setNewAddressFormData(initialState);
+    setIsAddingAddress(false);
+    setIsEditingAddress(false);
+    setCurrentAddressId(null);
   };
 
   return (
     <div
       className={`flex flex-col items-center justify-center bg-[#F9F9F9] px-10 py-20 pt-40`}
     >
-      {isCheckingOut && isAddingAddress && (
+      {isCheckingOut && (isAddingAddress || isEditingAddress) && (
         <div className="absolute flex h-full w-full justify-center border-black bg-black bg-opacity-30 pt-[500px]">
           <div className="flex h-fit w-[400px] flex-col gap-4 rounded-lg border bg-white p-6">
-            <p className="text-lg font-semibold">New Address</p>
+            <p className="text-lg font-semibold">
+              {isEditingAddress ? "Edit Address" : "New Address"}
+            </p>
 
-            <form onSubmit={handleNewAddress} className="flex flex-col gap-4">
+            <form
+              onSubmit={isEditingAddress ? handleEditAddress : handleNewAddress}
+              className="flex flex-col gap-4"
+            >
               <input
-                onChange={handleNewAddressFormData}
-                value={newAddressFormData.firstName}
+                onChange={
+                  isEditingAddress
+                    ? handleEditAddressFormData
+                    : handleNewAddressFormData
+                }
+                value={
+                  isEditingAddress
+                    ? editAddressFormData.firstName
+                    : newAddressFormData.firstName
+                }
                 className="rounded-lg border p-3"
                 id="firstName"
                 required
@@ -107,8 +172,16 @@ function Cart() {
                 placeholder="First Name"
               />
               <input
-                onChange={handleNewAddressFormData}
-                value={newAddressFormData.lastName}
+                onChange={
+                  isEditingAddress
+                    ? handleEditAddressFormData
+                    : handleNewAddressFormData
+                }
+                value={
+                  isEditingAddress
+                    ? editAddressFormData.lastName
+                    : newAddressFormData.lastName
+                }
                 className="rounded-lg border p-3"
                 id="lastName"
                 required
@@ -116,8 +189,16 @@ function Cart() {
                 placeholder="Last Name"
               />
               <input
-                onChange={handleNewAddressFormData}
-                value={newAddressFormData.phone}
+                onChange={
+                  isEditingAddress
+                    ? handleEditAddressFormData
+                    : handleNewAddressFormData
+                }
+                value={
+                  isEditingAddress
+                    ? editAddressFormData.phone
+                    : newAddressFormData.phone
+                }
                 className="rounded-lg border p-3"
                 id="phone"
                 required
@@ -125,8 +206,16 @@ function Cart() {
                 placeholder="Phone Number"
               />
               <input
-                onChange={handleNewAddressFormData}
-                value={newAddressFormData.address}
+                onChange={
+                  isEditingAddress
+                    ? handleEditAddressFormData
+                    : handleNewAddressFormData
+                }
+                value={
+                  isEditingAddress
+                    ? editAddressFormData.address
+                    : newAddressFormData.address
+                }
                 className="rounded-lg border p-3"
                 id="address"
                 required
@@ -134,37 +223,49 @@ function Cart() {
                 placeholder="Address"
               />
               <textarea
-                onChange={handleNewAddressFormData}
-                value={newAddressFormData.description}
+                onChange={
+                  isEditingAddress
+                    ? handleEditAddressFormData
+                    : handleNewAddressFormData
+                }
+                value={
+                  isEditingAddress
+                    ? editAddressFormData.description
+                    : newAddressFormData.description
+                }
                 id="description"
                 rows={5}
                 className="max-h-[150px] min-h-[75px] w-full rounded-lg border p-3"
                 placeholder="landmarks near you..."
               />
-              <div className="flex items-center gap-2">
-                <input
-                  onChange={handleNewAddressFormData}
-                  id="default"
-                  checked={newAddressFormData.default}
-                  type="checkbox"
-                  className="h-4 w-4"
-                />
-                <label htmlFor="default" className="text-sm text-[#7f8183]">
-                  Set as Default Address
-                </label>
-              </div>
 
-              <input type="submit" />
+              {!isEditingAddress && (
+                <div className="flex items-center gap-2">
+                  <input
+                    onChange={handleNewAddressFormData}
+                    checked={newAddressFormData.default}
+                    id="default"
+                    type="checkbox"
+                    className="h-4 w-4"
+                  />
+                  <label htmlFor="default" className="text-sm text-[#7f8183]">
+                    Set as Default Address
+                  </label>
+                </div>
+              )}
+
+              <input
+                className="cursor-pointer bg-red-500 px-4 py-2 text-xs font-semibold uppercase text-white"
+                type="submit"
+                value={isEditingAddress ? "Update" : "Submit"}
+              />
 
               <button
                 role="button"
-                onClick={() => setIsAddingAddress(false)}
-                className="px-4 py-2 text-xs font-semibold uppercase hover:bg-slate-100"
+                className="px-4 py-2 text-xs font-semibold uppercase hover:bg-slate-200"
+                onClick={handleCancel}
               >
                 Cancel
-              </button>
-              <button className="bg-red-500 px-4 py-2 text-xs font-semibold uppercase text-white">
-                Submit
               </button>
             </form>
           </div>
@@ -258,7 +359,14 @@ function Cart() {
             <div className="flex flex-col gap-2 p-3">
               {address.length ? (
                 address.map((address) => (
-                  <AddressItem key={address._id} address={address} />
+                  <AddressItem
+                    key={address._id}
+                    address={address}
+                    setEditAddressFormData={setEditAddressFormData}
+                    setIsEditingAddress={setIsEditingAddress}
+                    setCurrentAddressId={setCurrentAddressId}
+                    setOrderFormData={setOrderFormData}
+                  />
                 ))
               ) : (
                 <p>No address saved</p>
@@ -276,7 +384,7 @@ function Cart() {
           <form onSubmit={handleOrder} className="flex w-full flex-col gap-4">
             <input
               onChange={handleOrderFormData}
-              defaultValue={defaultAddress?.address || ""}
+              value={orderFormData.address}
               className="rounded-lg border p-3"
               type="text"
               id="address"
@@ -286,7 +394,7 @@ function Cart() {
 
             <input
               onChange={handleOrderFormData}
-              defaultValue={defaultAddress?.firstName || ""}
+              value={orderFormData.firstName}
               className="rounded-lg border p-3"
               type="text"
               id="firstName"
@@ -296,7 +404,7 @@ function Cart() {
 
             <input
               onChange={handleOrderFormData}
-              defaultValue={defaultAddress?.lastName || ""}
+              value={orderFormData.lastName}
               className="rounded-lg border p-3"
               type="text"
               id="lastName"
@@ -309,7 +417,7 @@ function Cart() {
 
               <input
                 onChange={handleOrderFormData}
-                defaultValue={defaultAddress?.phone || ""}
+                value={orderFormData.phone}
                 className="w-full bg-transparent p-3"
                 type="text"
                 id="phone"
@@ -321,7 +429,7 @@ function Cart() {
 
             <textarea
               onChange={handleOrderFormData}
-              defaultValue={defaultAddress?.description || ""}
+              value={orderFormData.description}
               className="max-h-[150px] min-h-[75px] w-full rounded-lg border p-3"
               id="description"
               type="text"
@@ -334,6 +442,7 @@ function Cart() {
               <div className="flex items-center gap-2">
                 <input
                   onChange={handleOrderFormData}
+                  checked={!orderFormData.payment ? false : true}
                   id="payment"
                   type="checkbox"
                   className="h-6 w-6 cursor-pointer border-gray-300 bg-white"

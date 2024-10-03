@@ -1,7 +1,16 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import { useAddress } from "../../contexts/AddressContext";
 
-/* eslint-disable react/prop-types */
-function AddressItem({ address }) {
+function AddressItem({
+  address,
+  setCurrentAddressId,
+  setIsEditingAddress,
+  setEditAddressFormData,
+  setOrderFormData,
+}) {
+  const { setDefault } = useAddress();
+
   const {
     firstName,
     lastName,
@@ -15,6 +24,21 @@ function AddressItem({ address }) {
 
   const handleDelete = () => {
     deleteAddress(addressId);
+  };
+
+  const handleEdit = () => {
+    const { _id, default: _default, ...userAddress } = address;
+
+    setIsEditingAddress(true);
+    setEditAddressFormData(userAddress);
+    setCurrentAddressId(_id);
+  };
+
+  const handleSetDefault = () => {
+    const { _id, default: _default, ...userAddress } = address;
+
+    setDefault(address);
+    setOrderFormData({ ...userAddress, payment: "" });
   };
 
   return (
@@ -35,7 +59,12 @@ function AddressItem({ address }) {
 
       <div className="flex flex-col gap-3">
         <div className="flex justify-end gap-3">
-          <button className="text-blue-500 hover:underline">Edit</button>
+          <button
+            onClick={handleEdit}
+            className="text-blue-500 hover:underline"
+          >
+            Edit
+          </button>
           <button
             onClick={handleDelete}
             className="text-red-500 hover:underline"
@@ -43,8 +72,12 @@ function AddressItem({ address }) {
             Delete
           </button>
         </div>
+
         {!isDefault && (
-          <button className="border border-slate-500 px-2 text-sm text-slate-500">
+          <button
+            onClick={handleSetDefault}
+            className="border border-slate-500 px-2 text-sm text-slate-500"
+          >
             Set as Default
           </button>
         )}

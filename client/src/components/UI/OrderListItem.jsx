@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 
@@ -8,9 +9,6 @@ import { useCart } from "../../contexts/CartContext";
 
 function OrderListItem({ food }) {
   const { updateCart } = useCart();
-
-  console.log("rendering");
-  console.log(food);
 
   const [quantity, setQuantity] = useState(food.quantity);
   useEffect(() => {

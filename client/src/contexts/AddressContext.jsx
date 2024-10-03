@@ -53,6 +53,20 @@ function reducer(state, action) {
         error: action.payload,
       };
 
+    case "address/edit-address":
+      return { ...state, address: action.payload, loading: false, error: "" };
+
+    case "address/edit-address/start":
+      return { ...state, address: state.address, loading: true, error: "" };
+
+    case "address/edit-address/fail":
+      return {
+        ...state,
+        address: state.address,
+        loading: false,
+        error: action.payload,
+      };
+
     default:
       throw new Error("Unknown Action");
   }
@@ -134,8 +148,6 @@ function AddressProvider({ children }) {
   const deleteAddress = async (addressId) => {
     const body = { _id: user._id, addressId, addressList: address };
 
-    console.log(address);
-
     try {
       dispatch({ type: "address/delete-address/start" });
 
@@ -153,6 +165,56 @@ function AddressProvider({ children }) {
     }
   };
 
+  const editAddress = async (updatedAddress) => {
+    const body = {
+      _id: user._id,
+      updatedAddress,
+      addressList: address,
+      settingDefault: false,
+    };
+
+    try {
+      dispatch({ type: "address/edit-address/start" });
+
+      const res = await fetch(`${BASE_URL}/address/edit-address`, {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      const data = await res.json();
+
+      dispatch({ type: "address/edit-address", payload: data });
+    } catch (error) {
+      dispatch({ type: "address/edit-address/fail", payload: error.message });
+    }
+  };
+
+  const setDefault = async (updatedAddress) => {
+    const body = {
+      _id: user._id,
+      updatedAddress,
+      addressList: address,
+      settingDefault: true,
+    };
+
+    try {
+      dispatch({ type: "address/edit-address/start" });
+
+      const res = await fetch(`${BASE_URL}/address/edit-address`, {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      const data = await res.json();
+
+      dispatch({ type: "address/edit-address", payload: data });
+    } catch (error) {
+      dispatch({ type: "address/edit-address/fail", payload: error.message });
+    }
+  };
+
   return (
     <AddressContext.Provider
       value={{
@@ -162,6 +224,8 @@ function AddressProvider({ children }) {
         createAddress,
         getAddress,
         deleteAddress,
+        editAddress,
+        setDefault,
       }}
     >
       {children}

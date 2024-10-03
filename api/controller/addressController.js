@@ -11,7 +11,7 @@ export const getAddress = async (req, res, next) => {
     if (!userAddress)
       next({ statusCode: 404, message: "User does not exist!" });
 
-    const { password, access_level, ...rest } = user._doc;
+    const { password, access_level, ...rest } = userAddress._doc;
 
     res.status(200).json(rest);
   } catch (error) {
@@ -51,11 +51,47 @@ export const createAddress = async (req, res, next) => {
 export const deleteAddress = async (req, res, next) => {
   const { _id, addressId, addressList } = req.body;
 
-  console.log(addressList);
-
   const newAddressList = addressList?.filter(
     (address) => address._id !== addressId
   );
+
+  const update = { address: newAddressList };
+
+  try {
+    const userAddress = await User.findOneAndUpdate({ _id }, update, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!userAddress)
+      next({ statusCode: 404, message: "User does not exist!" });
+
+    res.status(200).json(userAddress.address);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const editAddress = async (req, res, next) => {
+  const { _id, updatedAddress, addressList, settingDefault, fasdfs } = req.body;
+
+  let newAddressList = addressList;
+
+  if (settingDefault) {
+    const resetDefaultAddress = newAddressList.map((item) =>
+      item.default ? { ...item, default: false } : item
+    );
+
+    newAddressList = resetDefaultAddress.map((address) =>
+      address._id === updatedAddress._id
+        ? { ...updatedAddress, default: true }
+        : address
+    );
+  } else {
+    newAddressList = addressList.map((address) =>
+      address._id === updatedAddress._id ? { ...updatedAddress } : address
+    );
+  }
 
   const update = { address: newAddressList };
 
