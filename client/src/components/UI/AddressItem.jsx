@@ -2,6 +2,15 @@
 /* eslint-disable react/prop-types */
 import { useAddress } from "../../contexts/AddressContext";
 
+const initialState = {
+  firstName: "",
+  lastName: "",
+  address: "",
+  phone: "",
+  description: "",
+  default: false,
+};
+
 function AddressItem({
   address,
   setCurrentAddressId,
@@ -24,6 +33,7 @@ function AddressItem({
 
   const handleDelete = () => {
     deleteAddress(addressId);
+    if (isDefault) setOrderFormData(initialState);
   };
 
   const handleEdit = () => {

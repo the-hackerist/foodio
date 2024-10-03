@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { UserProvider } from "./contexts/UserContext.jsx";
 import { CartProvider } from "./contexts/CartContext.jsx";
 import { AddressProvider } from "./contexts/AddressContext.jsx";
+import { OrderProvider } from "./contexts/OrderContext.jsx";
 
 import HomePage from "./pages/HomePage";
 import Menu from "./pages/Menu";
@@ -17,6 +18,7 @@ import PrivateRoute from "./pages/PrivateRoute";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Profile from "./pages/Profile.jsx";
+import OrderStatus from "./pages/OrderStatus.jsx";
 
 function App() {
   return (
@@ -24,24 +26,27 @@ function App() {
       <UserProvider>
         <CartProvider>
           <AddressProvider>
-            <div className="relative">
-              <Header />
-              <Routes>
-                <Route index element={<HomePage />} />
-                <Route path="/menu" element={<Menu />} />
-                <Route path="/about-us" element={<AboutUs />} />
-                <Route path="/contact-us" element={<ContactUs />} />
-                <Route path="/log-in" element={<Login />} />
-                <Route path="/sign-up" element={<SignUp />} />
-                <Route path="/order" element={<Order />} />
-                <Route element={<PrivateRoute />}>
-                  <Route path="/profile" element={<Profile />} />
-                  <Route path="/reservation" element={<Reservation />} />
-                  <Route path="/cart" element={<Cart />} />
-                </Route>
-              </Routes>
-              <Footer />
-            </div>
+            <OrderProvider>
+              <div className="relative">
+                <Header />
+                <Routes>
+                  <Route index element={<HomePage />} />
+                  <Route path="/menu" element={<Menu />} />
+                  <Route path="/about-us" element={<AboutUs />} />
+                  <Route path="/contact-us" element={<ContactUs />} />
+                  <Route path="/log-in" element={<Login />} />
+                  <Route path="/sign-up" element={<SignUp />} />
+                  <Route path="/order" element={<Order />} />
+                  <Route path="/order/:id" element={<OrderStatus />} />
+                  <Route element={<PrivateRoute />}>
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/reservation" element={<Reservation />} />
+                    <Route path="/cart" element={<Cart />} />
+                  </Route>
+                </Routes>
+                <Footer />
+              </div>
+            </OrderProvider>
           </AddressProvider>
         </CartProvider>
       </UserProvider>

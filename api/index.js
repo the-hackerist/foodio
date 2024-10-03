@@ -6,6 +6,7 @@ import cors from "cors";
 import authRouter from "./routes/authRouter.js";
 import cartRouter from "./routes/cartRouter.js";
 import addressRouter from "./routes/addressRouter.js";
+import orderRouter from "./routes/orderRouter.js";
 
 dotenv.config();
 
@@ -33,6 +34,8 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/cart", cartRouter);
 
 app.use("/api/v1/address", addressRouter);
+
+app.use("/api/v1/order", orderRouter);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;

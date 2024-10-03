@@ -11,6 +11,8 @@ const userSchema = new mongoose.Schema(
     access_level: { type: String, default: "user" },
     cart: { type: Array, default: [] },
     address: { type: Array, default: [] },
+    orders: { type: Array, default: [] },
+    bookings: { type: Array, default: [] },
   },
   { timestamps: true }
 );

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 
@@ -9,6 +8,7 @@ import AddressItem from "../components/UI/AddressItem";
 
 import { useCart } from "../contexts/CartContext";
 import { useAddress } from "../contexts/AddressContext";
+import { useOrder } from "../contexts/OrderContext";
 
 const initialState = {
   firstName: "",
@@ -19,11 +19,14 @@ const initialState = {
   default: false,
 };
 
+const isAnyPropertyEmpty = (objData) =>
+  Object.values(objData).some((val) => val === "");
+
 function Cart() {
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [isAddingAddress, setIsAddingAddress] = useState(false);
   const [isEditingAddress, setIsEditingAddress] = useState(false);
-  const [currentAddressId, setCurrentAddressId] = useState(null);
+  const [currentAddressId, setCurrentAddressId] = useState("");
   const [newAddressFormData, setNewAddressFormData] = useState(initialState);
   const [editAddressFormData, setEditAddressFormData] = useState(initialState);
   const [orderFormData, setOrderFormData] = useState({
@@ -37,37 +40,21 @@ function Cart() {
 
   const { cart, calculateTotal } = useCart();
 
+  const { createOrder } = useOrder();
+
   const { tax, total, itemsTotal } = calculateTotal();
 
   const { address, createAddress, getAddress, editAddress } = useAddress();
 
-  const isAnyPropertyEmpty = Object.values(newAddressFormData).some(
-    (val) => val === "",
-  );
-
-  const currentDefaultAddress = address?.find(
-    (address) => address.default === true,
-  );
-
-  const userDefaultAddress = {
-    firstName: currentDefaultAddress?.firstName,
-    lastName: currentDefaultAddress?.lastName,
-    address: currentDefaultAddress?.address,
-    phone: currentDefaultAddress?.phone,
-    description: currentDefaultAddress?.description,
-    payment: currentDefaultAddress?.payment,
-  };
-
   useEffect(() => {
     getAddress();
-    setOrderFormData(userDefaultAddress);
   }, []);
 
   const handleNewAddressFormData = (e) => {
     if (e.target.type === "text" || e.target.type === "textarea")
       setNewAddressFormData({
         ...newAddressFormData,
-        [e.target.id]: e.target.value,
+        [e.target.id]: e.target.value || "",
       });
 
     if (e.target.type === "checkbox")
@@ -108,7 +95,7 @@ function Cart() {
   const handleNewAddress = (e) => {
     e.preventDefault();
 
-    if (isAnyPropertyEmpty) return;
+    if (isAnyPropertyEmpty(newAddressFormData)) return;
 
     createAddress(newAddressFormData);
 
@@ -119,6 +106,9 @@ function Cart() {
 
   const handleEditAddress = (e) => {
     e.preventDefault();
+
+    if (isAnyPropertyEmpty(editAddressFormData)) return;
+
     const updatedAddress = { _id: currentAddressId, ...editAddressFormData };
 
     editAddress(updatedAddress);
@@ -127,9 +117,12 @@ function Cart() {
     setCurrentAddressId(null);
   };
 
+  // TODO
   const handleOrder = (e) => {
     e.preventDefault();
     console.log("Order submitted");
+    console.log(orderFormData);
+    createOrder(orderFormData);
   };
 
   const handleCancel = () => {
@@ -162,8 +155,8 @@ function Cart() {
                 }
                 value={
                   isEditingAddress
-                    ? editAddressFormData.firstName
-                    : newAddressFormData.firstName
+                    ? editAddressFormData?.firstName
+                    : newAddressFormData?.firstName
                 }
                 className="rounded-lg border p-3"
                 id="firstName"
@@ -179,8 +172,8 @@ function Cart() {
                 }
                 value={
                   isEditingAddress
-                    ? editAddressFormData.lastName
-                    : newAddressFormData.lastName
+                    ? editAddressFormData?.lastName
+                    : newAddressFormData?.lastName
                 }
                 className="rounded-lg border p-3"
                 id="lastName"
@@ -196,8 +189,8 @@ function Cart() {
                 }
                 value={
                   isEditingAddress
-                    ? editAddressFormData.phone
-                    : newAddressFormData.phone
+                    ? editAddressFormData?.phone
+                    : newAddressFormData?.phone
                 }
                 className="rounded-lg border p-3"
                 id="phone"
@@ -213,8 +206,8 @@ function Cart() {
                 }
                 value={
                   isEditingAddress
-                    ? editAddressFormData.address
-                    : newAddressFormData.address
+                    ? editAddressFormData?.address
+                    : newAddressFormData?.address
                 }
                 className="rounded-lg border p-3"
                 id="address"
@@ -230,8 +223,8 @@ function Cart() {
                 }
                 value={
                   isEditingAddress
-                    ? editAddressFormData.description
-                    : newAddressFormData.description
+                    ? editAddressFormData?.description
+                    : newAddressFormData?.description
                 }
                 id="description"
                 rows={5}
@@ -422,7 +415,7 @@ function Cart() {
                 type="text"
                 id="phone"
                 placeholder="912 345 6789"
-                pattern="^9[0-9]{2} [0-9]{3} [0-9]{4}"
+                // pattern="^9[0-9]{2} [0-9]{3} [0-9]{4}"
                 required
               />
             </div>

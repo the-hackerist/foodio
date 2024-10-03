@@ -13,7 +13,7 @@ function MenuItem({ food }) {
   const navigate = useNavigate();
 
   const handleOrder = () => {
-    updateCart(food);
+    updateCart(food, 1);
     navigate("/order");
   };
 
