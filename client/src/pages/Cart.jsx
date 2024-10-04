@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 
@@ -48,6 +49,13 @@ function Cart() {
 
   useEffect(() => {
     getAddress();
+
+    const currentAddress = address.find((item) => item.default);
+
+    if (currentAddress) {
+      const { _id, ...rest } = currentAddress;
+      setOrderFormData(rest);
+    }
   }, []);
 
   const handleNewAddressFormData = (e) => {
