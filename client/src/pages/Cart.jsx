@@ -10,6 +10,7 @@ import AddressItem from "../components/UI/AddressItem";
 import { useCart } from "../contexts/CartContext";
 import { useAddress } from "../contexts/AddressContext";
 import { useOrder } from "../contexts/OrderContext";
+import { useNavigate } from "react-router-dom";
 
 const initialState = {
   firstName: "",
@@ -46,6 +47,8 @@ function Cart() {
   const { tax, total, itemsTotal } = calculateTotal();
 
   const { address, createAddress, getAddress, editAddress } = useAddress();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     getAddress();
@@ -125,12 +128,13 @@ function Cart() {
     setCurrentAddressId(null);
   };
 
-  // TODO
   const handleOrder = (e) => {
     e.preventDefault();
+    navigate(`/order/orderId`);
     console.log("Order submitted");
     console.log(orderFormData);
     createOrder(orderFormData);
+    // todo reset cart
   };
 
   const handleCancel = () => {

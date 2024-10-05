@@ -106,13 +106,16 @@ function CartProvider({ children }) {
   }
 
   const updateCart = async (food, quantity, action = "addItem") => {
-    const { foodId: id, id: foodId, foodName, stock, price } = food;
+    const { foodId: id, id: foodId, foodName, stock, price, image } = food;
 
     let cartList;
 
     switch (action) {
       case "addItem": {
-        cartList = [...cart, { foodId, foodName, stock, price, quantity }];
+        cartList = [
+          ...cart,
+          { foodId, foodName, stock, price, quantity, image },
+        ];
         break;
       }
 

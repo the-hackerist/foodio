@@ -19,6 +19,7 @@ import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Profile from "./pages/Profile.jsx";
 import OrderStatus from "./pages/OrderStatus.jsx";
+import PageNotFound from "./components/UI/PageNotFound.jsx";
 
 function App() {
   return (
@@ -27,7 +28,7 @@ function App() {
         <CartProvider>
           <AddressProvider>
             <OrderProvider>
-              <div className="relative">
+              <div className="relative h-screen">
                 <Header />
                 <Routes>
                   <Route index element={<HomePage />} />
@@ -43,6 +44,7 @@ function App() {
                     <Route path="/reservation" element={<Reservation />} />
                     <Route path="/cart" element={<Cart />} />
                   </Route>
+                  <Route path="*" element={<PageNotFound />} />
                 </Routes>
                 <Footer />
               </div>

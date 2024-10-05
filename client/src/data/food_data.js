@@ -25,7 +25,7 @@ const menu = [
     id: 3,
 
     image:
-      "    https://images.pexels.com/photos/19087691/pexels-photo-19087691/free-photo-of-salad-with-bread.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "https://images.pexels.com/photos/19087691/pexels-photo-19087691/free-photo-of-salad-with-bread.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     foodName: "Caesar Salad",
     stock: 20,
     starRatings: 4,
@@ -37,7 +37,7 @@ const menu = [
     id: 4,
 
     image:
-      "    https://images.pexels.com/photos/26597663/pexels-photo-26597663/free-photo-of-close-up-of-pasta-with-meat.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "https://images.pexels.com/photos/26597663/pexels-photo-26597663/free-photo-of-close-up-of-pasta-with-meat.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     foodName: "Spaghetti Carbonara",
     stock: 10,
     starRatings: 5,
@@ -49,7 +49,7 @@ const menu = [
     id: 5,
 
     image:
-      "    https://images.pexels.com/photos/7627414/pexels-photo-7627414.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "https://images.pexels.com/photos/7627414/pexels-photo-7627414.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     foodName: "Grilled Salmon",
     stock: 5,
     starRatings: 5,
@@ -61,7 +61,7 @@ const menu = [
     id: 6,
 
     image:
-      "    https://images.pexels.com/photos/10839496/pexels-photo-10839496.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "https://images.pexels.com/photos/10839496/pexels-photo-10839496.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     foodName: "Tacos",
     stock: 12,
     starRatings: 4,
@@ -71,9 +71,8 @@ const menu = [
   },
   {
     id: 7,
-
     image:
-      "    https://images.pexels.com/photos/15803805/pexels-photo-15803805/free-photo-of-cake-with-chocolate-bar.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      " https://images.pexels.com/photos/15803805/pexels-photo-15803805/free-photo-of-cake-with-chocolate-bar.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     foodName: "Chocolate Lava Cake",
     stock: 6,
     starRatings: 5,
@@ -83,9 +82,8 @@ const menu = [
   },
   {
     id: 8,
-
     image:
-      "    https://images.pexels.com/photos/772514/pexels-photo-772514.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "https://images.pexels.com/photos/772514/pexels-photo-772514.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     foodName: "Pad Thai",
     stock: 10,
     starRatings: 4,
