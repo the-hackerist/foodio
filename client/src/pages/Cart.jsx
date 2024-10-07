@@ -42,8 +42,8 @@ function Cart() {
 
   const { cart, calculateTotal } = useCart();
 
-  const { createOrder } = useOrder();
-
+  const { createOrder, order } = useOrder();
+  // console.log("orders database: ", order);
   const { tax, total, itemsTotal } = calculateTotal();
 
   const { address, createAddress, getAddress, editAddress } = useAddress();
@@ -130,10 +130,11 @@ function Cart() {
 
   const handleOrder = (e) => {
     e.preventDefault();
-    navigate(`/order/orderId`);
-    console.log("Order submitted");
-    console.log(orderFormData);
+    // navigate(`/order/orderId`);
+    // console.log("Order submitted");
+    // console.log(orderFormData);
     createOrder(orderFormData);
+
     // todo reset cart
   };
 

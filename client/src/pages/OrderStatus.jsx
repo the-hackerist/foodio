@@ -3,7 +3,41 @@ import { PiNewspaperClipping } from "react-icons/pi";
 import { GrDeliver } from "react-icons/gr";
 import { FaRegStar, FaRegHandshake } from "react-icons/fa";
 import { IoMdCheckmark } from "react-icons/io";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
 function OrderStatus() {
+  const [orderData, setOrderData] = useState(null);
+
+  const params = useParams();
+
+  useEffect(() => {
+    const fetchListing = async () => {
+      try {
+        const res = await fetch(
+          `http://localhost:3000/api/v1/order/${params.id}`,
+        );
+
+        const data = await res.json();
+
+        if (!data) {
+          console.log("error");
+          return;
+        }
+
+        setOrderData(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchListing();
+  }, []);
+
+  console.log(orderData?.status);
+
+  if (!orderData) return <div>no data!</div>;
+
   return (
     <div className="flex w-full flex-col p-80 pt-40">
       <header className="flex items-center justify-between rounded-md border border-dotted p-4">
@@ -15,16 +49,28 @@ function OrderStatus() {
           Back
         </button>
 
-        <div className="flex divide-x-4">
-          <p className="pr-4">ORDER ID. 24080396XETHD2</p>
-          <p className="pl-4 font-semibold text-red-500">ORDER CONFIRMED</p>
+        <div className="flex divide-x-4 uppercase">
+          <p className="pr-4">ORDER ID. {orderData._id || "no id"}</p>
+          <p className="pl-4 font-semibold text-red-500">
+            order {orderData.status}
+          </p>
         </div>
       </header>
 
       {/* delivery status  */}
       <div className="flex justify-evenly rounded-md border border-dotted p-4 px-20 py-12">
         <div className="flex w-[200px] flex-col items-center gap-4">
-          <div className="flex h-14 w-14 items-center justify-center rounded-full border-[4px] border-green-500 text-3xl text-green-500">
+          <div
+            className={`flex h-14 w-14 items-center justify-center rounded-full border-[4px] text-3xl ${
+              orderData.status === "placed" ||
+              orderData.status === "confirmed" ||
+              orderData.status === "onDelivery" ||
+              orderData.status === "received" ||
+              orderData.status === "completed"
+                ? "border-green-500 text-green-500"
+                : "border-slate-500 text-slate-500"
+            }`}
+          >
             <PiNewspaperClipping />
           </div>
           <div className="flex flex-col items-center">
@@ -34,7 +80,16 @@ function OrderStatus() {
         </div>
 
         <div className="flex w-[200px] flex-col items-center gap-4">
-          <div className="flex h-14 w-14 items-center justify-center rounded-full border-[4px] border-green-500 text-3xl text-green-500">
+          <div
+            className={`flex h-14 w-14 items-center justify-center rounded-full border-[4px] text-3xl ${
+              orderData.status === "confirmed" ||
+              orderData.status === "onDelivery" ||
+              orderData.status === "received" ||
+              orderData.status === "completed"
+                ? "border-green-500 text-green-500"
+                : "border-slate-500 text-slate-500"
+            }`}
+          >
             <IoMdCheckmark />
           </div>
           <div className="flex flex-col items-center">
@@ -44,7 +99,15 @@ function OrderStatus() {
         </div>
 
         <div className="flex w-[200px] flex-col items-center gap-4">
-          <div className="flex h-14 w-14 items-center justify-center rounded-full border-[4px] border-slate-500 text-3xl text-slate-500">
+          <div
+            className={`flex h-14 w-14 items-center justify-center rounded-full border-[4px] text-3xl ${
+              orderData.status === "onDelivery" ||
+              orderData.status === "received" ||
+              orderData.status === "completed"
+                ? "border-green-500 text-green-500"
+                : "border-slate-500 text-slate-500"
+            }`}
+          >
             <GrDeliver />
           </div>
           <div className="flex flex-col items-center">
@@ -54,7 +117,14 @@ function OrderStatus() {
         </div>
 
         <div className="flex w-[200px] flex-col items-center gap-4">
-          <div className="flex h-14 w-14 items-center justify-center rounded-full border-[4px] border-slate-500 text-3xl text-slate-500">
+          <div
+            className={`flex h-14 w-14 items-center justify-center rounded-full border-[4px] text-3xl ${
+              orderData.status === "received" ||
+              orderData.status === "completed"
+                ? "border-green-500 text-green-500"
+                : "border-slate-500 text-slate-500"
+            }`}
+          >
             <FaRegHandshake />
           </div>
           <div className="flex flex-col items-center">
@@ -64,7 +134,13 @@ function OrderStatus() {
         </div>
 
         <div className="flex w-[200px] flex-col items-center gap-4">
-          <div className="flex h-14 w-14 items-center justify-center rounded-full border-[4px] border-slate-500 text-3xl text-slate-500">
+          <div
+            className={`flex h-14 w-14 items-center justify-center rounded-full border-[4px] text-3xl ${
+              orderData.status === "completed"
+                ? "border-green-500 text-green-500"
+                : "border-slate-500 text-slate-500"
+            }`}
+          >
             <FaRegStar />
           </div>
           <div className="flex flex-col items-center">
@@ -94,12 +170,12 @@ function OrderStatus() {
           <p className="pb-2 text-2xl font-medium text-[#000000CC]">
             Delivery Address
           </p>
-          <p className="text-lg">Vince dela Pena</p>
-          <p className="text-sm text-[#0000008A]">(+63) 9270089269</p>
+          <p className="text-lg">{`${orderData.customerInfo.firstName} ${orderData.customerInfo.lastName}`}</p>
           <p className="text-sm text-[#0000008A]">
-            Pioneer St. cor EDSA, Pioneer Woodlands Condominium, Tower 3, unit
-            36D, Barangka Ilaya, Mandaluyong City, Metro Manila, Metro Manila,
-            1554
+            (+63) {orderData.customerInfo.phone}
+          </p>
+          <p className="text-sm text-[#0000008A]">
+            {orderData.customerInfo.address}
           </p>
         </div>
 
@@ -108,146 +184,40 @@ function OrderStatus() {
             Order Summary
           </p>
 
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex gap-4">
-              <div className="h-24 w-24 overflow-hidden border border-[#00000042]">
-                <img
-                  className="object-cover"
-                  alt="food image"
-                  src="https://imgs.search.brave.com/RS3Xyj5LkwHnpivn8ZCZzGkRMB8_sJ4IfXQM44Go9sQ/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/ZnJlZS1waG90by9w/aXp6YS1mb29kXzE0/NDYyNy0zODYyMS5q/cGc_c2l6ZT02MjYm/ZXh0PWpwZw"
-                />
+          {orderData.items.map((item) => (
+            <div
+              key={item.foodId}
+              className="flex items-center justify-between gap-4"
+            >
+              <div className="flex gap-4">
+                <div className="h-24 w-24 overflow-hidden border border-[#00000042]">
+                  <img
+                    className="object-cover"
+                    alt="food image"
+                    src={item.image}
+                  />
+                </div>
+
+                <div className="self-center">
+                  <p className="text-lg font-semibold">{item.foodName}</p>
+                  <p className="line-clamp-1 w-[550px] text-sm">
+                    {item.description}
+                  </p>
+                  <p>x1</p>
+                </div>
               </div>
 
-              <div className="self-center">
-                <p className="text-lg font-semibold">Margherita pizza</p>
-                <p className="line-clamp-1 w-[550px] text-sm">
-                  Classic pizza topped with fresh tomatoes, mozzarella cheese,
-                  and basil. Classic pizza topped with fresh tomatoes,
-                  mozzarella cheese, and basil.
+              <div>
+                <p className="flex w-[80px] items-center justify-between">
+                  <span>₱</span> {item.price}
                 </p>
-                <p>x1</p>
               </div>
             </div>
-
-            <div>
-              <p className="flex w-[80px] items-center justify-between">
-                <span>₱</span> 1,099.00
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex gap-4">
-              <div className="h-24 w-24 overflow-hidden border border-[#00000042]">
-                <img
-                  className="object-cover"
-                  alt="food image"
-                  src="https://imgs.search.brave.com/RS3Xyj5LkwHnpivn8ZCZzGkRMB8_sJ4IfXQM44Go9sQ/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/ZnJlZS1waG90by9w/aXp6YS1mb29kXzE0/NDYyNy0zODYyMS5q/cGc_c2l6ZT02MjYm/ZXh0PWpwZw"
-                />
-              </div>
-
-              <div className="self-center">
-                <p className="text-lg font-semibold">Margherita pizza</p>
-                <p className="line-clamp-1 w-[550px] text-sm">
-                  Classic pizza topped with fresh tomatoes, mozzarella cheese,
-                  and basil.Classic pizza topped with fresh tomatoes, mozzarella
-                  cheese, and basil.
-                </p>
-                <p>x1</p>
-              </div>
-            </div>
-
-            <div>
-              <p className="flex w-[80px] items-center justify-between">
-                <span>₱</span> 1,099.00
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex gap-4">
-              <div className="h-24 w-24 overflow-hidden border border-[#00000042]">
-                <img
-                  className="object-cover"
-                  alt="food image"
-                  src="https://imgs.search.brave.com/RS3Xyj5LkwHnpivn8ZCZzGkRMB8_sJ4IfXQM44Go9sQ/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/ZnJlZS1waG90by9w/aXp6YS1mb29kXzE0/NDYyNy0zODYyMS5q/cGc_c2l6ZT02MjYm/ZXh0PWpwZw"
-                />
-              </div>
-
-              <div className="self-center">
-                <p className="text-lg font-semibold">Margherita pizza</p>
-                <p className="line-clamp-1 w-[550px] text-sm">
-                  Classic pizza topped with fresh tomatoes, mozzarella cheese,
-                  and basil.
-                </p>
-                <p>x1</p>
-              </div>
-            </div>
-
-            <div>
-              <p className="flex w-[80px] items-center justify-between">
-                <span>₱</span> 1,099.00
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex gap-4">
-              <div className="h-24 w-24 overflow-hidden border border-[#00000042]">
-                <img
-                  className="object-cover"
-                  alt="food image"
-                  src="https://imgs.search.brave.com/RS3Xyj5LkwHnpivn8ZCZzGkRMB8_sJ4IfXQM44Go9sQ/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/ZnJlZS1waG90by9w/aXp6YS1mb29kXzE0/NDYyNy0zODYyMS5q/cGc_c2l6ZT02MjYm/ZXh0PWpwZw"
-                />
-              </div>
-
-              <div className="self-center">
-                <p className="text-lg font-semibold">Margherita pizza</p>
-                <p className="line-clamp-1 w-[550px] text-sm">
-                  Classic pizza topped with fresh tomatoes, mozzarella cheese,
-                  and basil.
-                </p>
-                <p>x1</p>
-              </div>
-            </div>
-
-            <div>
-              <p className="flex w-[80px] items-center justify-between">
-                <span>₱</span> 899.00
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex gap-4">
-              <div className="h-24 w-24 overflow-hidden border border-[#00000042]">
-                <img
-                  className="object-cover"
-                  alt="food image"
-                  src="https://imgs.search.brave.com/RS3Xyj5LkwHnpivn8ZCZzGkRMB8_sJ4IfXQM44Go9sQ/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/ZnJlZS1waG90by9w/aXp6YS1mb29kXzE0/NDYyNy0zODYyMS5q/cGc_c2l6ZT02MjYm/ZXh0PWpwZw"
-                />
-              </div>
-
-              <div className="self-center">
-                <p className="text-lg font-semibold">Margherita pizza</p>
-                <p className="line-clamp-1 w-[550px] text-sm">
-                  Classic pizza topped with fresh tomatoes, mozzarella cheese,
-                  and basil.
-                </p>
-                <p>x1</p>
-              </div>
-            </div>
-
-            <div>
-              <p className="flex w-[80px] items-center justify-between">
-                <span>₱</span> 999.00
-              </p>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
 
-      <div className="rounded-md border border-dotted">
+      <div className="rounded-md border border-dotted bg-[#FFFCF5]">
         <div className="flex w-full items-center justify-end border-b border-dotted border-b-[#00000015] px-6 text-right">
           <div className="p-2 text-sm text-[#000000] text-opacity-55">
             <p>Sub Total</p>
@@ -270,7 +240,7 @@ function OrderStatus() {
           <div className="border-l- w-[240px] border-l border-dotted px-2 py-3 text-opacity-10">
             <div className="flex justify-end">
               <p className="flex w-[80px] items-center justify-between">
-                <span>₱</span> 49.00
+                <span>₱</span> ${orderData.deliveryFee}.00
               </p>
             </div>
           </div>
@@ -306,7 +276,10 @@ function OrderStatus() {
           </div>
 
           <div className="border-l- w-[240px] border-l border-dotted px-2 py-5 text-opacity-10">
-            <p className="text-lg">Cash on Delivery</p>
+            <p className="text-lg">
+              {orderData.paymentMethod === "cashOnDelivery" &&
+                "Cash on Delivery"}
+            </p>
           </div>
         </div>
       </div>
