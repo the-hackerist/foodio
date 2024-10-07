@@ -4,7 +4,6 @@ const DeliveryStatusSchema = new mongoose.Schema(
   {
     status: {
       type: String,
-      required: true,
       enum: [
         "placed",
         "confirmed",
@@ -19,14 +18,14 @@ const DeliveryStatusSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
-    location: {
-      type: String,
-      default: "", // Optional field to store the current location of the delivery
-    },
-    notes: {
-      type: String,
-      default: "", // Optional notes regarding the status
-    },
+    // location: {
+    //   type: String,
+    //   default: "",
+    // },
+    // notes: {
+    //   type: String,
+    //   default: "",
+    // },
   },
   { _id: false }
 );
@@ -42,7 +41,7 @@ const DeliveryTimeSchema = new mongoose.Schema(
     // },
     statusHistory: {
       type: [DeliveryStatusSchema],
-      default: [], // Array to store the history of status updates
+      default: [],
     },
   },
   { _id: false }
@@ -55,6 +54,7 @@ const ItemSchema = new mongoose.Schema(
     quantity: { type: Number, required: true },
     image: { type: String, required: true },
     price: { type: Number, required: true },
+    description: { type: String, default: "" },
   },
   { _id: false }
 );
@@ -75,7 +75,6 @@ const OrderSchema = new mongoose.Schema({
   orderDate: { type: Date, default: Date.now },
   status: {
     type: String,
-    // required: true,
     enum: [
       "placed",
       "confirmed",
@@ -96,11 +95,10 @@ const OrderSchema = new mongoose.Schema({
   },
   paymentStatus: {
     type: String,
-    required: true,
     enum: ["paid", "pending", "failed"],
     default: "pending",
   },
-  deliveryTime: { type: DeliveryTimeSchema, required: true },
+  deliveryTime: { type: DeliveryTimeSchema },
   deliveryFee: { type: Number, default: 0 },
 });
 
