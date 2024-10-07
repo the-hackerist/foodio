@@ -106,7 +106,15 @@ function CartProvider({ children }) {
   }
 
   const updateCart = async (food, quantity, action = "addItem") => {
-    const { foodId: id, id: foodId, foodName, stock, price, image } = food;
+    const {
+      foodId: id,
+      id: foodId,
+      foodName,
+      stock,
+      price,
+      image,
+      description,
+    } = food;
 
     let cartList;
 
@@ -114,8 +122,10 @@ function CartProvider({ children }) {
       case "addItem": {
         cartList = [
           ...cart,
-          { foodId, foodName, stock, price, quantity, image },
+          { foodId, foodName, stock, price, quantity, image, description },
         ];
+        console.log(cartList);
+
         break;
       }
 
@@ -123,11 +133,13 @@ function CartProvider({ children }) {
         cartList = cart.map((item) =>
           item.foodName === foodName ? { ...item, quantity } : item,
         );
+        console.log(cartList);
         break;
       }
 
       case "removeItem": {
         cartList = cart.filter((menu) => menu.foodId !== id);
+        console.log(cartList);
         break;
       }
 
