@@ -1,23 +1,48 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 
 import { RiPencilFill, RiDiscountPercentLine } from "react-icons/ri";
-import { FaRegUser } from "react-icons/fa";
+import { FaRegUser, FaPlus } from "react-icons/fa";
 import { MdOutlineTableRestaurant } from "react-icons/md";
 import { IoFastFoodOutline } from "react-icons/io5";
-import { IoIosRestaurant } from "react-icons/io";
 
 import { useAuth } from "../contexts/UserContext";
 import { useOrder } from "../contexts/OrderContext";
+import { useAddress } from "../contexts/AddressContext";
+
+import Account from "../contexts/Account";
 
 const profileImage =
   "https://images.pexels.com/photos/9117796/pexels-photo-9117796.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
 
+const initialState = {
+  firstName: "",
+  lastName: "",
+  address: "",
+  phone: "",
+  description: "",
+  default: false,
+};
+
+const isAnyPropertyEmpty = (objData) =>
+  Object.values(objData).some((val) => val === "");
+
 function Profile() {
-  const [activeTab, setActiveTab] = useState("orders");
   const [ordersList, setOrdersList] = useState([]);
+  const [view, setView] = useState("account");
+  const [subView, setSubView] = useState("profile");
+  const [currentAddressId, setCurrentAddressId] = useState("");
+  const [isAddingAddress, setIsAddingAddress] = useState(false);
+  const [isEditingAddress, setIsEditingAddress] = useState(false);
+  const [newAddressFormData, setNewAddressFormData] = useState(initialState);
+  const [editAddressFormData, setEditAddressFormData] = useState(initialState);
 
   const { user } = useAuth();
+
   const { getOrdersList } = useOrder();
+
+  const { address, createAddress, editAddress, deleteAddress, setDefault } =
+    useAddress();
 
   useEffect(() => {
     const fetch = async () => {
@@ -29,10 +54,228 @@ function Profile() {
     fetch();
   }, []);
 
+  const handleNewAddressFormData = (e) => {
+    if (e.target.type === "text" || e.target.type === "textarea")
+      setNewAddressFormData({
+        ...newAddressFormData,
+        [e.target.id]: e.target.value || "",
+      });
+
+    if (e.target.type === "checkbox")
+      setNewAddressFormData({
+        ...newAddressFormData,
+        [e.target.id]: e.target.checked,
+      });
+  };
+
+  const handleEditAddressFormData = (e) => {
+    if (e.target.type === "text" || e.target.type === "textarea")
+      setEditAddressFormData({
+        ...editAddressFormData,
+        [e.target.id]: e.target.value,
+      });
+
+    if (e.target.type === "checkbox")
+      setEditAddressFormData({
+        ...editAddressFormData,
+        [e.target.id]: e.target.checked,
+      });
+  };
+
+  const handleNewAddress = (e) => {
+    e.preventDefault();
+
+    if (isAnyPropertyEmpty(newAddressFormData)) return;
+
+    createAddress(newAddressFormData);
+
+    // reset state values
+    setNewAddressFormData(initialState);
+    setIsAddingAddress(false);
+    setCurrentAddressId(null);
+  };
+
+  const handleEditAddress = (e) => {
+    e.preventDefault();
+
+    if (isAnyPropertyEmpty(editAddressFormData)) return;
+    console.log(currentAddressId);
+
+    console.log(editAddressFormData);
+
+    const updatedAddress = { _id: currentAddressId, ...editAddressFormData };
+
+    console.log(updatedAddress);
+
+    editAddress(updatedAddress);
+
+    // reset state values
+    setIsEditingAddress(false);
+    setCurrentAddressId(null);
+  };
+
+  const handleEdit = (addresses) => {
+    const { addressId: _id, ...userAddress } = addresses;
+    console.log("click edits: ", addresses);
+    setIsEditingAddress(true);
+    setCurrentAddressId(_id);
+    setEditAddressFormData(userAddress);
+  };
+
+  const handleDelete = (addressId) => {
+    deleteAddress(addressId);
+  };
+
+  const handleSetDefault = (address) => {
+    setDefault(address);
+  };
+
+  const handleCancel = () => {
+    if (isAddingAddress) setNewAddressFormData(initialState);
+    setIsAddingAddress(false);
+    setIsEditingAddress(false);
+    setCurrentAddressId(null);
+  };
+
+  // console.log("edit add", editAddressFormData);
+  console.log("address from db: ", address);
+
   return (
     <div className="flex items-center justify-center gap-2 bg-[#F9F9F9] px-10 py-20 pt-40 md:px-20 lg:gap-10 xl:gap-20">
-      <div className="flex gap-4 border border-black p-10">
-        <aside className="flex flex-col divide-y px-4">
+      {(isAddingAddress || isEditingAddress) && (
+        <div
+          className="absolute inset-0 flex justify-center bg-black bg-opacity-30 pt-[250px]"
+          // onClick={() => setIsAddingAddress(false)}
+        >
+          <div className="flex h-fit w-[500px] flex-col gap-4 rounded-md bg-white p-6">
+            <p className="text-lg font-semibold">
+              {isEditingAddress ? "Edit Address" : "New Address"}
+            </p>
+
+            <form
+              onSubmit={isEditingAddress ? handleEditAddress : handleNewAddress}
+              className="flex flex-col gap-4"
+            >
+              <input
+                className="rounded-lg border p-3"
+                onChange={
+                  isEditingAddress
+                    ? handleEditAddressFormData
+                    : handleNewAddressFormData
+                }
+                value={
+                  isEditingAddress
+                    ? editAddressFormData?.firstName
+                    : newAddressFormData?.firstName
+                }
+                id="firstName"
+                required
+                type="text"
+                placeholder="First Name"
+              />
+              <input
+                className="rounded-lg border p-3"
+                onChange={
+                  isEditingAddress
+                    ? handleEditAddressFormData
+                    : handleNewAddressFormData
+                }
+                value={
+                  isEditingAddress
+                    ? editAddressFormData?.lastName
+                    : newAddressFormData?.lastName
+                }
+                id="lastName"
+                required
+                type="text"
+                placeholder="Last Name"
+              />
+              <input
+                className="rounded-lg border p-3"
+                onChange={
+                  isEditingAddress
+                    ? handleEditAddressFormData
+                    : handleNewAddressFormData
+                }
+                value={
+                  isEditingAddress
+                    ? editAddressFormData?.phone
+                    : newAddressFormData?.phone
+                }
+                id="phone"
+                required
+                type="text"
+                placeholder="Phone Number"
+              />
+              <input
+                className="rounded-lg border p-3"
+                onChange={
+                  isEditingAddress
+                    ? handleEditAddressFormData
+                    : handleNewAddressFormData
+                }
+                value={
+                  isEditingAddress
+                    ? editAddressFormData?.address
+                    : newAddressFormData?.address
+                }
+                id="address"
+                required
+                type="text"
+                placeholder="Address"
+              />
+              <textarea
+                id="description"
+                onChange={
+                  isEditingAddress
+                    ? handleEditAddressFormData
+                    : handleNewAddressFormData
+                }
+                value={
+                  isEditingAddress
+                    ? editAddressFormData?.description
+                    : newAddressFormData?.description
+                }
+                rows={5}
+                className="max-h-[150px] min-h-[75px] w-full rounded-lg border p-3"
+                placeholder="landmarks near you..."
+              />
+
+              {!isEditingAddress && (
+                <div className="flex items-center gap-2">
+                  <input
+                    onChange={handleNewAddressFormData}
+                    checked={newAddressFormData.default}
+                    id="default"
+                    type="checkbox"
+                    className="h-4 w-4"
+                  />
+                  <label htmlFor="default" className="text-sm text-[#7f8183]">
+                    Set as Default Address
+                  </label>
+                </div>
+              )}
+
+              <input
+                className="cursor-pointer bg-red-500 px-4 py-2 text-xs font-semibold uppercase text-white"
+                type="submit"
+                value={isEditingAddress ? "Update" : "Submit"}
+              />
+
+              <button
+                role="button"
+                className="px-4 py-2 text-xs font-semibold uppercase hover:bg-slate-200"
+                onClick={handleCancel}
+              >
+                Cancel
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      <div className="flex gap-4 p-10">
+        <aside className="flex flex-col divide-y divide-red-300 px-4 pt-4">
           <div className="flex items-center justify-center gap-4 p-4">
             <div className="h-12 w-12 cursor-pointer overflow-hidden rounded-full">
               <img src={profileImage} alt="profile image" />
@@ -41,7 +284,13 @@ function Profile() {
             <div className="flex flex-col">
               <p className="text-md font-semibold">{user.username}</p>
 
-              <p className="flex cursor-pointer items-center gap-1 text-[#888888] hover:underline">
+              <p
+                className="flex cursor-pointer items-center gap-1 text-[#888888] hover:underline"
+                onClick={() => {
+                  setView("account");
+                  setSubView("profile");
+                }}
+              >
                 <span>
                   <RiPencilFill />
                 </span>
@@ -51,225 +300,208 @@ function Profile() {
           </div>
 
           <div className="text-md flex flex-col gap-1 pt-4">
-            <div className="cursor-pointer rounded-md px-2 hover:bg-slate-200">
-              <p className="flex h-8 items-center">
+            <div className="">
+              <p
+                onClick={() => {
+                  setView("account");
+                  setSubView("profile");
+                }}
+                className="flex h-8 cursor-pointer items-center rounded-md px-2 hover:bg-[#faeded]"
+              >
                 <span className="w-[25px] text-red-400">
                   <FaRegUser />
                 </span>
                 My Account
               </p>
 
-              <ul className="hidden">
-                <li>Profile</li>
-                <li>Addresses</li>
-                <li>Change Password</li>
+              <ul
+                className={`${view === "account" ? "flex" : "hidden"} ml-8 flex-col gap-1 py-1 text-sm text-[#000000A6]`}
+              >
+                <li
+                  onClick={() => setSubView("profile")}
+                  className={`cursor-pointer hover:text-red-400 ${subView === "profile" && "font-semibold text-red-400"}`}
+                >
+                  Profile
+                </li>
+                <li
+                  onClick={() => setSubView("address")}
+                  className={`cursor-pointer hover:text-red-400 ${subView === "address" && "font-semibold text-red-400"}`}
+                >
+                  Addresses
+                </li>
+                <li
+                  onClick={() => setSubView("changePassword")}
+                  className={`cursor-pointer hover:text-red-400 ${subView === "changePassword" && "font-semibold text-red-400"}`}
+                >
+                  Change Password
+                </li>
               </ul>
             </div>
 
-            <div className="cursor-pointer rounded-md px-2 hover:bg-slate-200">
-              <p className="flex h-8 items-center">
+            <div
+              className="cursor-pointer rounded-md px-2 hover:bg-[#faeded]"
+              onClick={() => setView("orders")}
+            >
+              <p
+                className={`flex h-8 items-center ${view === "orders" && "font-semibold text-red-400"}`}
+              >
                 <span className="w-[25px] text-red-400">
                   <IoFastFoodOutline />
                 </span>
-                My Orders
+                Orders
               </p>
             </div>
 
-            <div className="cursor-pointer rounded-md px-2 hover:bg-slate-200">
-              <p className="flex h-8 items-center">
+            <div
+              className="cursor-pointer rounded-md px-2 hover:bg-[#faeded]"
+              onClick={() => setView("reservations")}
+            >
+              <p
+                className={`flex h-8 items-center ${view === "reservations" && "font-semibold text-red-400"}`}
+              >
                 <span className="w-[25px] text-red-400">
                   <MdOutlineTableRestaurant />
                 </span>
-                My Reservations
+                Reservations
               </p>
             </div>
 
-            <div className="cursor-pointer rounded-md px-2 hover:bg-slate-200">
-              <p className="flex h-8 items-center">
+            <div
+              className="cursor-pointer rounded-md px-2 hover:bg-[#faeded]"
+              onClick={() => setView("vouchers")}
+            >
+              <p
+                className={`flex h-8 items-center ${view === "vouchers" && "font-semibold text-red-400"}`}
+              >
                 <span className="w-[25px] text-red-400">
                   <RiDiscountPercentLine />
                 </span>
-                My Vouchers
+                Vouchers
               </p>
             </div>
           </div>
         </aside>
 
-        <div className="h-[500px]">
-          {/* account */}
-          <div className="flex flex-col divide-y px-8">
-            <div className="py-4">
-              <p className="text-xl font-semibold">My Profile</p>
-              <p className="text-sm">Manage and protect your account</p>
-            </div>
-
-            <div className="flex w-[800px] divide-x">
-              <form className="flex divide-x p-2">
-                <table className="w-[500px]">
-                  <tr>
-                    <td className="px-2 py-4">
-                      <p className="text-end text-[#555555CC]">Username</p>
-                    </td>
-                    <td className="px-2 py-4">
-                      <p>{user.username}</p>
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td className="px-2 py-4">
-                      <p className="text-end text-[#555555CC]">Name</p>
-                    </td>
-                    <td className="px-2">
-                      <input
-                        className="w-full border bg-transparent p-2"
-                        type="text"
-                        defaultValue={user.username}
-                      />
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td className="px-2 py-4">
-                      <p className="text-end text-[#555555CC]">Email</p>
-                    </td>
-                    <td className="flex gap-2 px-2 py-4">
-                      <p>{user.email}</p>
-                      <p className="cursor-pointer text-blue-400 underline">
-                        Change
-                      </p>
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td className="px-2 py-4">
-                      <p className="text-end text-[#555555CC]"> Phone Number</p>
-                    </td>
-                    <td className="flex gap-2 px-2 py-4">
-                      <p>{user.phone || "09270089269"}</p>
-                      <p className="cursor-pointer text-blue-400 underline">
-                        Change
-                      </p>
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td className="px-2 py-4"></td>
-                    <td className="flex gap-2 px-2 py-4">
-                      <button className="rounded-md bg-red-500 px-4 py-2 font-semibold text-white">
-                        Save
-                      </button>
-                    </td>
-                  </tr>
-                </table>
-              </form>
-
-              <div className="flex w-[300px] flex-col items-center justify-center gap-6">
-                <div className="h-[100px] w-[100px] cursor-pointer overflow-hidden rounded-full">
-                  <img src={profileImage} alt="profile image" />
+        <div className="max-h-[1000px] w-[900px] divide-y rounded-md bg-[#faeded] pb-8">
+          {view === "account" && subView === "profile" && <Account />}
+          {view === "account" && subView === "address" && (
+            <div className="flex w-full flex-col divide-y divide-red-300 px-8 pb-8 pt-4">
+              <div className="flex items-center justify-between py-4">
+                <div className="">
+                  <p className="text-xl font-semibold">My Addresses</p>
+                  <p className="text-sm">Manage and check your addresses</p>
                 </div>
 
-                <button className="rounded-md border bg-transparent px-4 py-2 text-[#555555]">
-                  Select Image
+                <button
+                  onClick={() => setIsAddingAddress(true)}
+                  className="flex items-center gap-2 rounded-md bg-red-500 px-4 py-2 text-sm font-semibold uppercase text-white"
+                >
+                  <FaPlus /> Add New Address
                 </button>
+              </div>
 
-                <div>
-                  <p className="text-md text-[#999999]">
-                    File size: maximum 1 MB
-                  </p>
-                  <p className="text-md text-[#999999]">
-                    File extension: .JPEG, .PNG
-                  </p>
-                </div>
+              <div className="flex max-h-[800px] flex-col gap-2 divide-y divide-red-200 overflow-y-auto py-4 pt-6">
+                {address.length ? (
+                  address
+                    .sort((a, b) => b.default - a.default)
+                    .map(
+                      ({
+                        firstName,
+                        lastName,
+                        _id: addressId,
+                        phone,
+                        address,
+                        default: isDefault,
+                        description,
+                      }) => (
+                        <div
+                          key={addressId}
+                          className="flex h-[140px] justify-between gap-4 py-[18px]"
+                        >
+                          <div className="flex flex-col gap-2">
+                            <div className="flex divide-x divide-red-300">
+                              <p className="pr-2 font-semibold">{`${firstName} ${lastName}`}</p>
+                              <p className="pl-2 text-slate-600">
+                                (+63) {phone}
+                              </p>
+                            </div>
+                            <p className="w-[400px] text-xs text-slate-600">
+                              {address}
+                            </p>
+
+                            {isDefault && (
+                              <p className="w-fit border border-red-500 px-2 text-sm text-red-500">
+                                Default
+                              </p>
+                            )}
+                          </div>
+
+                          <div className="flex flex-col gap-3">
+                            <div className="flex justify-end gap-3 text-sm">
+                              <button
+                                onClick={() =>
+                                  handleEdit({
+                                    firstName,
+                                    lastName,
+                                    addressId,
+                                    phone,
+                                    address,
+                                    description,
+                                    default: isDefault,
+                                  })
+                                }
+                                className="text-blue-500 hover:underline"
+                              >
+                                Edit
+                              </button>
+                              {!isDefault && (
+                                <button
+                                  onClick={() => handleDelete(addressId)}
+                                  className="text-red-500 hover:underline"
+                                >
+                                  Delete
+                                </button>
+                              )}
+                            </div>
+
+                            {!isDefault && (
+                              <button
+                                onClick={() =>
+                                  handleSetDefault({
+                                    firstName,
+                                    lastName,
+                                    _id: addressId,
+                                    phone,
+                                    address,
+                                    description,
+                                    default: isDefault,
+                                  })
+                                }
+                                className="border border-slate-500 px-2 text-sm text-slate-500"
+                              >
+                                Set as Default
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                      ),
+                    )
+                ) : (
+                  <p>No address saved</p>
+                )}
               </div>
             </div>
-          </div>
+          )}
+
+          {view === "account" && subView === "changePassword" && (
+            <p>change password</p>
+          )}
+          {view === "orders" &&
+            ordersList.map((el) => <p key={el._id}>{el.userIdRef}</p>)}
+          {view === "reservations" && <p>reservations</p>}
+          {view === "vouchers" && <p>vouchers</p>}
         </div>
       </div>
-
-      {/* <div className="flex h-[550px] max-h-[550px] w-[1000px] flex-col gap-4 rounded-lg bg-[#FEE2E2] p-6 lg:flex-row">
-        <div className="flex w-full flex-col items-center gap-2 rounded-lg bg-white p-4 lg:max-w-[300px]">
-          <div className="h-60 w-60 overflow-hidden rounded-full">
-            <img
-              className="object-cover"
-              src={profileImage}
-              alt="profile image"
-            />
-          </div>
-
-          <h3 className="text-lg font-bold">Profile Details</h3>
-
-          <div className="my-2 h-[1px] w-full bg-slate-700"></div>
-
-          <div className="text-md w-full">
-            <p className="truncate">
-              <span className="font-semibold">Username:</span> {user.username}
-            </p>
-            <p className="truncate">
-              <span className="font-semibold">Email:</span> {user.email}
-            </p>
-          </div>
-
-          <div className="mt-2 flex w-full flex-col gap-2 text-xs">
-            <button className="w-full rounded-lg bg-red-500 p-3 font-bold uppercase text-white">
-              reset password
-            </button>
-            <button className="w-full rounded-lg bg-red-500 p-3 font-bold uppercase text-white">
-              set order details
-            </button>
-          </div>
-        </div>
-
-        
-        <div className="flex h-[500px] w-full flex-col overflow-hidden rounded-lg">
-          <div className="flex h-[50px] w-full">
-            <div
-              className={`${activeTab === "orders" ? "bg-red-500" : "bg-slate-400"} flex w-full cursor-pointer items-center justify-evenly p-4 font-bold text-white`}
-              onClick={() => setActiveTab("orders")}
-            >
-              <p to="/orders">Orders</p>
-            </div>
-
-            <div
-              className={`${activeTab === "reservations" ? "bg-red-500" : "bg-slate-400"} flex w-full cursor-pointer items-center justify-evenly p-4 font-bold text-white`}
-              onClick={() => setActiveTab("reservations")}
-            >
-              <p>Reservations</p>
-            </div>
-          </div>
-
-          {activeTab === "orders" && (
-            <form className="h-[100px] bg-red-200 p-4">
-              <input
-                type="text"
-                placeholder="order id"
-                className="rounded-lg border p-3"
-              />
-
-              <input id="all" type="checkbox" />
-              <label htmlFor="all">show all</label>
-
-              <input id="current" type="checkbox" />
-              <label htmlFor="current">current</label>
-
-              <input id="past" type="checkbox" />
-              <label htmlFor="past">past</label>
-            </form>
-          )}
-
-          <div className="w-full overflow-y-auto bg-red-300 p-6">
-            <div className="flex flex-col gap-4">
-              <div className="h-[200px] border border-black"></div>
-              <div className="h-[200px] border border-black"></div>
-            </div>
-          </div>
-
-          {activeTab === "reservations" && (
-            <div>
-              <p>reservations</p>
-            </div>
-          )}
-        </div>
-      </div> */}
     </div>
   );
 }

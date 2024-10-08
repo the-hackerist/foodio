@@ -73,7 +73,7 @@ export const deleteAddress = async (req, res, next) => {
 };
 
 export const editAddress = async (req, res, next) => {
-  const { _id, updatedAddress, addressList, settingDefault, fasdfs } = req.body;
+  const { _id, updatedAddress, addressList, settingDefault } = req.body;
 
   let newAddressList = addressList;
 

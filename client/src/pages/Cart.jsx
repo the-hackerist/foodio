@@ -150,7 +150,7 @@ function Cart() {
       className={`flex flex-col items-center justify-center bg-[#F9F9F9] px-10 py-20 pt-40`}
     >
       {isCheckingOut && (isAddingAddress || isEditingAddress) && (
-        <div className="absolute flex h-full w-full justify-center border-black bg-black bg-opacity-30 pt-[500px]">
+        <div className="absolute inset-0 flex w-full justify-center border-black bg-black bg-opacity-30 pt-[500px]">
           <div className="flex h-fit w-[400px] flex-col gap-4 rounded-lg border bg-white p-6">
             <p className="text-lg font-semibold">
               {isEditingAddress ? "Edit Address" : "New Address"}

@@ -28,7 +28,7 @@ function App() {
         <CartProvider>
           <AddressProvider>
             <OrderProvider>
-              <div className="relative h-screen">
+              <div className="relative">
                 <Header />
                 <Routes>
                   <Route index element={<HomePage />} />
