@@ -7,6 +7,7 @@ import authRouter from "./routes/authRouter.js";
 import cartRouter from "./routes/cartRouter.js";
 import addressRouter from "./routes/addressRouter.js";
 import orderRouter from "./routes/orderRouter.js";
+import profileRouter from "./routes/profileRouter.js";
 
 dotenv.config();
 
@@ -36,6 +37,8 @@ app.use("/api/v1/cart", cartRouter);
 app.use("/api/v1/address", addressRouter);
 
 app.use("/api/v1/order", orderRouter);
+
+app.use("/api/v1/profile", profileRouter);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;

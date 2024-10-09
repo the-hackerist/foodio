@@ -3,8 +3,23 @@ import User from "../models/UserModel.js";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 
+export const getUser = async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    const user = await User.findById(id);
+
+    if (!user) next({ statusCode: 404, message: "User does not exist!" });
+
+    res.status(200).json(user);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const signIn = async (req, res, next) => {
   const { email, password } = req.body;
+
   try {
     const validUser = await User.findOne({ email });
     if (!validUser)

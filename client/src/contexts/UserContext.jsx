@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 /* eslint-disable react/prop-types */
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 
 const UserContext = createContext();
@@ -15,6 +15,9 @@ function reducer(state, action) {
   switch (action.type) {
     case "reset-error":
       return { ...state, error: "" };
+
+    case "get-user":
+      return { ...state, user: action.payload, loading: false, error: false };
 
     case "auth/sign-in":
       return {
@@ -79,6 +82,41 @@ function UserProvider({ children }) {
   );
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  const getUser = async () => {
+    const { _id } = user;
+
+    try {
+      const res = await fetch(
+        `http://localhost:3000/api/v1/auth/get-user/${_id}`,
+      );
+
+      const data = await res.json();
+
+      if (!data) {
+        console.log("error in getUser function of UserContext");
+        return;
+      }
+
+      dispatch({ type: "get-user", payload: data });
+
+      console.log("data here:", data);
+
+      localStorage.setItem(
+        "auth",
+        JSON.stringify({ user: data, loading: false, error: "" }),
+      );
+
+      return data;
+    } catch (error) {
+      console.log(error.message);
+      return;
+    }
+  };
 
   const signIn = async (email, password) => {
     try {
@@ -184,7 +222,16 @@ function UserProvider({ children }) {
 
   return (
     <UserContext.Provider
-      value={{ user, error, loading, signIn, signOut, signUp, resetError }}
+      value={{
+        user,
+        error,
+        loading,
+        signIn,
+        signOut,
+        signUp,
+        resetError,
+        getUser,
+      }}
     >
       {children}
     </UserContext.Provider>
