@@ -9,6 +9,11 @@ function PasswordInput({
   placeholder,
   id,
 }) {
+  let inputStyle = "w-full rounded-lg border p-4";
+
+  if (id === "newPassword" || id === "confirmPassword")
+    inputStyle = "w-full rounded-sm border border-[#888888] bg-transparent p-2";
+
   return (
     <div className="relative">
       {name.length > 0 && (
@@ -27,7 +32,7 @@ function PasswordInput({
       )}
 
       <input
-        className="w-full rounded-lg border p-4"
+        className={inputStyle}
         type={isVisible ? "text" : "password"}
         placeholder={placeholder}
         value={name}

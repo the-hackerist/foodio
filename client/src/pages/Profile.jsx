@@ -10,7 +10,9 @@ import { useAuth } from "../contexts/UserContext";
 import { useOrder } from "../contexts/OrderContext";
 import { useAddress } from "../contexts/AddressContext";
 
-import Account from "../contexts/Account";
+import Account from "../components/UI/Account";
+import ChangePassword from "../components/UI/ChangePassword";
+import { useProfile } from "../contexts/ProfileContext";
 
 const profileImage =
   "https://images.pexels.com/photos/9117796/pexels-photo-9117796.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
@@ -37,9 +39,11 @@ function Profile() {
   const [newAddressFormData, setNewAddressFormData] = useState(initialState);
   const [editAddressFormData, setEditAddressFormData] = useState(initialState);
 
-  const { user } = useAuth();
+  const { user, getUser } = useAuth();
 
   const { getOrdersList } = useOrder();
+
+  const { profile } = useProfile();
 
   const { address, createAddress, editAddress, deleteAddress, setDefault } =
     useAddress();
@@ -52,6 +56,7 @@ function Profile() {
     };
 
     fetch();
+    getUser();
   }, []);
 
   const handleNewAddressFormData = (e) => {
@@ -282,7 +287,9 @@ function Profile() {
             </div>
 
             <div className="flex flex-col">
-              <p className="text-md font-semibold">{user.username}</p>
+              <p className="text-md font-semibold">
+                {user.username || "no user"}
+              </p>
 
               <p
                 className="flex cursor-pointer items-center gap-1 text-[#888888] hover:underline"
@@ -494,7 +501,7 @@ function Profile() {
           )}
 
           {view === "account" && subView === "changePassword" && (
-            <p>change password</p>
+            <ChangePassword />
           )}
           {view === "orders" &&
             ordersList.map((el) => <p key={el._id}>{el.userIdRef}</p>)}
