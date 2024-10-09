@@ -4,6 +4,7 @@ import { UserProvider } from "./contexts/UserContext.jsx";
 import { CartProvider } from "./contexts/CartContext.jsx";
 import { AddressProvider } from "./contexts/AddressContext.jsx";
 import { OrderProvider } from "./contexts/OrderContext.jsx";
+import { ProfileProvider } from "./contexts/ProfileContext.jsx";
 
 import HomePage from "./pages/HomePage";
 import Menu from "./pages/Menu";
@@ -28,26 +29,28 @@ function App() {
         <CartProvider>
           <AddressProvider>
             <OrderProvider>
-              <div className="relative">
-                <Header />
-                <Routes>
-                  <Route index element={<HomePage />} />
-                  <Route path="/menu" element={<Menu />} />
-                  <Route path="/about-us" element={<AboutUs />} />
-                  <Route path="/contact-us" element={<ContactUs />} />
-                  <Route path="/log-in" element={<Login />} />
-                  <Route path="/sign-up" element={<SignUp />} />
-                  <Route path="/order" element={<Order />} />
-                  <Route path="/order/:id" element={<OrderStatus />} />
-                  <Route element={<PrivateRoute />}>
-                    <Route path="/profile" element={<Profile />} />
-                    <Route path="/reservation" element={<Reservation />} />
-                    <Route path="/cart" element={<Cart />} />
-                  </Route>
-                  <Route path="*" element={<PageNotFound />} />
-                </Routes>
-                <Footer />
-              </div>
+              <ProfileProvider>
+                <div className="relative">
+                  <Header />
+                  <Routes>
+                    <Route index element={<HomePage />} />
+                    <Route path="/menu" element={<Menu />} />
+                    <Route path="/about-us" element={<AboutUs />} />
+                    <Route path="/contact-us" element={<ContactUs />} />
+                    <Route path="/log-in" element={<Login />} />
+                    <Route path="/sign-up" element={<SignUp />} />
+                    <Route path="/order" element={<Order />} />
+                    <Route path="/order/:id" element={<OrderStatus />} />
+                    <Route element={<PrivateRoute />}>
+                      <Route path="/profile" element={<Profile />} />
+                      <Route path="/reservation" element={<Reservation />} />
+                      <Route path="/cart" element={<Cart />} />
+                    </Route>
+                    <Route path="*" element={<PageNotFound />} />
+                  </Routes>
+                  <Footer />
+                </div>
+              </ProfileProvider>
             </OrderProvider>
           </AddressProvider>
         </CartProvider>
