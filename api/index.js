@@ -26,18 +26,10 @@ mongoose
 app.use(express.json());
 app.use(cors());
 
-app.get("/test", async (req, res) => {
-  res.end(JSON.stringify({ message: "test" }));
-});
-
 app.use("/api/v1/auth", authRouter);
-
 app.use("/api/v1/cart", cartRouter);
-
 app.use("/api/v1/address", addressRouter);
-
 app.use("/api/v1/order", orderRouter);
-
 app.use("/api/v1/profile", profileRouter);
 
 app.use((err, req, res, next) => {
