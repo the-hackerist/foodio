@@ -34,6 +34,8 @@ function OrderStatus() {
     fetchListing();
   }, []);
 
+  console.log(orderData);
+
   if (!orderData) return <div>no data!</div>;
 
   return (
@@ -188,7 +190,7 @@ function OrderStatus() {
               className="flex items-center justify-between gap-4"
             >
               <div className="flex gap-4">
-                <div className="h-24 w-24 overflow-hidden border border-[#00000042]">
+                <div className="h-24 w-24 overflow-hidden rounded-md border border-[#00000042]">
                   <img
                     className="object-cover"
                     alt="food image"
@@ -201,7 +203,7 @@ function OrderStatus() {
                   <p className="line-clamp-1 w-[550px] text-sm">
                     {item.description}
                   </p>
-                  <p>x1</p>
+                  <p>x{item.quantity}</p>
                 </div>
               </div>
 

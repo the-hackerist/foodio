@@ -118,8 +118,6 @@ function UserProvider({ children }) {
 
     const body = { _id: user._id, newPassword };
 
-    console.log(body);
-
     try {
       const res = await fetch(
         "http://localhost:3000/api/v1/auth/update-password",

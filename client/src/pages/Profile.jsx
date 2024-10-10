@@ -12,6 +12,7 @@ import { useAddress } from "../contexts/AddressContext";
 
 import Account from "../components/UI/Account";
 import ChangePassword from "../components/UI/ChangePassword";
+import OrderProfile from "../components/UI/OrderProfile";
 
 const profileImage =
   "https://images.pexels.com/photos/9117796/pexels-photo-9117796.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
@@ -132,6 +133,8 @@ function Profile() {
     setIsEditingAddress(false);
     setCurrentAddressId(null);
   };
+
+  console.log(ordersList);
 
   return (
     <div className="flex items-center justify-center gap-2 bg-[#F9F9F9] px-10 py-20 pt-40 md:px-20 lg:gap-10 xl:gap-20">
@@ -377,7 +380,9 @@ function Profile() {
           </div>
         </aside>
 
-        <div className="max-h-[1000px] w-[900px] divide-y rounded-md bg-[#faeded] pb-8">
+        <div
+          className={`w-[900px] space-y-4 rounded-md bg-[#faeded] pb-8 ${view === "orders" ? "p-8" : ""}`}
+        >
           {view === "account" && subView === "profile" && <Account />}
           {view === "account" && subView === "address" && (
             <div className="flex w-full flex-col divide-y divide-red-300 px-8 pb-8 pt-4">
@@ -493,7 +498,10 @@ function Profile() {
           )}
 
           {view === "orders" &&
-            ordersList.map((el) => <p key={el._id}>{el.userIdRef}</p>)}
+            ordersList.map((order) => (
+              <OrderProfile key={order._id} order={order} />
+            ))}
+
           {view === "reservations" && <p>reservations</p>}
           {view === "vouchers" && <p>vouchers</p>}
         </div>
