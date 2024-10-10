@@ -3,6 +3,46 @@ import User from "../models/UserModel.js";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 
+export const updatePassword = async (req, res, next) => {
+  const { _id, newPassword } = req.body;
+
+  const hashedPassword = bcryptjs.hashSync(newPassword, 10);
+
+  const update = { password: hashedPassword };
+
+  try {
+    const validUser = await User.findByIdAndUpdate({ _id }, update, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!validUser)
+      return next({ statusCode: 404, message: "User does not exist!" });
+
+    res.status(200).json({ success: "OK" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const verifyUser = async (req, res, next) => {
+  const { email, password } = req.body;
+
+  try {
+    const validUser = await User.findOne({ email });
+
+    if (!validUser)
+      return next({ statusCode: 404, message: "User does not exist!" });
+
+    const validPassword = bcryptjs.compareSync(password, validUser.password);
+
+    if (!validPassword) res.status(404).json({ success: "failed" });
+    else res.status(200).json({ success: "OK" });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const getUser = async (req, res, next) => {
   const { id } = req.params;
 

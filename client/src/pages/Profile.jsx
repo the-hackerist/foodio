@@ -491,6 +491,7 @@ function Profile() {
           {view === "account" && subView === "changePassword" && (
             <ChangePassword />
           )}
+
           {view === "orders" &&
             ordersList.map((el) => <p key={el._id}>{el.userIdRef}</p>)}
           {view === "reservations" && <p>reservations</p>}

@@ -113,6 +113,49 @@ function UserProvider({ children }) {
     getUser();
   }, []);
 
+  const updatePassword = async (newPassword) => {
+    if (!newPassword) return;
+
+    const body = { _id: user._id, newPassword };
+
+    console.log(body);
+
+    try {
+      const res = await fetch(
+        "http://localhost:3000/api/v1/auth/update-password",
+        {
+          method: "POST",
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify(body),
+        },
+      );
+
+      const data = await res.json();
+
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const verifyUser = async (password) => {
+    if (!password) return;
+
+    try {
+      const res = await fetch("http://localhost:3000/api/v1/auth/verify", {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({ email: user.email, password }),
+      });
+
+      const data = await res.json();
+
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const getUser = async () => {
     const { _id } = user;
 
@@ -279,6 +322,8 @@ function UserProvider({ children }) {
         resetError,
         getUser,
         updateProfile,
+        verifyUser,
+        updatePassword,
       }}
     >
       {children}

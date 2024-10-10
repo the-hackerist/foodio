@@ -11,7 +11,11 @@ function PasswordInput({
 }) {
   let inputStyle = "w-full rounded-lg border p-4";
 
-  if (id === "newPassword" || id === "confirmPassword")
+  if (
+    id === "newPassword" ||
+    id === "confirmPassword" ||
+    id === "currentPassword"
+  )
     inputStyle = "w-full rounded-sm border border-[#888888] bg-transparent p-2";
 
   return (
