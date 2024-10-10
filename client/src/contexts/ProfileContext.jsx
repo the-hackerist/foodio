@@ -46,7 +46,7 @@ function ProfileProvider({ children }) {
     try {
       dispatch({ type: "profile/start" });
 
-      const res = await fetch(`${BASE_URL}/profile/update`, {
+      const res = await fetch(`http://localhost:3000/profile/update`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(body),
@@ -54,14 +54,11 @@ function ProfileProvider({ children }) {
 
       const data = await res.json();
 
-      console.log(data);
-
       if (!data.success) {
         dispatch({ type: "profile/error", payload: data.message });
         return;
       }
 
-      console.log("data passed");
       dispatch({ type: "profile/update", data });
     } catch (error) {
       dispatch({ type: "profile/error", payload: error.message });

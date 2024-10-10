@@ -107,8 +107,6 @@ function UserProvider({ children }) {
     initialState,
   );
 
-  console.log("UserContext: ", user);
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -130,15 +128,6 @@ function UserProvider({ children }) {
         return;
       }
 
-      // dispatch({ type: "get-user", payload: data });
-
-      // console.log("data here:", data);
-
-      // localStorage.setItem(
-      //   "auth",
-      //   JSON.stringify({ user: data, loading: false, error: "" }),
-      // );
-
       return data;
     } catch (error) {
       console.log(error.message);
@@ -148,7 +137,7 @@ function UserProvider({ children }) {
 
   const updateProfile = async (profileData) => {
     const body = { _id: user._id, ...profileData };
-    console.log("this is from user context", body);
+
     try {
       dispatch({ type: "profile/start" });
 
@@ -160,14 +149,10 @@ function UserProvider({ children }) {
 
       const data = await res.json();
 
-      console.log("data from fetch:", data);
-
       if (!data) {
         dispatch({ type: "profile/error", payload: "Something went wrong!" });
         return;
       }
-
-      console.log(data);
 
       dispatch({ type: "profile/update", payload: data });
 

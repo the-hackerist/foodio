@@ -124,7 +124,6 @@ function CartProvider({ children }) {
           ...cart,
           { foodId, foodName, stock, price, quantity, image, description },
         ];
-        console.log(cartList);
 
         break;
       }
@@ -133,13 +132,11 @@ function CartProvider({ children }) {
         cartList = cart.map((item) =>
           item.foodName === foodName ? { ...item, quantity } : item,
         );
-        console.log(cartList);
         break;
       }
 
       case "removeItem": {
         cartList = cart.filter((menu) => menu.foodId !== id);
-        console.log(cartList);
         break;
       }
 

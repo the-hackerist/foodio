@@ -1,7 +1,5 @@
-
 /* eslint-disable react/prop-types */
 function OrderProfile({ order }) {
-  console.log("order", order);
   return (
     <div className="flex w-full flex-col border border-black">
       <div className="PY-2 flex w-full flex-col">

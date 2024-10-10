@@ -78,7 +78,6 @@ function OrderProvider({ children }) {
 
       const data = await res.json();
 
-      console.log("Order context: ", data);
 
       return data;
     } catch (error) {

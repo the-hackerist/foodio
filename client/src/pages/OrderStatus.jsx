@@ -34,8 +34,6 @@ function OrderStatus() {
     fetchListing();
   }, []);
 
-  console.log(orderData?.status);
-
   if (!orderData) return <div>no data!</div>;
 
   return (

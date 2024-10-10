@@ -12,7 +12,6 @@ import { useAddress } from "../contexts/AddressContext";
 
 import Account from "../components/UI/Account";
 import ChangePassword from "../components/UI/ChangePassword";
-import { useProfile } from "../contexts/ProfileContext";
 
 const profileImage =
   "https://images.pexels.com/photos/9117796/pexels-photo-9117796.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
@@ -102,24 +101,18 @@ function Profile() {
     e.preventDefault();
 
     if (isAnyPropertyEmpty(editAddressFormData)) return;
-    console.log(currentAddressId);
-
-    console.log(editAddressFormData);
 
     const updatedAddress = { _id: currentAddressId, ...editAddressFormData };
 
-    console.log(updatedAddress);
-
     editAddress(updatedAddress);
 
-    // reset state values
     setIsEditingAddress(false);
     setCurrentAddressId(null);
   };
 
   const handleEdit = (addresses) => {
     const { addressId: _id, ...userAddress } = addresses;
-    console.log("click edits: ", addresses);
+
     setIsEditingAddress(true);
     setCurrentAddressId(_id);
     setEditAddressFormData(userAddress);
@@ -139,9 +132,6 @@ function Profile() {
     setIsEditingAddress(false);
     setCurrentAddressId(null);
   };
-
-  // console.log("edit add", editAddressFormData);
-  console.log("address from db: ", address);
 
   return (
     <div className="flex items-center justify-center gap-2 bg-[#F9F9F9] px-10 py-20 pt-40 md:px-20 lg:gap-10 xl:gap-20">

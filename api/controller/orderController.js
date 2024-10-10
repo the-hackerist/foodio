@@ -3,7 +3,6 @@
 import Order from "../models/OrderModel.js";
 
 export const getOrder = async (req, res, next) => {
-  console.log(req.params);
   try {
     const order = await Order.findById(req.params.id);
 
