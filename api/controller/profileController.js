@@ -13,14 +13,9 @@ export const updateProfile = async (req, res, next) => {
 
     if (!user) next({ statusCode: 404, message: "User does not exist!" });
 
-    res.status(200).json(user);
+    const { access_level, password, ...finalUser } = user._doc;
 
-    // res.status(200).json({
-    //   success: "OK",
-    //   statusCode: 200,
-    //   message: "User successfully updated!",
-    //   data: user,
-    // });
+    res.status(200).json(finalUser);
   } catch (error) {
     next(error);
   }
