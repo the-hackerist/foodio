@@ -3,6 +3,8 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 
+const BASE_URL = `http://localhost:3000/api/v1`;
+
 const UserContext = createContext();
 
 const initialState = JSON.parse(localStorage.getItem("auth")) || {
@@ -15,6 +17,30 @@ function reducer(state, action) {
   switch (action.type) {
     case "reset-error":
       return { ...state, error: "" };
+
+    case "profile/update":
+      return {
+        ...state,
+        user: action.payload,
+        error: "",
+        loading: false,
+      };
+
+    case "profile/error":
+      return {
+        ...state,
+        user: state.user,
+        error: action.payload,
+        loading: false,
+      };
+
+    case "profile/start":
+      return {
+        ...state,
+        user: state.user,
+        error: "",
+        loading: false,
+      };
 
     case "get-user":
       return { ...state, user: action.payload, loading: false, error: false };
@@ -81,6 +107,8 @@ function UserProvider({ children }) {
     initialState,
   );
 
+  console.log("UserContext: ", user);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -102,19 +130,53 @@ function UserProvider({ children }) {
         return;
       }
 
-      dispatch({ type: "get-user", payload: data });
+      // dispatch({ type: "get-user", payload: data });
 
-      console.log("data here:", data);
+      // console.log("data here:", data);
 
-      localStorage.setItem(
-        "auth",
-        JSON.stringify({ user: data, loading: false, error: "" }),
-      );
+      // localStorage.setItem(
+      //   "auth",
+      //   JSON.stringify({ user: data, loading: false, error: "" }),
+      // );
 
       return data;
     } catch (error) {
       console.log(error.message);
       return;
+    }
+  };
+
+  const updateProfile = async (profileData) => {
+    const body = { _id: user._id, ...profileData };
+    console.log("this is from user context", body);
+    try {
+      dispatch({ type: "profile/start" });
+
+      const res = await fetch(`${BASE_URL}/profile/update`, {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      const data = await res.json();
+
+      console.log("data from fetch:", data);
+
+      if (!data) {
+        dispatch({ type: "profile/error", payload: "Something went wrong!" });
+        return;
+      }
+
+      console.log(data);
+
+      dispatch({ type: "profile/update", payload: data });
+
+      localStorage.setItem(
+        "auth",
+        JSON.stringify({ user: data, loading: false, error: "" }),
+      );
+    } catch (error) {
+      dispatch({ type: "profile/error", payload: error.message });
     }
   };
 
@@ -231,6 +293,7 @@ function UserProvider({ children }) {
         signUp,
         resetError,
         getUser,
+        updateProfile,
       }}
     >
       {children}

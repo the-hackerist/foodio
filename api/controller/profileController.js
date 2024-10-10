@@ -13,7 +13,7 @@ export const updateProfile = async (req, res, next) => {
 
     if (!user) next({ statusCode: 404, message: "User does not exist!" });
 
-    res.status(200).json("User successfully updated!");
+    res.status(200).json(user);
 
     // res.status(200).json({
     //   success: "OK",

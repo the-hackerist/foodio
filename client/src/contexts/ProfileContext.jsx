@@ -3,8 +3,6 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
 import { useAuth } from "./UserContext";
 
-const BASE_URL = `http://localhost:3000/api/v1`;
-
 const ProfileContext = createContext();
 
 const initialState = {

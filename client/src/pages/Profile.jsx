@@ -43,8 +43,6 @@ function Profile() {
 
   const { getOrdersList } = useOrder();
 
-  const { profile } = useProfile();
-
   const { address, createAddress, editAddress, deleteAddress, setDefault } =
     useAddress();
 

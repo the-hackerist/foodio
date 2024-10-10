@@ -1,14 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/UserContext";
-import { useProfile } from "../../contexts/ProfileContext";
 
 const profileImage =
   "https://images.pexels.com/photos/9117796/pexels-photo-9117796.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
 
 function Account() {
-  const { user, getUser } = useAuth();
-  const { updateProfile } = useProfile();
+  const { user, getUser, updateProfile } = useAuth();
 
   const [profile, setProfile] = useState({
     firstName: "",
@@ -21,12 +19,10 @@ function Account() {
     const fetchUser = async () => {
       const userData = await getUser();
 
-      console.log(userData);
       setProfile(userData);
     };
 
     fetchUser();
-    getUser();
   }, []);
 
   const onChangeProfile = (e) =>
