@@ -13,6 +13,7 @@ import { useAddress } from "../contexts/AddressContext";
 import Account from "../components/UI/Account";
 import ChangePassword from "../components/UI/ChangePassword";
 import OrderProfile from "../components/UI/OrderProfile";
+import UnderConstruction from "../components/UI/UnderConstruction";
 
 const profileImage =
   "https://images.pexels.com/photos/9117796/pexels-photo-9117796.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
@@ -379,7 +380,7 @@ function Profile() {
         </aside>
 
         <div
-          className={`w-[900px] space-y-4 rounded-md bg-[#faeded] pb-8 ${view === "orders" ? "p-8" : ""}`}
+          className={`w-[900px] space-y-4 rounded-md bg-[#faeded] pb-8 ${view === "orders" ? "p-8" : ""} ${view === "vouchers" || view === "reservations" ? "flex items-center justify-center" : ""}`}
         >
           {view === "account" && subView === "profile" && <Account />}
           {view === "account" && subView === "address" && (
@@ -500,8 +501,8 @@ function Profile() {
               <OrderProfile key={order._id} order={order} />
             ))}
 
-          {view === "reservations" && <p>reservations</p>}
-          {view === "vouchers" && <p>vouchers</p>}
+          {view === "reservations" && <UnderConstruction />}
+          {view === "vouchers" && <UnderConstruction />}
         </div>
       </div>
     </div>
