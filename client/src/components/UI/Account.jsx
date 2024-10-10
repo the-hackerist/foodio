@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../../contexts/UserContext";
 
 const profileImage =
@@ -14,6 +14,8 @@ function Account() {
     phone: "",
     username: "",
   });
+
+  const inputRef = useRef(null);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -32,6 +34,8 @@ function Account() {
     e.preventDefault();
 
     updateProfile(profile);
+
+    inputRef.current.blur();
   };
 
   return (
@@ -60,6 +64,7 @@ function Account() {
                 </td>
                 <td className="px-2">
                   <input
+                    ref={inputRef}
                     id="username"
                     value={profile.username}
                     onChange={onChangeProfile}
@@ -75,6 +80,7 @@ function Account() {
                 </td>
                 <td className="px-2">
                   <input
+                    ref={inputRef}
                     id="firstName"
                     value={profile.firstName}
                     onChange={onChangeProfile}
@@ -90,6 +96,7 @@ function Account() {
                 </td>
                 <td className="px-2">
                   <input
+                    ref={inputRef}
                     id="lastName"
                     value={profile.lastName}
                     onChange={onChangeProfile}
@@ -105,6 +112,7 @@ function Account() {
                 </td>
                 <td className="px-2">
                   <input
+                    ref={inputRef}
                     id="phone"
                     value={profile.phone}
                     onChange={onChangeProfile}
