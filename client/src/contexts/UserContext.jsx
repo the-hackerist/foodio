@@ -2,6 +2,7 @@
 /* eslint-disable react/prop-types */
 import { createContext, useContext, useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
+import { useMenu } from "./MenuContext";
 
 const BASE_URL = `http://localhost:3000/api/v1`;
 
@@ -108,6 +109,8 @@ function UserProvider({ children }) {
   );
 
   const navigate = useNavigate();
+
+  const { resetMenu, setMenu } = useMenu();
 
   useEffect(() => {
     getUser();
@@ -237,6 +240,8 @@ function UserProvider({ children }) {
         "auth",
         JSON.stringify({ user: data, loading: false, error: "" }),
       );
+
+      setMenu("home");
       navigate("/");
     } catch (error) {
       dispatch({ type: "auth/sign-in/fail", payload: error.message });
@@ -304,6 +309,7 @@ function UserProvider({ children }) {
   const signOut = () => {
     localStorage.removeItem("auth");
     dispatch({ type: "auth/sign-out" });
+    resetMenu();
   };
 
   const resetError = () => dispatch({ type: "reset-error" });

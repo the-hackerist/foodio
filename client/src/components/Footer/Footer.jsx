@@ -1,6 +1,10 @@
 import { FaTwitter, FaInstagram, FaFacebookF } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { useMenu } from "../../contexts/MenuContext";
 
 function Footer() {
+  const { setMenu } = useMenu();
+
   return (
     <footer className="flex flex-col items-center gap-10 bg-[#1B1919] p-20 text-white">
       <div className="flex flex-col items-center gap-10 md:flex-row md:items-start">
@@ -14,9 +18,9 @@ function Footer() {
             </p>
           </div>
 
-          <p className="w-[200px] text-center md:text-start">
-            Viverra gravida morbi egestas facilisis tortor netus non duis
-            tempor.
+          <p className="w-[200px] text-center text-sm md:text-start">
+            Delicious meals delivered to your door! Order your favorite cuisines
+            with ease today!
           </p>
 
           <div className="mt-6">
@@ -37,17 +41,37 @@ function Footer() {
         <div className="flex flex-col items-center justify-center md:items-start md:justify-start">
           <h3 className="mb-6 text-xl font-bold text-red-500">Page</h3>
           <ul className="flex flex-col items-center justify-center gap-3 md:items-start md:justify-start">
-            <li className="cursor-pointer">Home</li>
-            <li className="cursor-pointer">Menu</li>
-            <li className="cursor-pointer">Order</li>
-            <li className="cursor-pointer">Reservation</li>
+            <li className="cursor-pointer">
+              <Link onClick={() => setMenu("home")} to="/">
+                Home
+              </Link>
+            </li>
+            <li className="cursor-pointer">
+              <Link onClick={() => setMenu("menu")} to="/menu">
+                Menu
+              </Link>
+            </li>
+            <li className="cursor-pointer">
+              <Link onClick={() => setMenu("order")} to="/order">
+                Order
+              </Link>
+            </li>
+            <li className="cursor-pointer">
+              <Link onClick={() => setMenu("reservation")} to="/reservation">
+                Reservation
+              </Link>
+            </li>
           </ul>
         </div>
 
         <div className="flex flex-col items-center justify-center md:items-start md:justify-start">
           <h3 className="mb-6 text-xl font-bold text-red-500">Information</h3>
           <ul className="flex flex-col items-center justify-center gap-3 md:items-start md:justify-start">
-            <li className="cursor-pointer">About us</li>
+            <li className="cursor-pointer">
+              <Link to="/about-us" onClick={() => setMenu("about-us")}>
+                About us
+              </Link>
+            </li>
           </ul>
         </div>
 

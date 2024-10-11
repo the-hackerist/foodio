@@ -1,8 +1,12 @@
+import { Link } from "react-router-dom";
 import img from "../assets/chef_cooking.jpg";
 import food from "../assets/food.jpg";
 import owner from "../assets/owner.jpg";
+import { useMenu } from "../contexts/MenuContext";
 
 function AboutUs() {
+  const { setMenu } = useMenu();
+
   return (
     <div className="flex flex-col gap-10 bg-[#F9F9F9] px-10 pb-20 pt-40 md:px-4 lg:px-20">
       <div className="flex flex-col items-center justify-center gap-4 md:flex-row lg:gap-20">
@@ -29,9 +33,13 @@ function AboutUs() {
             protein, providing all the essential amino acids your body needs,
             and is also a good source of fiber.
           </p>
-          <button className="mt-8 rounded-xl bg-red-500 px-10 py-3 text-lg font-semibold text-white">
+          <Link
+            to="/order"
+            onClick={() => setMenu("order")}
+            className="mt-8 rounded-xl bg-red-500 px-10 py-3 text-lg font-semibold text-white"
+          >
             Order now
-          </button>
+          </Link>
         </div>
       </div>
 

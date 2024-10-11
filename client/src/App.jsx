@@ -21,40 +21,45 @@ import Footer from "./components/Footer/Footer";
 import Profile from "./pages/Profile.jsx";
 import OrderStatus from "./pages/OrderStatus.jsx";
 import PageNotFound from "./components/UI/PageNotFound.jsx";
+import ScrollToTop from "./utils/ScrollToTop.js";
+import { MenuProvider } from "./contexts/MenuContext.jsx";
 
 function App() {
   return (
     <BrowserRouter>
-      <UserProvider>
-        <CartProvider>
-          <AddressProvider>
-            <OrderProvider>
-              <ProfileProvider>
-                <div className="relative">
-                  <Header />
-                  <Routes>
-                    <Route index element={<HomePage />} />
-                    <Route path="/menu" element={<Menu />} />
-                    <Route path="/about-us" element={<AboutUs />} />
-                    <Route path="/contact-us" element={<ContactUs />} />
-                    <Route path="/log-in" element={<Login />} />
-                    <Route path="/sign-up" element={<SignUp />} />
-                    <Route path="/order" element={<Order />} />
-                    <Route path="/order/:id" element={<OrderStatus />} />
-                    <Route element={<PrivateRoute />}>
-                      <Route path="/profile" element={<Profile />} />
-                      <Route path="/reservation" element={<Reservation />} />
-                      <Route path="/cart" element={<Cart />} />
-                    </Route>
-                    <Route path="*" element={<PageNotFound />} />
-                  </Routes>
-                  <Footer />
-                </div>
-              </ProfileProvider>
-            </OrderProvider>
-          </AddressProvider>
-        </CartProvider>
-      </UserProvider>
+      <ScrollToTop />
+      <MenuProvider>
+        <UserProvider>
+          <CartProvider>
+            <AddressProvider>
+              <OrderProvider>
+                <ProfileProvider>
+                  <div className="relative">
+                    <Header />
+                    <Routes>
+                      <Route index element={<HomePage />} />
+                      <Route path="/menu" element={<Menu />} />
+                      <Route path="/about-us" element={<AboutUs />} />
+                      <Route path="/contact-us" element={<ContactUs />} />
+                      <Route path="/log-in" element={<Login />} />
+                      <Route path="/sign-up" element={<SignUp />} />
+                      <Route path="/order" element={<Order />} />
+                      <Route path="/order/:id" element={<OrderStatus />} />
+                      <Route element={<PrivateRoute />}>
+                        <Route path="/profile" element={<Profile />} />
+                        <Route path="/reservation" element={<Reservation />} />
+                        <Route path="/cart" element={<Cart />} />
+                      </Route>
+                      <Route path="*" element={<PageNotFound />} />
+                    </Routes>
+                    <Footer />
+                  </div>
+                </ProfileProvider>
+              </OrderProvider>
+            </AddressProvider>
+          </CartProvider>
+        </UserProvider>
+      </MenuProvider>
     </BrowserRouter>
   );
 }

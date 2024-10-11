@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 
-import Action from "../components/HomePage/Action";
+// import Action from "../components/HomePage/Action";
 import Chef from "../components/HomePage/Chef";
 import Hero from "../components/HomePage/Hero";
 import Menu from "../components/HomePage/Menu";
@@ -25,7 +25,7 @@ function HomePage() {
       <Popular />
       <Menu />
       <Chef />
-      <Action />
+      {/* <Action /> */}
     </main>
   );
 }

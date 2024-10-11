@@ -6,7 +6,7 @@ const menu = [
     foodName: "Margherita Pizza",
     stock: 15,
     starRatings: 5,
-    price: 12.99,
+    price: 850,
     description:
       "Classic pizza topped with fresh tomatoes, mozzarella cheese, and basil.",
   },
@@ -17,19 +17,18 @@ const menu = [
     foodName: "Cheeseburger",
     stock: 8,
     starRatings: 5,
-    price: 10.49,
+    price: 550,
     description:
       "Juicy beef patty with melted cheese, lettuce, tomato, and special sauce.",
   },
   {
     id: 3,
-
     image:
       "https://images.pexels.com/photos/19087691/pexels-photo-19087691/free-photo-of-salad-with-bread.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     foodName: "Caesar Salad",
     stock: 20,
     starRatings: 4,
-    price: 8.99,
+    price: 350,
     description:
       "Crisp romaine lettuce, croutons, and Caesar dressing topped with Parmesan cheese.",
   },
@@ -41,19 +40,18 @@ const menu = [
     foodName: "Spaghetti Carbonara",
     stock: 10,
     starRatings: 5,
-    price: 14.5,
+    price: 900,
     description:
       "Pasta tossed in a creamy sauce with pancetta, egg, and Parmesan.",
   },
   {
     id: 5,
-
     image:
       "https://images.pexels.com/photos/7627414/pexels-photo-7627414.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     foodName: "Grilled Salmon",
     stock: 5,
     starRatings: 5,
-    price: 18.99,
+    price: 1200,
     description:
       "Fresh salmon fillet grilled to perfection, served with lemon and herbs.",
   },
@@ -65,7 +63,7 @@ const menu = [
     foodName: "Tacos",
     stock: 12,
     starRatings: 4,
-    price: 9.99,
+    price: 550,
     description:
       "Soft or hard shell tacos filled with seasoned meat, lettuce, and salsa.",
   },
@@ -76,7 +74,7 @@ const menu = [
     foodName: "Chocolate Lava Cake",
     stock: 6,
     starRatings: 5,
-    price: 6.5,
+    price: 200,
     description:
       "Decadent chocolate cake with a gooey molten center, served warm.",
   },
@@ -87,7 +85,7 @@ const menu = [
     foodName: "Pad Thai",
     stock: 10,
     starRatings: 4,
-    price: 11.99,
+    price: 650,
     description:
       "Stir-fried rice noodles with shrimp, tofu, and a tangy tamarind sauce.",
   },
@@ -98,7 +96,7 @@ const menu = [
     foodName: "Mushroom Risotto",
     stock: 8,
     starRatings: 5,
-    price: 13.5,
+    price: 850,
     description:
       "Creamy Arborio rice cooked with mushrooms and Parmesan cheese.",
   },
@@ -109,7 +107,7 @@ const menu = [
     foodName: "Beef Stroganoff",
     stock: 7,
     starRatings: 4,
-    price: 15.99,
+    price: 1100,
     description:
       "Tender beef in a creamy mushroom sauce served over egg noodles.",
   },
@@ -120,7 +118,7 @@ const menu = [
     foodName: "Eggplant Parmesan",
     stock: 9,
     starRatings: 4,
-    price: 12.49,
+    price: 800,
     description:
       "Breaded eggplant slices baked with marinara sauce and melted cheese.",
   },
@@ -131,7 +129,7 @@ const menu = [
     foodName: "Shrimp Scampi",
     stock: 4,
     starRatings: 3,
-    price: 16.5,
+    price: 950,
     description:
       "Shrimp sautéed in garlic, butter, and lemon, served over linguine.",
   },

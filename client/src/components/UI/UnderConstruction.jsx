@@ -11,10 +11,11 @@ function UnderConstruction() {
         This page is currently under development. Please check back later!
       </p>
 
-      <Link to="/">
-        <a className="inline-block rounded bg-red-500 px-4 py-2 font-semibold text-white transition duration-300 hover:bg-red-600">
-          Go Back to Home
-        </a>
+      <Link
+        className="inline-block rounded bg-red-500 px-4 py-2 font-semibold text-white transition duration-300 hover:bg-red-600"
+        to="/"
+      >
+        Go Back to Home
       </Link>
     </div>
   );

@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import { Link } from "react-router-dom";
 
 import { MdOutlineShoppingCart } from "react-icons/md";
@@ -8,26 +7,32 @@ import { FaTimes } from "react-icons/fa";
 
 import { useAuth } from "../../contexts/UserContext";
 import { useCart } from "../../contexts/CartContext";
+import { useMenu } from "../../contexts/MenuContext";
 
 const activeLinkStyle =
   "border-b border-red-500 text-red-500 pb-1 font-semibold";
 
 function Header() {
-  const [activeLink, setActiveLink] = useState("home");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const { navigation, setMenu } = useMenu();
   const { user, signOut } = useAuth();
   const { resetCart } = useCart();
 
   const handleActiveLink = (link) => {
-    if (link === "none") setActiveLink(link);
+    if (link === "none") setMenu(link);
 
-    setActiveLink(link);
+    setMenu(link);
     setIsMenuOpen(false);
   };
 
   return (
     <header className="absolute left-0 right-0 top-0 flex w-full justify-between bg-transparent px-10 py-8 md:px-20 lg:px-24 xl:px-48 2xl:px-80">
-      <div className="flex items-center gap-2">
+      <Link
+        className="flex cursor-pointer items-center gap-2"
+        to="/"
+        onClick={() => handleActiveLink("home")}
+      >
         <div className="flex h-10 w-10 rotate-[-20deg] items-center justify-center rounded-full bg-[#F54748]">
           <span className="p-2 text-xl font-semibold text-white">F</span>
         </div>
@@ -35,7 +40,7 @@ function Header() {
         <p className="font-bold text-[#523E2C]">
           Foodio<span className="text-red-500">.</span>
         </p>
-      </div>
+      </Link>
 
       <div className="relative flex items-center">
         <div
@@ -51,7 +56,7 @@ function Header() {
               <li
                 onClick={() => handleActiveLink("home")}
                 className={
-                  activeLink === "home" && `${activeLinkStyle} border-none pb-0`
+                  navigation === "home" && `${activeLinkStyle} border-none pb-0`
                 }
               >
                 <Link to="/">Home</Link>
@@ -59,7 +64,7 @@ function Header() {
               <li
                 onClick={() => handleActiveLink("menu")}
                 className={
-                  activeLink === "menu" && `${activeLinkStyle} border-none pb-0`
+                  navigation === "menu" && `${activeLinkStyle} border-none pb-0`
                 }
               >
                 <Link to="/menu">Menu</Link>
@@ -67,7 +72,7 @@ function Header() {
               <li
                 onClick={() => handleActiveLink("about-us")}
                 className={
-                  activeLink === "about-us" &&
+                  navigation === "about-us" &&
                   `${activeLinkStyle} border-none pb-0`
                 }
               >
@@ -76,7 +81,7 @@ function Header() {
               <li
                 onClick={() => handleActiveLink("order")}
                 className={
-                  activeLink === "order" &&
+                  navigation === "order" &&
                   `${activeLinkStyle} border-none pb-0`
                 }
               >
@@ -85,7 +90,7 @@ function Header() {
               <li
                 onClick={() => handleActiveLink("reservation")}
                 className={
-                  activeLink === "reservation" &&
+                  navigation === "reservation" &&
                   `${activeLinkStyle} border-none pb-0`
                 }
               >
@@ -94,7 +99,7 @@ function Header() {
               <li
                 onClick={() => handleActiveLink("contact-us")}
                 className={
-                  activeLink === "contact-us" &&
+                  navigation === "contact-us" &&
                   `${activeLinkStyle} border-none pb-0`
                 }
               >
@@ -104,7 +109,7 @@ function Header() {
               <li
                 onClick={() => handleActiveLink("cart")}
                 className={
-                  activeLink === "cart" && `${activeLinkStyle} border-none pb-0`
+                  navigation === "cart" && `${activeLinkStyle} border-none pb-0`
                 }
               >
                 <Link to="/cart">Check cart</Link>
@@ -113,7 +118,7 @@ function Header() {
               <li
                 onClick={() => handleActiveLink("log-in")}
                 className={
-                  activeLink === "log-in" &&
+                  navigation === "log-in" &&
                   `${activeLinkStyle} border-none pb-0`
                 }
               >
@@ -124,41 +129,41 @@ function Header() {
         )}
 
         <ul className="hidden items-center gap-3 text-sm lg:flex 2xl:gap-4 2xl:text-base">
-          <li
-            onClick={() => handleActiveLink("home")}
-            className={activeLink === "home" ? activeLinkStyle : ""}
-          >
-            <Link to="/">Home</Link>
+          <li className={navigation === "home" ? activeLinkStyle : ""}>
+            <Link to="/" onClick={() => handleActiveLink("home")}>
+              Home
+            </Link>
           </li>
-          <li
-            onClick={() => handleActiveLink("menu")}
-            className={activeLink === "menu" ? activeLinkStyle : ""}
-          >
-            <Link to="/menu">Menu</Link>
+          <li className={navigation === "menu" ? activeLinkStyle : ""}>
+            <Link to="/menu" onClick={() => handleActiveLink("menu")}>
+              Menu
+            </Link>
           </li>
-          <li
-            onClick={() => handleActiveLink("about-us")}
-            className={activeLink === "about-us" ? activeLinkStyle : ""}
-          >
-            <Link to="/about-us">About us</Link>
+          <li className={navigation === "about-us" ? activeLinkStyle : ""}>
+            <Link to="/about-us" onClick={() => handleActiveLink("about-us")}>
+              About us
+            </Link>
           </li>
-          <li
-            onClick={() => handleActiveLink("order")}
-            className={activeLink === "order" ? activeLinkStyle : ""}
-          >
-            <Link to="/order">Order online</Link>
+          <li className={navigation === "order" ? activeLinkStyle : ""}>
+            <Link to="/order" onClick={() => handleActiveLink("order")}>
+              Order online
+            </Link>
           </li>
-          <li
-            onClick={() => handleActiveLink("reservation")}
-            className={activeLink === "reservation" ? activeLinkStyle : ""}
-          >
-            <Link to="/reservation">Reservation</Link>
+          <li className={navigation === "reservation" ? activeLinkStyle : ""}>
+            <Link
+              to="/reservation"
+              onClick={() => handleActiveLink("reservation")}
+            >
+              Reservation
+            </Link>
           </li>
-          <li
-            onClick={() => handleActiveLink("contact-us")}
-            className={activeLink === "contact-us" ? activeLinkStyle : ""}
-          >
-            <Link to="/contact-us">Contact us</Link>
+          <li className={navigation === "contact-us" ? activeLinkStyle : ""}>
+            <Link
+              to="/contact-us"
+              onClick={() => handleActiveLink("contact-us")}
+            >
+              Contact us
+            </Link>
           </li>
         </ul>
       </div>
@@ -213,8 +218,8 @@ function Header() {
         <Link
           onClick={() => {
             handleActiveLink("none");
-            signOut();
             resetCart();
+            signOut();
           }}
           to="/log-in"
           className="rounded-xl bg-[#F54748] px-8 py-3 text-sm font-semibold text-white"

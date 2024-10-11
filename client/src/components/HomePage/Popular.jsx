@@ -21,9 +21,6 @@ function Popular() {
           protein, providing all the essential amino acids your body needs, and
           is also a good source of fiber.
         </p>
-        <button className="mt-8 w-full rounded-xl bg-red-500 px-10 py-3 text-lg font-semibold text-white md:w-fit">
-          Order now
-        </button>
       </div>
     </div>
   );
