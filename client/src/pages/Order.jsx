@@ -1,32 +1,62 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 
-import Pagination from "../components/UI/Pagination.jsx";
+// import Pagination from "../components/UI/Pagination.jsx";
 import OrderItem from "../components/UI/OrderItem.jsx";
 
 import { useFood } from "../contexts/FoodContext.jsx";
 
 function Order() {
   const [category, setCategory] = useState("all categories");
-  const [activePage, setActivePage] = useState(1);
+  // const [activePage, setActivePage] = useState(1);
   const [isOrderListOpen, setIsOrderListOpen] = useState(false);
   const [foodList, setFoodList] = useState(null);
 
-  const { getAllFood } = useFood();
+  const { getAllFood, loading } = useFood();
 
   useEffect(() => {
     const fetchFood = async () => {
       const data = await getAllFood();
 
-      setFoodList(data);
+      let foodArray = data;
+
+      if (category === "all categories") {
+        setFoodList(foodArray);
+        return;
+      }
+      if (category === "pizza") {
+        foodArray = data.filter((item) => item.category === "pizza");
+        setFoodList(foodArray);
+        return;
+      }
+      if (category === "pasta") {
+        foodArray = data.filter((item) => item.category === "pasta");
+        setFoodList(foodArray);
+        return;
+      }
+      if (category === "drink") {
+        foodArray = data.filter((item) => item.category === "drinks");
+        setFoodList(foodArray);
+        return;
+      }
+      if (category === "dessert") {
+        foodArray = data.filter((item) => item.category === "dessert");
+        setFoodList(foodArray);
+        return;
+      }
     };
 
     fetchFood();
-  }, []);
+  }, [category]);
 
   const activeCategoryStyle = "text-white bg-red-500";
 
-  // sorting
+  if (loading)
+    return (
+      <div className="flex h-screen items-center justify-center bg-[#F9F9F9] px-20 pb-20 pt-40">
+        <p className="text-3xl font-bold">Loading...</p>
+      </div>
+    );
 
   return (
     <div className="flex flex-col items-center gap-10 bg-[#F9F9F9] px-20 pb-20 pt-40">
@@ -102,13 +132,13 @@ function Order() {
       </p>
 
       <div className="flex w-[870px] flex-col gap-6 p-8">
-        <Pagination activePage={activePage} setActivePage={setActivePage} />
+        {/* <Pagination activePage={activePage} setActivePage={setActivePage} /> */}
 
         <div className="flex gap-6">
           <div
             className={`${
               isOrderListOpen ? "hidden" : "flex"
-            } flex-wrap items-center justify-center gap-5 sm:flex`}
+            } flex-wrap items-center gap-5 sm:flex`}
           >
             {foodList &&
               foodList.map((menu) => <OrderItem key={menu._id} food={menu} />)}

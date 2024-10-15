@@ -10,7 +10,7 @@ const formDataInitialState = {
   username: "",
   email: "",
   password: "",
-  confirmPassword: "",
+  confirmPass: "",
 };
 
 function SignUp() {
@@ -79,8 +79,8 @@ function SignUp() {
           />
 
           <PasswordInput
-            id="confirmPassword"
-            name={formData.confirmPassword}
+            id="confirmPass"
+            name={formData.confirmPass}
             placeholder="confirm password"
             isVisible={isConfirmPassVisible}
             setIsVisible={setIsConfirmPassVisible}

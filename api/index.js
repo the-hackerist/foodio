@@ -2,13 +2,13 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
+import path from "path";
 
 import authRouter from "./routes/authRouter.js";
 import cartRouter from "./routes/cartRouter.js";
 import addressRouter from "./routes/addressRouter.js";
 import orderRouter from "./routes/orderRouter.js";
 import profileRouter from "./routes/profileRouter.js";
-import path from "path";
 
 dotenv.config();
 

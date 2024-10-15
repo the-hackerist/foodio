@@ -4,9 +4,9 @@ import chef_3 from "../../assets/chef_3.jpg";
 
 function Chef() {
   return (
-    <div className="flex w-full flex-col items-center justify-center bg-[#F9F9F9] p-20">
+    <div className="flex w-full flex-col items-center justify-center bg-[#F9F9F9] p-20 pb-40">
       <h2 className="mb-10 text-center text-5xl font-bold sm:text-start">
-        Our Popular Chef
+        Our Popular Chefs
       </h2>
       <div className="mt-6 flex flex-wrap items-center justify-center gap-10">
         <div className="flex flex-col items-center justify-center text-lg">
@@ -33,9 +33,9 @@ function Chef() {
           <p className="font-semibold text-slate-500">Chef</p>
         </div>
       </div>
-      <button className="mt-12 w-full rounded-lg bg-red-500 px-16 py-4 text-lg font-bold text-white md:w-[300px]">
+      {/* <button className="mt-12 w-full rounded-lg bg-red-500 px-16 py-4 text-lg font-bold text-white md:w-[300px]">
         View all
-      </button>
+      </button> */}
     </div>
   );
 }

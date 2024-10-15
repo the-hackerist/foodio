@@ -17,6 +17,9 @@ function reducer(state, action) {
     case "food/error":
       return { ...state, food: null, loading: false, error: action.payload };
 
+    case "food/end":
+      return { ...state, loading: false };
+
     default:
       throw new Error("Unknown action!");
   }
@@ -30,10 +33,13 @@ function FoodProvider({ children }) {
 
   const getAllFood = async () => {
     try {
+      dispatch({ type: "food/start" });
+
       const res = await fetch(`/api/v1/order/get/get-all-food`);
 
       const data = await res.json();
 
+      dispatch({ type: "food/end" });
       return data;
     } catch (error) {
       dispatch({ type: "food/error", payload: error.message });

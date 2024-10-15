@@ -6,7 +6,8 @@ function ChangePassword() {
   const [verifyPassword, setVerifyPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [isVisible, setIsVisible] = useState(false);
+  const [isPassVisible, setIsPassVisible] = useState(false);
+  const [isConfirmPassVisible, setIsConfirmPassVisible] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
   const [error, setError] = useState(false);
 
@@ -88,8 +89,8 @@ function ChangePassword() {
                         handleFormData={(e) =>
                           setVerifyPassword(e.target.value)
                         }
-                        isVisible={isVisible}
-                        setIsVisible={setIsVisible}
+                        isVisible={isPassVisible}
+                        setIsVisible={setIsPassVisible}
                         placeholder="current password"
                         id="currentPassword"
                       />
@@ -130,8 +131,8 @@ function ChangePassword() {
                       <PasswordInput
                         name={newPassword}
                         handleFormData={(e) => setNewPassword(e.target.value)}
-                        isVisible={isVisible}
-                        setIsVisible={setIsVisible}
+                        isVisible={isPassVisible}
+                        setIsVisible={setIsPassVisible}
                         placeholder="new password"
                         id="newPassword"
                       />
@@ -150,8 +151,8 @@ function ChangePassword() {
                         handleFormData={(e) =>
                           setConfirmPassword(e.target.value)
                         }
-                        isVisible={isVisible}
-                        setIsVisible={setIsVisible}
+                        isVisible={isConfirmPassVisible}
+                        setIsVisible={setIsConfirmPassVisible}
                         placeholder="confirm password"
                         id="confirmPassword"
                       />

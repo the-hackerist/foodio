@@ -11,7 +11,6 @@ import { useCart } from "../../contexts/CartContext";
 
 import { toast, ToastContainer, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import PageNotFound from "./PageNotFound";
 
 const toastProps = {
   position: "top-center",
@@ -32,7 +31,7 @@ function Food() {
 
   const { id } = useParams();
 
-  const { getFood, food } = useFood();
+  const { getFood, food, loading: isFoodLoading } = useFood();
 
   const { updateCart, loading } = useCart();
 
@@ -40,7 +39,12 @@ function Food() {
     getFood(id);
   }, []);
 
-  if (!food) return <PageNotFound />;
+  if (isFoodLoading)
+    return (
+      <div className="flex h-screen items-center justify-center bg-[#F9F9F9] px-80 pb-20 pt-40">
+        <p className="text-3xl font-bold">Loading...</p>
+      </div>
+    );
 
   const stars = [
     ...new Array(food.starRatings).fill("star"),
