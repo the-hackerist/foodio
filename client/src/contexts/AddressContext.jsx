@@ -100,7 +100,7 @@ function AddressProvider({ children }) {
         return;
       }
 
-      const res = await fetch(`api/v1/address/get-address`, {
+      const res = await fetch(`/api/v1/address/get-address`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(body),
@@ -129,7 +129,7 @@ function AddressProvider({ children }) {
     try {
       dispatch({ type: "address/create-address/start" });
 
-      const res = await fetch(`api/v1/address/create-address`, {
+      const res = await fetch(`/api/v1/address/create-address`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(body),
@@ -149,7 +149,7 @@ function AddressProvider({ children }) {
     try {
       dispatch({ type: "address/delete-address/start" });
 
-      const res = await fetch(`api/v1/address/delete-address`, {
+      const res = await fetch(`/api/v1/address/delete-address`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(body),
@@ -174,7 +174,7 @@ function AddressProvider({ children }) {
     try {
       dispatch({ type: "address/edit-address/start" });
 
-      const res = await fetch(`api/v1/address/edit-address`, {
+      const res = await fetch(`/api/v1/address/edit-address`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(body),
@@ -199,7 +199,7 @@ function AddressProvider({ children }) {
     try {
       dispatch({ type: "address/edit-address/start" });
 
-      const res = await fetch(`api/v1/address/edit-address`, {
+      const res = await fetch(`/api/v1/address/edit-address`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(body),

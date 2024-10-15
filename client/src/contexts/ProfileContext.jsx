@@ -45,7 +45,7 @@ function ProfileProvider({ children }) {
     try {
       dispatch({ type: "profile/start" });
 
-      const res = await fetch(`api/v1/profile/update`, {
+      const res = await fetch(`/api/v1/profile/update`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(body),

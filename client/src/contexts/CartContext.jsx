@@ -83,7 +83,7 @@ function CartProvider({ children }) {
           payload: "There is no user logged in.",
         });
 
-      const res = await fetch(`api/v1/cart/get-cart`, {
+      const res = await fetch(`/api/v1/cart/get-cart`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(body),
@@ -154,7 +154,7 @@ function CartProvider({ children }) {
     try {
       dispatch({ type: "cart/update-cart/start" });
 
-      const res = await fetch(`api/v1/cart/update-cart`, {
+      const res = await fetch(`/api/v1/cart/update-cart`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(body),

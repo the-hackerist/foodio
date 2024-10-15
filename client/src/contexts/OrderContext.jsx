@@ -60,7 +60,7 @@ function OrderProvider({ children }) {
 
   const getOrder = async (id) => {
     try {
-      const res = await fetch(`api/v1/order/${id}`);
+      const res = await fetch(`/api/v1/order/${id}`);
 
       const { data } = await res.json();
 
@@ -72,7 +72,7 @@ function OrderProvider({ children }) {
 
   const getOrdersList = async () => {
     try {
-      const res = await fetch(`api/v1/order/get-orders-list/${user._id}`);
+      const res = await fetch(`/api/v1/order/get-orders-list/${user._id}`);
 
       const data = await res.json();
 
@@ -95,7 +95,7 @@ function OrderProvider({ children }) {
 
     try {
       dispatch({ type: "order/create-order/start" });
-      const res = await fetch(`api/v1/order/create-order`, {
+      const res = await fetch(`/api/v1/order/create-order`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(body),

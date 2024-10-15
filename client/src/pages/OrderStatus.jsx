@@ -20,7 +20,7 @@ function OrderStatus() {
   useEffect(() => {
     const fetchListing = async () => {
       try {
-        const res = await fetch(`api/v1/order/${params.id}`);
+        const res = await fetch(`/api/v1/order/${params.id}`);
 
         const data = await res.json();
 
