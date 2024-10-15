@@ -32,7 +32,7 @@ function FoodProvider({ children }) {
 
   const getAllFood = async () => {
     try {
-      const res = await fetch(`/api/order/get/get-all-food`);
+      const res = await fetch(`/api/v1/order/get/get-all-food`);
 
       const data = await res.json();
 
