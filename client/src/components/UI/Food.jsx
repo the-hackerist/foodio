@@ -35,8 +35,15 @@ function Food() {
 
   const { updateCart, loading } = useCart();
 
+  let stars;
+
   useEffect(() => {
     getFood(id);
+
+    stars = [
+      ...new Array(food.starRatings).fill("star"),
+      ...new Array(5 - food.starRatings).fill("noStar"),
+    ];
   }, []);
 
   if (isFoodLoading)
@@ -45,11 +52,6 @@ function Food() {
         <p className="text-3xl font-bold">Loading...</p>
       </div>
     );
-
-  const stars = [
-    ...new Array(food.starRatings).fill("star"),
-    ...new Array(5 - food.starRatings).fill("noStar"),
-  ];
 
   const handleQuantity = (action) => {
     if (action === "increase") setQuantity((prev) => prev + 1);
