@@ -136,8 +136,6 @@ function Profile() {
     setCurrentAddressId(null);
   };
 
-  console.log("ordersList: ", ordersList);
-
   return (
     <div className="flex items-center justify-center gap-2 bg-[#F9F9F9] px-10 py-20 pt-40 md:px-20 lg:gap-10 xl:gap-20">
       {(isAddingAddress || isEditingAddress) && (

@@ -69,8 +69,6 @@ function CartProvider({ children }) {
     getCart();
   }, []);
 
-  const BASE_URL = "http://localhost:3000/api/v1";
-
   async function getCart() {
     if (!user) return;
 
@@ -85,7 +83,7 @@ function CartProvider({ children }) {
           payload: "There is no user logged in.",
         });
 
-      const res = await fetch(`${BASE_URL}/cart/get-cart`, {
+      const res = await fetch(`api/v1/cart/get-cart`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(body),
@@ -156,7 +154,7 @@ function CartProvider({ children }) {
     try {
       dispatch({ type: "cart/update-cart/start" });
 
-      const res = await fetch(`${BASE_URL}/cart/update-cart`, {
+      const res = await fetch(`api/v1/cart/update-cart`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(body),

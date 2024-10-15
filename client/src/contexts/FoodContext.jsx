@@ -28,8 +28,6 @@ function FoodProvider({ children }) {
     initialState,
   );
 
-  const BASE_URL = "http://localhost:3000/api/v1";
-
   const getAllFood = async () => {
     try {
       const res = await fetch(`/api/v1/order/get/get-all-food`);
@@ -47,7 +45,7 @@ function FoodProvider({ children }) {
     try {
       dispatch({ type: "food/start" });
 
-      const res = await fetch(`${BASE_URL}/order/menu/${foodId}`);
+      const res = await fetch(`/api/v1/order/menu/${foodId}`);
 
       const data = await res.json();
 

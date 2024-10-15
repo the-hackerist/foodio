@@ -38,7 +38,6 @@ function ProfileProvider({ children }) {
   useEffect(() => {
     getUser();
   }, []);
-  // causes constant re-render
 
   const updateProfile = async (profileData) => {
     const body = { _id: user._id, ...profileData };
@@ -46,7 +45,7 @@ function ProfileProvider({ children }) {
     try {
       dispatch({ type: "profile/start" });
 
-      const res = await fetch(`http://localhost:3000/profile/update`, {
+      const res = await fetch(`api/v1/profile/update`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(body),

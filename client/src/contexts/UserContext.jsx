@@ -4,8 +4,6 @@ import { createContext, useContext, useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMenu } from "./MenuContext";
 
-const BASE_URL = `http://localhost:3000/api/v1`;
-
 const UserContext = createContext();
 
 const initialState = JSON.parse(localStorage.getItem("auth")) || {
@@ -122,14 +120,11 @@ function UserProvider({ children }) {
     const body = { _id: user._id, newPassword };
 
     try {
-      const res = await fetch(
-        "http://localhost:3000/api/v1/auth/update-password",
-        {
-          method: "POST",
-          headers: { "Content-type": "application/json" },
-          body: JSON.stringify(body),
-        },
-      );
+      const res = await fetch("api/v1/auth/update-password", {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify(body),
+      });
 
       const data = await res.json();
 
@@ -143,7 +138,7 @@ function UserProvider({ children }) {
     if (!password) return;
 
     try {
-      const res = await fetch("http://localhost:3000/api/v1/auth/verify", {
+      const res = await fetch("api/v1/auth/verify", {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify({ email: user.email, password }),
@@ -162,9 +157,7 @@ function UserProvider({ children }) {
     const { _id } = user;
 
     try {
-      const res = await fetch(
-        `http://localhost:3000/api/v1/auth/get-user/${_id}`,
-      );
+      const res = await fetch(`api/v1/auth/get-user/${_id}`);
 
       const data = await res.json();
 
@@ -186,7 +179,7 @@ function UserProvider({ children }) {
     try {
       dispatch({ type: "profile/start" });
 
-      const res = await fetch(`${BASE_URL}/profile/update`, {
+      const res = await fetch(`api/v1/profile/update`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(body),
@@ -222,7 +215,7 @@ function UserProvider({ children }) {
         return;
       }
 
-      const res = await fetch("http://localhost:3000/api/v1/auth/sign-in", {
+      const res = await fetch("api/v1/auth/sign-in", {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -280,7 +273,7 @@ function UserProvider({ children }) {
         return;
       }
 
-      const res = await fetch("http://localhost:3000/api/v1/auth/sign-up", {
+      const res = await fetch("api/v1/auth/sign-up", {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify({ username, email, password }),
