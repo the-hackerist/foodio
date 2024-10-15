@@ -8,6 +8,7 @@ import cartRouter from "./routes/cartRouter.js";
 import addressRouter from "./routes/addressRouter.js";
 import orderRouter from "./routes/orderRouter.js";
 import profileRouter from "./routes/profileRouter.js";
+import path from "path";
 
 dotenv.config();
 
@@ -23,6 +24,8 @@ mongoose
   .then(() => console.log("Successfully connected to database"))
   .catch(() => console.log("Failed to connect to database"));
 
+const __dirname = path.resolve();
+
 app.use(express.json());
 app.use(cors());
 
@@ -31,6 +34,12 @@ app.use("/api/v1/cart", cartRouter);
 app.use("/api/v1/address", addressRouter);
 app.use("/api/v1/order", orderRouter);
 app.use("/api/v1/profile", profileRouter);
+
+app.use(express.static(path.join(__dirname, "/client/dist")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+});
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
