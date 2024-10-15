@@ -4,16 +4,19 @@ import { useNavigate } from "react-router-dom";
 import { RiStarSLine, RiStarSFill } from "react-icons/ri";
 
 import { useCart } from "../../contexts/CartContext.jsx";
+import { useOrder } from "../../contexts/OrderContext.jsx";
 
 function MenuItem({ food }) {
+  const { getOrder } = useOrder();
   const { updateCart, cart } = useCart();
 
-  const isOnCart = cart.find((menu) => menu.foodId === food.id);
+  const isOnCart = cart.find((menu) => menu._id === food._id);
 
   const navigate = useNavigate();
 
   const handleOrder = () => {
     updateCart(food, 1);
+    getOrder();
     navigate("/order");
   };
 
@@ -24,11 +27,11 @@ function MenuItem({ food }) {
 
   return (
     <div
-      key={food.id}
-      className="flex h-[500px] w-[300px] flex-col items-center justify-between gap-2 rounded-3xl border-2 bg-white p-6 shadow-md"
+      key={food._id}
+      className="flex h-[500px] w-[300px] flex-col items-center justify-between gap-2 rounded-lg border-2 bg-white p-6"
     >
       <div className="flex flex-col items-center gap-3 text-center">
-        <div className="w-[250px] overflow-hidden rounded-lg">
+        <div className="w-[250px] overflow-hidden rounded-sm">
           <img className="object-cover" src={food.image} alt="food img" />
         </div>
         <h3 className="text-2xl font-bold">{food.foodName}</h3>
@@ -43,7 +46,9 @@ function MenuItem({ food }) {
         </div>
 
         <div className="flex w-full items-center justify-center gap-4">
-          <p className="text-nowrap text-xl font-bold">$ {food.price}</p>
+          <p className="text-nowrap text-xl font-semibold">
+            ₱ {food.price.toLocaleString()}.00
+          </p>
           {!isOnCart ? (
             <button
               onClick={handleOrder}

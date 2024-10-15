@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 const MenuContext = createContext();
 
 const initialState = {
-  navigation: localStorage.getItem("navigation") || "home",
+  navigation: localStorage.getItem("navigation") || "",
 };
 
 function reducer(state, action) {
@@ -31,7 +31,10 @@ function MenuProvider({ children }) {
   useEffect(() => {
     const savedMenu = localStorage.getItem("navigation");
 
-    if (savedMenu === "home") navigate("/");
+    if (savedMenu === "home") {
+      navigate("/");
+      return;
+    }
 
     navigate(`/${savedMenu}`);
   }, []);

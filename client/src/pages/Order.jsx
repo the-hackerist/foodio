@@ -1,23 +1,32 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from "react";
 
 import Pagination from "../components/UI/Pagination.jsx";
 import OrderItem from "../components/UI/OrderItem.jsx";
-import OrderListItem from "../components/UI/OrderListItem.jsx";
 
-import food_data from "../data/food_data.js";
-
-import { useCart } from "../contexts/CartContext.jsx";
+import { useFood } from "../contexts/FoodContext.jsx";
 
 function Order() {
   const [category, setCategory] = useState("all categories");
   const [activePage, setActivePage] = useState(1);
   const [isOrderListOpen, setIsOrderListOpen] = useState(false);
-  const { cart } = useCart();
+  const [foodList, setFoodList] = useState(null);
+
+  const { getAllFood } = useFood();
+
+  useEffect(() => {
+    const fetchFood = async () => {
+      const data = await getAllFood();
+
+      setFoodList(data);
+    };
+
+    fetchFood();
+  }, []);
 
   const activeCategoryStyle = "text-white bg-red-500";
 
-  const handleOrder = () => {};
+  // sorting
 
   return (
     <div className="flex flex-col items-center gap-10 bg-[#F9F9F9] px-20 pb-20 pt-40">
@@ -92,52 +101,17 @@ function Order() {
         {isOrderListOpen ? "Close " : "Open "} order summary
       </p>
 
-      <div className="flex flex-col gap-6 rounded-3xl p-4 sm:border-2 sm:border-red-100">
+      <div className="flex w-[870px] flex-col gap-6 p-8">
         <Pagination activePage={activePage} setActivePage={setActivePage} />
 
         <div className="flex gap-6">
           <div
             className={`${
               isOrderListOpen ? "hidden" : "flex"
-            } max-w-[700px] flex-wrap items-center justify-center gap-4 sm:flex`}
+            } flex-wrap items-center justify-center gap-5 sm:flex`}
           >
-            {food_data.map((menu, i) => (
-              <OrderItem key={i} food={menu} />
-            ))}
-          </div>
-
-          <div
-            className={`${
-              !isOrderListOpen ? "hidden" : "flex"
-            } h-fit w-[300px] flex-col items-center justify-center rounded-2xl border bg-red-100 p-6 lg:flex`}
-          >
-            <h3 className="w-full p-10 text-center text-2xl font-bold">
-              Order Summary
-            </h3>
-
-            <div className="mb-10 h-[1px] w-full bg-slate-500"></div>
-
-            <div className="flex h-full max-h-[500px] w-full flex-col gap-4 overflow-auto overflow-x-hidden">
-              {cart.length < 1 ? (
-                <p className="text-center text-xs font-semibold italic">
-                  You haven&apos;t order anything yet! 🥲
-                </p>
-              ) : (
-                cart.map((menu) => (
-                  <OrderListItem key={menu.foodId} food={menu} />
-                ))
-              )}
-            </div>
-
-            <div className="my-10 h-[1px] w-full bg-slate-500"></div>
-
-            <Link
-              to="/cart"
-              onClick={handleOrder}
-              className="w-full cursor-pointer rounded-lg bg-red-500 p-2 text-center text-lg font-bold uppercase text-white"
-            >
-              Continue
-            </Link>
+            {foodList &&
+              foodList.map((menu) => <OrderItem key={menu._id} food={menu} />)}
           </div>
         </div>
       </div>

@@ -1,4 +1,5 @@
-import { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { MdOutlineShoppingCart } from "react-icons/md";
@@ -14,13 +15,27 @@ const activeLinkStyle =
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [currUser, setCurrUser] = useState(null);
 
   const { navigation, setMenu } = useMenu();
-  const { user, signOut } = useAuth();
-  const { resetCart } = useCart();
+  const { user, signOut, getUser } = useAuth();
+  const { resetCart, cart } = useCart();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const data = await getUser();
+
+      setCurrUser({ ...currUser, ...data });
+    };
+
+    fetchUser();
+  }, [cart]);
 
   const handleActiveLink = (link) => {
-    if (link === "none") setMenu(link);
+    if (link === "none") {
+      setMenu("order");
+      return;
+    }
 
     setMenu(link);
     setIsMenuOpen(false);
@@ -61,14 +76,14 @@ function Header() {
               >
                 <Link to="/">Home</Link>
               </li>
-              <li
+              {/* <li
                 onClick={() => handleActiveLink("menu")}
                 className={
                   navigation === "menu" && `${activeLinkStyle} border-none pb-0`
                 }
               >
                 <Link to="/menu">Menu</Link>
-              </li>
+              </li> */}
               <li
                 onClick={() => handleActiveLink("about-us")}
                 className={
@@ -85,7 +100,7 @@ function Header() {
                   `${activeLinkStyle} border-none pb-0`
                 }
               >
-                <Link to="/order">Order online</Link>
+                <Link to="/order">Order</Link>
               </li>
               <li
                 onClick={() => handleActiveLink("reservation")}
@@ -134,11 +149,11 @@ function Header() {
               Home
             </Link>
           </li>
-          <li className={navigation === "menu" ? activeLinkStyle : ""}>
+          {/* <li className={navigation === "menu" ? activeLinkStyle : ""}>
             <Link to="/menu" onClick={() => handleActiveLink("menu")}>
               Menu
             </Link>
-          </li>
+          </li> */}
           <li className={navigation === "about-us" ? activeLinkStyle : ""}>
             <Link to="/about-us" onClick={() => handleActiveLink("about-us")}>
               About us
@@ -146,7 +161,7 @@ function Header() {
           </li>
           <li className={navigation === "order" ? activeLinkStyle : ""}>
             <Link to="/order" onClick={() => handleActiveLink("order")}>
-              Order online
+              Order
             </Link>
           </li>
           <li className={navigation === "reservation" ? activeLinkStyle : ""}>
@@ -174,7 +189,7 @@ function Header() {
         <Link
           onClick={() => handleActiveLink("none")}
           to="/cart"
-          className="rounded-full bg-white p-3 text-slate-700"
+          className="rounded-full p-3 text-slate-700"
         >
           <MdOutlineShoppingCart />
         </Link>
@@ -207,12 +222,19 @@ function Header() {
             </Link>
           </p>
         )}
+
         <Link
           onClick={() => handleActiveLink("none")}
           to="/cart"
-          className="rounded-full bg-white p-3 text-slate-700"
+          className="relative rounded-full p-3 text-slate-700"
         >
           <MdOutlineShoppingCart />
+
+          {user && (
+            <p className="absolute right-1 top-[2px] z-0 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-semibold text-white">
+              {currUser && currUser?.cart?.length}
+            </p>
+          )}
         </Link>
 
         <Link

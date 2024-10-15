@@ -49,7 +49,7 @@ const DeliveryTimeSchema = new mongoose.Schema(
 
 const ItemSchema = new mongoose.Schema(
   {
-    foodId: { type: String, required: true },
+    _id: { type: String, required: true },
     foodName: { type: String, required: true },
     quantity: { type: Number, required: true },
     image: { type: String, required: true },
@@ -91,7 +91,6 @@ const OrderSchema = new mongoose.Schema({
     type: String,
     enum: ["cashOnDelivery"],
     default: "cashOnDelivery",
-    required: true,
   },
   paymentStatus: {
     type: String,

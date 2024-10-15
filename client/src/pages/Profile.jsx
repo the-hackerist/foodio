@@ -14,6 +14,7 @@ import Account from "../components/UI/Account";
 import ChangePassword from "../components/UI/ChangePassword";
 import OrderProfile from "../components/UI/OrderProfile";
 import UnderConstruction from "../components/UI/UnderConstruction";
+import { Link } from "react-router-dom";
 
 const profileImage =
   "https://images.pexels.com/photos/9117796/pexels-photo-9117796.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
@@ -134,6 +135,8 @@ function Profile() {
     setIsEditingAddress(false);
     setCurrentAddressId(null);
   };
+
+  console.log("ordersList: ", ordersList);
 
   return (
     <div className="flex items-center justify-center gap-2 bg-[#F9F9F9] px-10 py-20 pt-40 md:px-20 lg:gap-10 xl:gap-20">
@@ -380,7 +383,7 @@ function Profile() {
         </aside>
 
         <div
-          className={`w-[900px] space-y-4 rounded-md bg-[#faeded] pb-8 ${view === "orders" ? "p-8" : ""} ${view === "vouchers" || view === "reservations" ? "flex items-center justify-center" : ""}`}
+          className={`min-h-[500px] w-[900px] space-y-4 rounded-md bg-[#faeded] pb-8 ${view === "orders" ? "p-8" : ""} ${view === "vouchers" || view === "reservations" ? "flex items-center justify-center" : ""}`}
         >
           {view === "account" && subView === "profile" && <Account />}
           {view === "account" && subView === "address" && (
@@ -496,10 +499,25 @@ function Profile() {
             <ChangePassword />
           )}
 
-          {view === "orders" &&
-            ordersList.map((order) => (
-              <OrderProfile key={order._id} order={order} />
-            ))}
+          {
+            view === "orders" &&
+              ordersList.length >= 1 &&
+              ordersList
+                .sort((a, b) => b.orderDate.localeCompare(a.orderDate))
+                .map((order) => <OrderProfile key={order._id} order={order} />)
+            /* <div className="flex h-full items-center justify-center">
+              <p>
+                Order{" "}
+                <Link
+                  to="/order"
+                  className="font-semibold text-blue-600 hover:underline"
+                >
+                  here
+                </Link>{" "}
+                to start tracking your orders.
+              </p>
+            </div> */
+          }
 
           {view === "reservations" && <UnderConstruction />}
           {view === "vouchers" && <UnderConstruction />}

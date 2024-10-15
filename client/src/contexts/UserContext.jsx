@@ -158,6 +158,7 @@ function UserProvider({ children }) {
   };
 
   const getUser = async () => {
+    if (!user) return;
     const { _id } = user;
 
     try {

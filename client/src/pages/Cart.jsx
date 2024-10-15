@@ -1,16 +1,19 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-import { FaPlus } from "react-icons/fa";
-
-import OrderListItem from "../components/UI/OrderListItem";
-import AddressItem from "../components/UI/AddressItem";
+import { FaMinus, FaPlus, FaRegTrashAlt } from "react-icons/fa";
+import { MdKeyboardArrowLeft } from "react-icons/md";
+import { IoLocationSharp } from "react-icons/io5";
 
 import { useCart } from "../contexts/CartContext";
 import { useAddress } from "../contexts/AddressContext";
 import { useOrder } from "../contexts/OrderContext";
-import { useNavigate } from "react-router-dom";
+
+import AddressItem from "../components/UI/AddressItem";
+import OrderListItem from "../components/UI/OrderListItem";
+import FoodSummaryItem from "../components/UI/FoodSummaryItem";
 
 const initialState = {
   firstName: "",
@@ -26,438 +29,384 @@ const isAnyPropertyEmpty = (objData) =>
 
 function Cart() {
   const [isCheckingOut, setIsCheckingOut] = useState(false);
-  const [isAddingAddress, setIsAddingAddress] = useState(false);
-  const [isEditingAddress, setIsEditingAddress] = useState(false);
-  const [currentAddressId, setCurrentAddressId] = useState("");
-  const [newAddressFormData, setNewAddressFormData] = useState(initialState);
-  const [editAddressFormData, setEditAddressFormData] = useState(initialState);
-  const [orderFormData, setOrderFormData] = useState({
-    firstName: "",
-    lastName: "",
-    address: "",
-    phone: "",
-    description: "",
-    payment: "",
-  });
+  const [isChangingAddress, setIsChangingAddress] = useState(false);
 
-  const { cart, calculateTotal } = useCart();
+  const { cart, calculateTotal, resetCart } = useCart();
 
   const { createOrder } = useOrder();
 
   const { tax, total, itemsTotal } = calculateTotal();
 
-  const { address, createAddress, getAddress, editAddress } = useAddress();
+  const { setDefault, address, createAddress, getAddress, editAddress } =
+    useAddress();
+
+  const currentDefaultAddress = address.find(
+    (address) => address.default === true,
+  );
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     getAddress();
-
-    const currentAddress = address.find((item) => item.default);
-
-    if (currentAddress) {
-      const { _id, ...rest } = currentAddress;
-      setOrderFormData(rest);
-    }
   }, []);
-
-  const handleNewAddressFormData = (e) => {
-    if (e.target.type === "text" || e.target.type === "textarea")
-      setNewAddressFormData({
-        ...newAddressFormData,
-        [e.target.id]: e.target.value || "",
-      });
-
-    if (e.target.type === "checkbox")
-      setNewAddressFormData({
-        ...newAddressFormData,
-        [e.target.id]: e.target.checked,
-      });
-  };
-
-  const handleEditAddressFormData = (e) => {
-    if (e.target.type === "text" || e.target.type === "textarea")
-      setEditAddressFormData({
-        ...editAddressFormData,
-        [e.target.id]: e.target.value,
-      });
-
-    if (e.target.type === "checkbox")
-      setEditAddressFormData({
-        ...editAddressFormData,
-        [e.target.id]: e.target.checked,
-      });
-  };
-
-  const handleOrderFormData = (e) => {
-    if (e.target.type === "text" || e.target.type === "textarea")
-      setOrderFormData({
-        ...orderFormData,
-        [e.target.id]: e.target.value,
-      });
-
-    if (e.target.type === "checkbox")
-      setOrderFormData({
-        ...orderFormData,
-        [e.target.id]: e.target.checked ? "cashOnDelivery" : "",
-      });
-  };
-
-  const handleNewAddress = (e) => {
-    e.preventDefault();
-
-    if (isAnyPropertyEmpty(newAddressFormData)) return;
-
-    createAddress(newAddressFormData);
-
-    setNewAddressFormData(initialState);
-    setIsAddingAddress(false);
-    setCurrentAddressId(null);
-  };
-
-  const handleEditAddress = (e) => {
-    e.preventDefault();
-
-    if (isAnyPropertyEmpty(editAddressFormData)) return;
-
-    const updatedAddress = { _id: currentAddressId, ...editAddressFormData };
-
-    editAddress(updatedAddress);
-
-    setIsEditingAddress(false);
-    setCurrentAddressId(null);
-  };
 
   const handleOrder = (e) => {
     e.preventDefault();
-    createOrder(orderFormData);
-
-    // todo reset cart
+    createOrder(currentDefaultAddress);
+    resetCart();
   };
-
-  const handleCancel = () => {
-    if (isAddingAddress) setNewAddressFormData(initialState);
-    setIsAddingAddress(false);
-    setIsEditingAddress(false);
-    setCurrentAddressId(null);
-  };
-
   return (
     <div
       className={`flex flex-col items-center justify-center bg-[#F9F9F9] px-10 py-20 pt-40`}
     >
-      {isCheckingOut && (isAddingAddress || isEditingAddress) && (
-        <div className="absolute inset-0 flex w-full justify-center border-black bg-black bg-opacity-30 pt-[500px]">
-          <div className="flex h-fit w-[400px] flex-col gap-4 rounded-lg border bg-white p-6">
-            <p className="text-lg font-semibold">
-              {isEditingAddress ? "Edit Address" : "New Address"}
-            </p>
+      {isCheckingOut && isChangingAddress && (
+        <div className="absolute inset-0 flex w-full justify-center bg-black bg-opacity-30 pt-[350px]">
+          <div className="flex h-[400px] w-[600px] flex-col gap-4 rounded-md bg-white p-8">
+            <div className="border-b border-b-red-400 pb-4">
+              <p className="flex items-center gap-1 rounded-md font-semibold text-red-500">
+                <span>
+                  <IoLocationSharp />
+                </span>
+                My Address
+              </p>
+            </div>
 
-            <form
-              onSubmit={isEditingAddress ? handleEditAddress : handleNewAddress}
-              className="flex flex-col gap-4"
-            >
-              <input
-                onChange={
-                  isEditingAddress
-                    ? handleEditAddressFormData
-                    : handleNewAddressFormData
-                }
-                value={
-                  isEditingAddress
-                    ? editAddressFormData?.firstName
-                    : newAddressFormData?.firstName
-                }
-                className="rounded-lg border p-3"
-                id="firstName"
-                required
-                type="text"
-                placeholder="First Name"
-              />
-              <input
-                onChange={
-                  isEditingAddress
-                    ? handleEditAddressFormData
-                    : handleNewAddressFormData
-                }
-                value={
-                  isEditingAddress
-                    ? editAddressFormData?.lastName
-                    : newAddressFormData?.lastName
-                }
-                className="rounded-lg border p-3"
-                id="lastName"
-                required
-                type="text"
-                placeholder="Last Name"
-              />
-              <input
-                onChange={
-                  isEditingAddress
-                    ? handleEditAddressFormData
-                    : handleNewAddressFormData
-                }
-                value={
-                  isEditingAddress
-                    ? editAddressFormData?.phone
-                    : newAddressFormData?.phone
-                }
-                className="rounded-lg border p-3"
-                id="phone"
-                required
-                type="text"
-                placeholder="Phone Number"
-              />
-              <input
-                onChange={
-                  isEditingAddress
-                    ? handleEditAddressFormData
-                    : handleNewAddressFormData
-                }
-                value={
-                  isEditingAddress
-                    ? editAddressFormData?.address
-                    : newAddressFormData?.address
-                }
-                className="rounded-lg border p-3"
-                id="address"
-                required
-                type="text"
-                placeholder="Address"
-              />
-              <textarea
-                onChange={
-                  isEditingAddress
-                    ? handleEditAddressFormData
-                    : handleNewAddressFormData
-                }
-                value={
-                  isEditingAddress
-                    ? editAddressFormData?.description
-                    : newAddressFormData?.description
-                }
-                id="description"
-                rows={5}
-                className="max-h-[150px] min-h-[75px] w-full rounded-lg border p-3"
-                placeholder="landmarks near you..."
-              />
+            {address.length &&
+              address
+                .sort((a, b) => b.default - a.default)
+                .map(
+                  ({
+                    firstName,
+                    lastName,
+                    _id: addressId,
+                    phone,
+                    address,
+                    default: isDefault,
+                    description,
+                  }) => (
+                    <div
+                      key={addressId}
+                      className="flex h-[140px] items-center justify-between gap-4"
+                    >
+                      <div className="flex flex-col gap-2">
+                        <div className="flex divide-x divide-red-300">
+                          <p className="pr-2 font-semibold">{`${firstName} ${lastName}`}</p>
+                          <p className="pl-2 text-slate-600">(+63) {phone}</p>
+                        </div>
+                        <p className="w-[400px] text-xs text-slate-600">
+                          {address}
+                        </p>
+                      </div>
 
-              {!isEditingAddress && (
-                <div className="flex items-center gap-2">
-                  <input
-                    onChange={handleNewAddressFormData}
-                    checked={newAddressFormData.default}
-                    id="default"
-                    type="checkbox"
-                    className="h-4 w-4"
-                  />
-                  <label htmlFor="default" className="text-sm text-[#7f8183]">
-                    Set as Default Address
-                  </label>
-                </div>
-              )}
+                      <div className="flex flex-col gap-3">
+                        {isDefault && (
+                          <p className="w-[110px] border border-red-500 px-2 text-center text-sm text-red-500">
+                            Default
+                          </p>
+                        )}
 
-              <input
-                className="cursor-pointer bg-red-500 px-4 py-2 text-xs font-semibold uppercase text-white"
-                type="submit"
-                value={isEditingAddress ? "Update" : "Submit"}
-              />
+                        {!isDefault && (
+                          <button
+                            onClick={() => {
+                              setDefault({
+                                firstName,
+                                lastName,
+                                _id: addressId,
+                                phone,
+                                address,
+                                description,
+                                default: isDefault,
+                              });
+                              setIsChangingAddress(false);
+                            }}
+                            className="w-[110px] border border-slate-500 px-2 text-sm text-slate-500"
+                          >
+                            Set as Default
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  ),
+                )}
 
+            <div className="flex gap-4 self-end pt-4">
               <button
-                role="button"
-                className="px-4 py-2 text-xs font-semibold uppercase hover:bg-slate-200"
-                onClick={handleCancel}
+                className="w-fit self-end rounded-md border border-[#888888aa] px-4 py-2 text-[#888888]"
+                onClick={() => setIsChangingAddress(false)}
               >
                 Cancel
               </button>
-            </form>
+              <Link
+                to="/profile"
+                className="w-fit self-end rounded-md border border-red-500 bg-red-500 px-4 py-2 font-semibold text-white"
+              >
+                Manage addresses
+              </Link>
+            </div>
           </div>
         </div>
       )}
 
       {!isCheckingOut && (
-        <>
-          <h3 className="mb-8 hidden px-10 pb-10 text-center text-5xl font-bold text-[#311F09] md:inline-block">
-            Order list
+        <div>
+          <Link
+            className="flex w-fit items-center gap-1 self-start pb-6 text-lg font-semibold hover:underline"
+            onClick={() => navigate(-1)}
+          >
+            <MdKeyboardArrowLeft />
+            Go back
+          </Link>
+
+          <h3 className="px-10 pb-10 text-center text-5xl font-bold text-[#311F09]">
+            Order Summary
           </h3>
-          <div className="flex max-w-[800px] flex-col items-center justify-center rounded-2xl bg-red-100 p-4 md:h-[500px] md:max-h-[500px] md:w-[650px] md:flex-row md:gap-10 md:p-10 lg:w-[800px]">
-            <h3 className="px-10 pt-10 text-center text-4xl font-bold md:hidden">
-              Order list
-            </h3>
 
-            <div className="my-10 h-[1px] w-full bg-slate-500 md:hidden"></div>
+          <div className="w-[800px] divide-y divide-[#fcc6c6] rounded-md bg-[#fef4f4] p-8">
+            <div className="flex w-full justify-between">
+              <p className="w-[300px] bg-[#fcc6c6] py-1 text-center text-lg font-semibold capitalize">
+                food
+              </p>
 
-            <div className="flex h-[500px] w-full flex-col gap-2 divide-y divide-red-200 overflow-y-scroll rounded-lg bg-[#F5F5F5] px-6 py-2 md:h-full md:overflow-x-hidden md:overflow-y-scroll">
-              {cart.map((menu) => (
-                <OrderListItem key={menu.foodName} food={menu} />
-              ))}
+              <p className="flex-1 bg-[#fdd4d4] py-1 text-center text-lg font-semibold capitalize">
+                quantity
+              </p>
+
+              <p className="flex-1 bg-[#fee3e3] py-1 text-center text-lg font-semibold capitalize">
+                price
+              </p>
+
+              <p className="flex-1 bg-[#fef1f1] py-1 text-center text-lg font-semibold capitalize">
+                actions
+              </p>
             </div>
 
-            <div className="my-10 h-[1px] w-full bg-slate-500 md:hidden"></div>
+            {cart.length > 0 ? (
+              cart.map((food) => <FoodSummaryItem key={food._id} food={food} />)
+            ) : (
+              <p className="flex h-[200px] items-center justify-center text-center text-sm font-semibold text-red-400">
+                Select a food from our menu to start ordering now
+              </p>
+            )}
 
-            <div className="h-full px-6 py-4">
-              <div className="flex flex-col items-center justify-center gap-2">
-                <p className="self-start text-xl font-bold">Voucher Code</p>
-                <div className="flex items-center gap-2">
-                  <input
-                    className="rounded-lg p-2"
-                    type="text"
-                    placeholder="FREETOEAT"
-                  />
-                  <button className="rounded-lg bg-blue-400 p-3 font-thin text-white">
-                    <FaPlus />
-                  </button>
+            <div className="flex w-full flex-col items-center gap-4">
+              <div className="flex w-full items-center justify-end border-b border-dotted border-b-[#fcc6c6] px-6 text-right">
+                <div className="p-2 text-sm text-[#000000] text-opacity-55">
+                  <p>Subtotal</p>
+                </div>
+
+                <div className="w-[240px] border-l border-dotted border-[#fcc6c6] px-2 py-3 text-opacity-10">
+                  <div className="flex justify-end">
+                    <p className="flex w-[80px] items-center justify-between text-lg font-semibold">
+                      <span>₱</span> {itemsTotal}
+                    </p>
+                  </div>
                 </div>
               </div>
 
-              <div className="my-10 h-[1px] w-full bg-slate-500"></div>
+              <div className="flex w-full items-center justify-end text-right">
+                <div className="p-2 text-sm text-[#000000] text-opacity-55">
+                  <p></p>
+                </div>
 
-              <div className="flex w-full flex-col items-center gap-4">
-                <div className="flex w-full justify-between text-xl font-bold">
-                  <p className="">Subtotal</p>
-                  <p className="font-semibold text-red-500">+ $ {itemsTotal}</p>
-                </div>
-                <div className="flex w-full justify-between text-xl font-bold">
-                  <p className="">Tax fee</p>
-                  <p className="font-semibold text-red-500">+ $ {tax}</p>
-                </div>
-                <div className="flex w-full justify-between text-xl font-bold">
-                  <p className="">Voucher</p>
-                  <p className="font-semibold text-green-500">- $5.0</p>
-                </div>
-                <div className="flex w-full justify-between text-xl font-bold">
-                  <p className="">Total</p>
-                  <p className="font-semibold text-slate-500">${total}</p>
+                <div className="w-[240px] py-3 text-opacity-10">
+                  <div className="flex justify-end">
+                    <button
+                      disabled={cart.length < 1 ? true : false}
+                      onClick={() => {
+                        setIsCheckingOut(true);
+                      }}
+                      className={` ${cart.length < 1 ? "cursor-not-allowed bg-[#aaaaaa]" : "bg-red-500"} mb-2 mt-10 w-full rounded-lg p-2 text-2xl font-bold text-white`}
+                    >
+                      Continue
+                    </button>
+                  </div>
                 </div>
               </div>
-
-              <button
-                onClick={() => {
-                  setIsCheckingOut(true);
-                }}
-                className="mb-2 mt-10 w-full rounded-lg bg-red-500 p-2 text-2xl font-bold text-white"
-              >
-                Checkout
-              </button>
             </div>
           </div>
-        </>
+        </div>
       )}
 
       {isCheckingOut && (
         <div className="flex w-screen max-w-[500px] flex-col items-center justify-center gap-6">
+          <Link
+            className="flex w-fit items-center gap-1 self-start text-lg font-semibold hover:underline"
+            onClick={() => setIsCheckingOut(false)}
+          >
+            <MdKeyboardArrowLeft />
+            Go back
+          </Link>
+
           <h2 className="mb-8 text-5xl font-bold text-[#311F09]">Checkout</h2>
 
-          <div className="flex w-full flex-col gap-3 rounded-lg bg-red-200 px-6 py-4 pt-8 shadow-md">
-            <div className="flex items-center justify-between px-3">
-              <p className="font-bold">My addresses</p>
-              <button
-                onClick={() => setIsAddingAddress(true)}
-                className="flex items-center gap-2 rounded-lg bg-red-500 px-4 py-2 text-sm font-bold uppercase text-white"
-              >
-                <FaPlus /> Add new address
-              </button>
+          <div className="flex min-h-[200px] w-full flex-col gap-4 rounded-md bg-[#faeded] p-8">
+            <div>
+              <p className="flex items-center gap-1 rounded-md font-semibold text-red-500">
+                <span>
+                  <IoLocationSharp />
+                </span>
+                My Address
+              </p>
             </div>
 
-            <div className="flex flex-col gap-2 p-3">
-              {address.length ? (
-                address.map((address) => (
-                  <AddressItem
-                    key={address._id}
-                    address={address}
-                    setEditAddressFormData={setEditAddressFormData}
-                    setIsEditingAddress={setIsEditingAddress}
-                    setCurrentAddressId={setCurrentAddressId}
-                    setOrderFormData={setOrderFormData}
-                  />
+            {address.length > 0 ? (
+              <div
+                key={currentDefaultAddress._id}
+                className="flex flex-col gap-4 text-sm"
+              >
+                <div className="flex flex-col gap-2 rounded-md bg-[#f5f5f5] p-4">
+                  <p className="font-bold">
+                    {currentDefaultAddress.firstName}{" "}
+                    {currentDefaultAddress.lastName}{" "}
+                    {currentDefaultAddress.phone}
+                  </p>
+
+                  <p>{currentDefaultAddress.address}</p>
+
+                  {currentDefaultAddress.default && (
+                    <p className="w-fit border border-red-500 px-2 text-red-500">
+                      default
+                    </p>
+                  )}
+                </div>
+
+                <p
+                  className="cursor-pointer self-end pr-2 text-blue-600 hover:underline"
+                  onClick={() => setIsChangingAddress(true)}
+                >
+                  Change
+                </p>
+              </div>
+            ) : (
+              <div className="flex h-[300px] items-center justify-center">
+                <p>
+                  Add an address{" "}
+                  <Link
+                    to="/profile"
+                    className="font-semibold text-blue-600 hover:underline"
+                  >
+                    here
+                  </Link>{" "}
+                  to place order
+                </p>
+              </div>
+            )}
+          </div>
+
+          <div className="w-full">
+            <form
+              onSubmit={handleOrder}
+              className="flex w-full flex-col divide-y divide-[#fcc6c6] rounded-md bg-[#fef4f4]"
+            >
+              <div className="flex w-full justify-between">
+                <p className="w-[300px] bg-[#fcc6c6] py-1 text-center text-lg font-semibold capitalize">
+                  food
+                </p>
+
+                <p className="flex-1 bg-[#fdd4d4] py-1 text-center text-lg font-semibold capitalize">
+                  quantity
+                </p>
+
+                <p className="flex-1 bg-[#fee3e3] py-1 text-center text-lg font-semibold capitalize">
+                  price
+                </p>
+              </div>
+
+              {cart.length > 0 ? (
+                cart.map((food) => (
+                  <div
+                    key={food._id}
+                    className="flex w-full items-center justify-between py-4"
+                  >
+                    <div className="flex w-[300px] items-center gap-4">
+                      <img
+                        className="h-16 w-16 rounded-md object-cover"
+                        src={food.image}
+                        alt={food.foodName}
+                      />
+                      <p className="font-semibold italic">{food.foodName}</p>
+                    </div>
+
+                    <div className="flex flex-1 items-center justify-center gap-6 font-thin">
+                      <span className="rounded-md bg-[#fee3e3] px-4 py-1 text-sm font-bold">
+                        {food.quantity}
+                      </span>
+                    </div>
+
+                    <p className="flex flex-1 justify-center gap-2 text-center">
+                      <span className="w-[20px]">₱</span>{" "}
+                      <span className="w-[50px] text-start">{food.price}</span>
+                    </p>
+                  </div>
                 ))
               ) : (
-                <p>No address saved</p>
+                <p className="flex h-[200px] items-center justify-center text-center text-sm font-semibold text-red-400">
+                  Select a food from our menu to start ordering now
+                </p>
               )}
+            </form>
+
+            <div className="flex w-full items-center justify-end border-b border-t border-dotted border-b-[#fcc6c6] border-t-[#fcc6c6] px-6 text-right">
+              <div className="p-2 text-sm text-[#000000] text-opacity-55">
+                <p>Subtotal</p>
+              </div>
+
+              <div className="w-[240px] border-l border-dotted border-[#fcc6c6] px-2 py-3 text-opacity-10">
+                <div className="flex justify-end">
+                  <p className="flex w-[90px] items-center justify-between text-lg font-semibold">
+                    <span>₱</span> {itemsTotal}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="flex w-full items-center justify-end border-b border-dotted border-b-[#fcc6c6] px-6 text-right">
+              <div className="p-2 text-sm text-[#000000] text-opacity-55">
+                <p>Delivery Fee</p>
+              </div>
+
+              <div className="w-[240px] border-l border-dotted border-[#fcc6c6] px-2 py-3 text-opacity-10">
+                <div className="flex justify-end">
+                  <p className="flex w-[90px] items-center justify-between text-lg font-semibold">
+                    <span>₱</span> 49.00
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="flex w-full items-center justify-end border-b border-dotted border-b-[#fcc6c6] px-6 text-right">
+              <div className="p-2 text-sm text-[#000000] text-opacity-55">
+                <p>Voucher</p>
+              </div>
+
+              <div className="w-[240px] border-l border-dotted border-[#fcc6c6] px-2 py-3 text-opacity-10">
+                <div className="flex justify-end">
+                  <p className="flex w-[90px] items-center justify-between text-lg font-semibold">
+                    <span>₱</span> 00.00
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="flex w-full items-center justify-end border-b border-dotted border-b-[#fcc6c6] px-6 text-right">
+              <div className="p-2 text-sm text-[#000000] text-opacity-55">
+                <p>Total</p>
+              </div>
+
+              <div className="w-[240px] border-l border-dotted border-[#fcc6c6] px-2 py-3 text-opacity-10">
+                <div className="flex justify-end">
+                  <p className="flex w-[90px] items-center justify-between text-lg font-semibold">
+                    <span>₱</span> {+itemsTotal + 49}.00
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 
-          <p
-            onClick={() => setIsCheckingOut(false)}
-            className="self-start text-lg font-semibold text-slate-700 hover:underline"
+          <button
+            className={`rounded-lg ${address.length > 0 ? "bg-red-500" : "cursor-not-allowed bg-[#888888aa]"} w-full p-4 font-bold uppercase text-white`}
+            disabled={address.length < 1}
+            onClick={handleOrder}
           >
-            Back to order list
-          </p>
-
-          <form onSubmit={handleOrder} className="flex w-full flex-col gap-4">
-            <input
-              onChange={handleOrderFormData}
-              value={orderFormData.address}
-              className="rounded-lg border p-3"
-              type="text"
-              id="address"
-              placeholder="address"
-              required
-            />
-
-            <input
-              onChange={handleOrderFormData}
-              value={orderFormData.firstName}
-              className="rounded-lg border p-3"
-              type="text"
-              id="firstName"
-              placeholder="first name"
-              required
-            />
-
-            <input
-              onChange={handleOrderFormData}
-              value={orderFormData.lastName}
-              className="rounded-lg border p-3"
-              type="text"
-              id="lastName"
-              placeholder="last name"
-              required
-            />
-
-            <div className="flex items-center rounded-lg border">
-              <p className="p-3 text-sm font-semibold text-slate-500">+63</p>
-
-              <input
-                onChange={handleOrderFormData}
-                value={orderFormData.phone}
-                className="w-full bg-transparent p-3"
-                type="text"
-                id="phone"
-                placeholder="912 345 6789"
-                // pattern="^9[0-9]{2} [0-9]{3} [0-9]{4}"
-                required
-              />
-            </div>
-
-            <textarea
-              onChange={handleOrderFormData}
-              value={orderFormData.description}
-              className="max-h-[150px] min-h-[75px] w-full rounded-lg border p-3"
-              id="description"
-              type="text"
-              rows={4}
-              placeholder="landmarks near you..."
-            />
-
-            <div className="my-4 flex flex-col justify-center gap-4">
-              <h3 className="font-semibold">Mode of payment:</h3>
-              <div className="flex items-center gap-2">
-                <input
-                  onChange={handleOrderFormData}
-                  checked={!orderFormData.payment ? false : true}
-                  id="payment"
-                  type="checkbox"
-                  className="h-6 w-6 cursor-pointer border-gray-300 bg-white"
-                />
-                <label htmlFor="payment" className="text-sm">
-                  Cash on Delivery
-                </label>
-              </div>
-            </div>
-
-            <button className="rounded-lg bg-red-500 p-4 font-bold uppercase text-white">
-              Order now
-            </button>
-          </form>
+            Place Order
+          </button>
         </div>
       )}
     </div>

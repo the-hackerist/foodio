@@ -46,11 +46,11 @@ function Footer() {
                 Home
               </Link>
             </li>
-            <li className="cursor-pointer">
+            {/* <li className="cursor-pointer">
               <Link onClick={() => setMenu("menu")} to="/menu">
                 Menu
               </Link>
-            </li>
+            </li> */}
             <li className="cursor-pointer">
               <Link onClick={() => setMenu("order")} to="/order">
                 Order

@@ -1,10 +1,13 @@
 import { Link } from "react-router-dom";
+import { useMenu } from "../../contexts/MenuContext";
 
 /* eslint-disable react/prop-types */
 function OrderProfile({ order }) {
   const total = order.items
     .reduce((acc, curr) => acc + curr.price * curr.quantity, 0)
     .toFixed(2);
+
+  const { setMenu } = useMenu();
 
   return (
     <div className="flex w-full flex-col rounded-md">
@@ -32,7 +35,7 @@ function OrderProfile({ order }) {
           <div className="flex flex-col gap-4 rounded-md p-8">
             {order.items.map((orderItem) => (
               <div
-                key={orderItem.foodId}
+                key={orderItem._id}
                 className="flex items-center justify-between gap-4"
               >
                 <div className="flex gap-4">
@@ -73,13 +76,27 @@ function OrderProfile({ order }) {
             </div>
 
             <div className="flex w-full justify-end">
-              <div className="flex gap-8">
-                <button className="w-[200px] rounded-md bg-red-500 py-2 font-semibold text-white">
-                  Order Again
-                </button>
-                <button className="w-[200px] rounded-md border border-[#00000015] bg-[#fff] py-2 font-semibold text-[#555555]">
-                  Contact Restaurant
-                </button>
+              <div className="flex w-full items-center justify-between">
+                <p className="text-xs text-[#888888ff]">
+                  <span className="font-semibold">Order Date:</span>{" "}
+                  {order.orderDate.slice(0, 10)} {order.orderDate.slice(11, 19)}
+                </p>
+                <div className="flex gap-8">
+                  <Link
+                    to="/order"
+                    onClick={() => setMenu("order")}
+                    className="w-[200px] cursor-pointer rounded-md bg-red-500 py-2 text-center font-semibold text-white"
+                  >
+                    Order Again
+                  </Link>
+                  <Link
+                    to="/contact-us"
+                    onClick={() => setMenu("contact-us")}
+                    className="w-[200px] cursor-pointer rounded-md border border-[#00000015] bg-[#fff] py-2 text-center font-semibold text-[#555555]"
+                  >
+                    Contact Restaurant
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

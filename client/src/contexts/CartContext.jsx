@@ -106,37 +106,44 @@ function CartProvider({ children }) {
   }
 
   const updateCart = async (food, quantity, action = "addItem") => {
-    const {
-      foodId: id,
-      id: foodId,
-      foodName,
-      stock,
-      price,
-      image,
-      description,
-    } = food;
+    const { _id, foodName, stock, price, image, description } = food;
 
-    let cartList;
+    let cartList = cart;
 
     switch (action) {
       case "addItem": {
-        cartList = [
-          ...cart,
-          { foodId, foodName, stock, price, quantity, image, description },
-        ];
+        const isOnCart = cart.find((menu) => menu._id === _id);
+
+        if (isOnCart) {
+          cartList = cart.map((menu) =>
+            menu._id === _id
+              ? { ...menu, quantity: menu.quantity + quantity }
+              : menu,
+          );
+        } else {
+          cartList = [
+            ...cart,
+            { _id, foodName, stock, price, quantity, image, description },
+          ];
+        }
 
         break;
       }
 
       case "updateQty": {
         cartList = cart.map((item) =>
-          item.foodName === foodName ? { ...item, quantity } : item,
+          item._id === _id ? { ...item, quantity } : item,
         );
         break;
       }
 
       case "removeItem": {
-        cartList = cart.filter((menu) => menu.foodId !== id);
+        cartList = cart.filter((menu) => menu._id !== _id);
+        break;
+      }
+
+      case "clearCart": {
+        cartList = [];
         break;
       }
 
@@ -159,13 +166,14 @@ function CartProvider({ children }) {
 
       if (data.success === false) {
         dispatch({ type: "cart/update-cart/fail", payload: data.message });
-        return;
+        return { success: "fail" };
       }
 
       dispatch({ type: "cart/update-cart", payload: data });
+      return { success: "OK" };
     } catch (error) {
       dispatch({ type: "cart/update-cart/fail", payload: error.message });
-      return;
+      return { success: "fail" };
     }
   };
 
@@ -187,7 +195,10 @@ function CartProvider({ children }) {
     };
   };
 
-  const resetCart = () => dispatch({ type: "cart/reset-cart" });
+  const resetCart = () => {
+    updateCart(1, 1, "clearCart");
+    dispatch({ type: "cart/reset-cart" });
+  };
 
   return (
     <CartContext.Provider

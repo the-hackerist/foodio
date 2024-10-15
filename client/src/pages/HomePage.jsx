@@ -23,7 +23,7 @@ function HomePage() {
     <main>
       <Hero />
       <Popular />
-      <Menu />
+      {/* <Menu /> */}
       <Chef />
       {/* <Action /> */}
     </main>

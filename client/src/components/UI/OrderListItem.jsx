@@ -11,6 +11,7 @@ function OrderListItem({ food }) {
   const { updateCart } = useCart();
 
   const [quantity, setQuantity] = useState(food.quantity);
+
   useEffect(() => {
     if (quantity === 0) {
       updateCart(food, 0, "removeItem");
@@ -26,7 +27,9 @@ function OrderListItem({ food }) {
     <div className="flex w-full flex-col gap-2 rounded-lg bg-red-200 p-4">
       <div className="flex items-center justify-between">
         <p className="text-sm font-semibold italic">{food.foodName}</p>
-        <span className="font-bold">$ {food.price}</span>
+        <span className="font-semibold">
+          ₱ {food.price.toLocaleString()}.00
+        </span>
       </div>
 
       <div className="flex w-full justify-between">

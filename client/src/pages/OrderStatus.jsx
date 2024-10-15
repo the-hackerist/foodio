@@ -4,12 +4,18 @@ import { GrDeliver } from "react-icons/gr";
 import { FaRegStar, FaRegHandshake } from "react-icons/fa";
 import { IoMdCheckmark } from "react-icons/io";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 function OrderStatus() {
   const [orderData, setOrderData] = useState(null);
 
   const params = useParams();
+
+  const subTotal = orderData?.items?.reduce(
+    (acc, curr) => acc + curr.price * curr.quantity,
+    0,
+  );
+  const total = +subTotal + +orderData?.deliveryFee;
 
   useEffect(() => {
     const fetchListing = async () => {
@@ -157,9 +163,9 @@ function OrderStatus() {
           <button className="w-[200px] rounded-md bg-red-500 py-2 font-semibold text-white">
             Order Again
           </button>
-          <button className="w-[200px] rounded-md border border-[#00000015] bg-[#fff] py-2 font-semibold text-[#555555]">
+          <Link className="w-[200px] cursor-pointer rounded-md border border-[#00000015] bg-[#fff] py-2 text-center font-semibold text-[#555555]">
             Contact Restaurant
-          </button>
+          </Link>
         </div>
       </div>
 
@@ -184,7 +190,7 @@ function OrderStatus() {
 
           {orderData.items.map((item) => (
             <div
-              key={item.foodId}
+              key={item._id}
               className="flex items-center justify-between gap-4"
             >
               <div className="flex gap-4">
@@ -207,7 +213,7 @@ function OrderStatus() {
 
               <div>
                 <p className="flex w-[80px] items-center justify-between">
-                  <span>₱</span> {item.price}
+                  <span>₱</span> {item.price.toLocaleString()}.00
                 </p>
               </div>
             </div>
@@ -224,7 +230,7 @@ function OrderStatus() {
           <div className="border-l- w-[240px] border-l border-dotted px-2 py-3 text-opacity-10">
             <div className="flex justify-end">
               <p className="flex w-[80px] items-center justify-between">
-                <span>₱</span> 1,099.00
+                <span>₱</span> {subTotal.toLocaleString()}.00
               </p>
             </div>
           </div>
@@ -238,7 +244,7 @@ function OrderStatus() {
           <div className="border-l- w-[240px] border-l border-dotted px-2 py-3 text-opacity-10">
             <div className="flex justify-end">
               <p className="flex w-[80px] items-center justify-between">
-                <span>₱</span> ${orderData.deliveryFee}.00
+                <span>₱</span> {orderData.deliveryFee}.00
               </p>
             </div>
           </div>
@@ -252,7 +258,7 @@ function OrderStatus() {
           <div className="border-l- w-[240px] border-l border-dotted px-2 py-3 text-opacity-10">
             <div className="flex justify-end">
               <p className="flex w-[80px] items-center justify-between">
-                <span>₱</span> 39.00
+                <span>₱</span> 00.00
               </p>
             </div>
           </div>
@@ -264,7 +270,9 @@ function OrderStatus() {
           </div>
 
           <div className="border-l- w-[240px] border-l border-dotted px-2 py-5 text-opacity-10">
-            <p className="text-3xl font-semibold">₱ 1,099</p>
+            <p className="text-3xl font-semibold">
+              ₱ {total.toLocaleString()}.00
+            </p>
           </div>
         </div>
 

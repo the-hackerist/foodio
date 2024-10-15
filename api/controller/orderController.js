@@ -1,6 +1,37 @@
 // import mongoose from "mongoose";
 // import User from "../models/UserModel.js";
+import Food from "../models/FoodModel.js";
 import Order from "../models/OrderModel.js";
+
+export const getAllFood = async (req, res, next) => {
+  try {
+    const food = await Food.find({});
+    if (!food)
+      next({
+        statusCode: 404,
+        message: "There are no food listed in the database.",
+      });
+
+    res.status(200).json(food);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getFood = async (req, res, next) => {
+  const { foodId } = req.params;
+
+  try {
+    const food = await Food.findById(foodId);
+
+    if (!food)
+      next({ statusCode: 404, message: "Food not found in the database." });
+
+    res.status(200).json(food);
+  } catch (error) {
+    next(error);
+  }
+};
 
 export const getOrder = async (req, res, next) => {
   try {
