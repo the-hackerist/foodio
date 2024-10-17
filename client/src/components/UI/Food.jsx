@@ -85,8 +85,6 @@ function Food() {
   const handleBuyNow = async () => {
     if (!user) return;
 
-    console.log("Food Component: ", quantity);
-
     updateCart(food, quantity);
     setMenu("cart");
     navigate("/cart");

@@ -248,8 +248,6 @@ function UserProvider({ children }) {
   const signUp = async (user) => {
     const { username, email, password, confirmPass } = user;
 
-    console.log(user);
-
     try {
       dispatch({ type: "auth/sign-up/start" });
 

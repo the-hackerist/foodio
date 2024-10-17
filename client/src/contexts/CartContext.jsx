@@ -105,7 +105,6 @@ function CartProvider({ children }) {
 
   const updateCart = async (food, quantity, action = "addItem") => {
     const { _id, foodName, stock, price, image, description } = food;
-    console.log("context: ", quantity);
 
     let cartList = cart;
 
