@@ -35,18 +35,11 @@ function Food() {
 
   const { updateCart, loading } = useCart();
 
-  let stars;
-
   useEffect(() => {
     getFood(id);
-
-    stars = [
-      ...new Array(food.starRatings).fill("star"),
-      ...new Array(5 - food.starRatings).fill("noStar"),
-    ];
   }, []);
 
-  if (isFoodLoading)
+  if (isFoodLoading || food === null)
     return (
       <div className="flex h-screen items-center justify-center bg-[#F9F9F9] px-80 pb-20 pt-40">
         <p className="text-3xl font-bold">Loading...</p>
@@ -108,7 +101,10 @@ function Food() {
             </p>
 
             <div className="flex text-xl">
-              {stars.map((star, i) =>
+              {[
+                ...new Array(food.starRatings).fill("star"),
+                ...new Array(5 - food.starRatings).fill("noStar"),
+              ].map((star, i) =>
                 star === "star" ? (
                   <RiStarSFill key={i} />
                 ) : (
