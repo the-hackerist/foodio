@@ -8,6 +8,7 @@ import { MdKeyboardArrowLeft } from "react-icons/md";
 
 import { useFood } from "../../contexts/FoodContext";
 import { useCart } from "../../contexts/CartContext";
+import { useAuth } from "../../contexts/UserContext";
 
 import { toast, ToastContainer, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -31,6 +32,8 @@ function Food() {
 
   const { id } = useParams();
 
+  const { user } = useAuth();
+
   const { getFood, food, loading: isFoodLoading } = useFood();
 
   const { updateCart, loading } = useCart();
@@ -52,6 +55,14 @@ function Food() {
   };
 
   const handleCart = async () => {
+    if (!user) {
+      toast.error(`Login first in order to add ${food.foodName} in your cart`, {
+        ...toastProps,
+        autoClose: 5000,
+      });
+      return;
+    }
+
     const data = await updateCart(food, quantity);
 
     if (data.success === "OK") {
@@ -68,6 +79,8 @@ function Food() {
   };
 
   const handleBuyNow = () => {
+    if (!user) return;
+
     updateCart(food, quantity);
     navigate("/cart");
   };
@@ -75,6 +88,7 @@ function Food() {
   return (
     <div className="bg-[#F9F9F9] px-80 pb-20 pt-40">
       <ToastContainer />
+
       <Link
         className="flex w-fit items-center gap-1 pb-6 pl-8 text-lg font-semibold hover:underline"
         onClick={() => navigate(-1)}

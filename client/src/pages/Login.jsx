@@ -70,12 +70,12 @@ function Login() {
             </div>
           )}
 
-          <p className="text-sm">
+          {/* <p className="text-sm">
             Forgot your password?{" "}
             <span className="cursor-pointer font-semibold text-blue-700 hover:underline">
               Click here
             </span>
-          </p>
+          </p> */}
 
           <div className="flex flex-col justify-between gap-4 md:flex-row">
             <input

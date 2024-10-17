@@ -51,12 +51,12 @@ function Order() {
 
   const activeCategoryStyle = "text-white bg-red-500";
 
-  if (loading)
-    return (
-      <div className="flex h-screen items-center justify-center bg-[#F9F9F9] px-20 pb-20 pt-40">
-        <p className="text-3xl font-bold">Loading...</p>
-      </div>
-    );
+  // if (loading)
+  //   return (
+  //     <div className="flex h-screen items-center justify-center bg-[#F9F9F9] px-20 pb-20 pt-40">
+  //       <p className="text-3xl font-bold">Loading...</p>
+  //     </div>
+  //   );
 
   return (
     <div className="flex flex-col items-center gap-10 bg-[#F9F9F9] px-20 pb-20 pt-40">
@@ -131,20 +131,28 @@ function Order() {
         {isOrderListOpen ? "Close " : "Open "} order summary
       </p>
 
-      <div className="flex w-[870px] flex-col gap-6 p-8">
-        {/* <Pagination activePage={activePage} setActivePage={setActivePage} /> */}
+      {loading ? (
+        <div className="flex h-screen items-center justify-center bg-[#F9F9F9] px-20 pb-20 pt-40">
+          <p className="text-3xl font-bold">Loading...</p>
+        </div>
+      ) : (
+        <div className="flex w-[870px] flex-col gap-6 p-8">
+          {/* <Pagination activePage={activePage} setActivePage={setActivePage} /> */}
 
-        <div className="flex gap-6">
-          <div
-            className={`${
-              isOrderListOpen ? "hidden" : "flex"
-            } flex-wrap items-center gap-5 sm:flex`}
-          >
-            {foodList &&
-              foodList.map((menu) => <OrderItem key={menu._id} food={menu} />)}
+          <div className="flex gap-6">
+            <div
+              className={`${
+                isOrderListOpen ? "hidden" : "flex"
+              } flex-wrap items-center gap-5 sm:flex`}
+            >
+              {foodList &&
+                foodList.map((menu) => (
+                  <OrderItem key={menu._id} food={menu} />
+                ))}
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
