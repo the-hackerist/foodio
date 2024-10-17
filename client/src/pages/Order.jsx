@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import OrderItem from "../components/UI/OrderItem.jsx";
 
 import { useFood } from "../contexts/FoodContext.jsx";
+import Loader from "../components/UI/Loader.jsx";
 
 function Order() {
   const [category, setCategory] = useState("all categories");
@@ -49,14 +50,15 @@ function Order() {
     fetchFood();
   }, [category]);
 
-  const activeCategoryStyle = "text-white bg-red-500";
+  const activeCategoryStyle = "text-white bg-red-500 border-red-500";
 
-  // if (loading)
-  //   return (
-  //     <div className="flex h-screen items-center justify-center bg-[#F9F9F9] px-20 pb-20 pt-40">
-  //       <p className="text-3xl font-bold">Loading...</p>
-  //     </div>
-  //   );
+  if (loading) {
+    return (
+      <div className="flex h-screen flex-col items-center gap-10 bg-[#F9F9F9] px-20 pb-20 pt-40">
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col items-center gap-10 bg-[#F9F9F9] px-20 pb-20 pt-40">
@@ -67,9 +69,11 @@ function Order() {
       <ul className="mt-4 flex flex-wrap items-center gap-2 text-lg sm:gap-4 md:gap-6">
         <li onClick={() => setCategory("all categories")}>
           <button
-            className={`${
-              category === "all categories" ? activeCategoryStyle : "border"
-            } rounded-lg px-3 py-4 sm:px-6 md:px-8 lg:min-w-[150px]`}
+            className={`rounded-lg border-2 px-3 py-4 sm:px-6 md:px-8 lg:min-w-[150px] ${
+              category === "all categories"
+                ? activeCategoryStyle
+                : "border-[#ffeaea]"
+            } `}
           >
             All categories
           </button>
@@ -77,9 +81,9 @@ function Order() {
 
         <li onClick={() => setCategory("pasta")}>
           <button
-            className={`${
-              category === "pasta" ? activeCategoryStyle : "border"
-            } rounded-lg px-3 py-4 sm:px-6 md:px-8 lg:min-w-[150px]`}
+            className={`rounded-lg border-2 px-3 py-4 sm:px-6 md:px-8 lg:min-w-[150px] ${
+              category === "pasta" ? activeCategoryStyle : "border-[#ffeaea]"
+            } `}
           >
             Pasta
           </button>
@@ -87,9 +91,9 @@ function Order() {
 
         <li onClick={() => setCategory("pizza")}>
           <button
-            className={`${
-              category === "pizza" ? activeCategoryStyle : "border"
-            } rounded-lg px-3 py-4 sm:px-6 md:px-8 lg:min-w-[150px]`}
+            className={`rounded-lg border-2 px-3 py-4 sm:px-6 md:px-8 lg:min-w-[150px] ${
+              category === "pizza" ? activeCategoryStyle : "border-[#ffeaea]"
+            } `}
           >
             Pizza
           </button>
@@ -97,9 +101,9 @@ function Order() {
 
         <li onClick={() => setCategory("dessert")}>
           <button
-            className={`${
-              category === "dessert" ? activeCategoryStyle : "border"
-            } rounded-lg px-3 py-4 sm:px-6 md:px-8 lg:min-w-[150px]`}
+            className={`rounded-lg border-2 px-3 py-4 sm:px-6 md:px-8 lg:min-w-[150px] ${
+              category === "dessert" ? activeCategoryStyle : "border-[#ffeaea]"
+            } `}
           >
             Dessert
           </button>
@@ -107,9 +111,9 @@ function Order() {
 
         <li onClick={() => setCategory("drink")}>
           <button
-            className={`${
-              category === "drink" ? activeCategoryStyle : "border"
-            } rounded-lg px-3 py-4 sm:px-6 md:px-8 lg:min-w-[150px]`}
+            className={`rounded-lg border-2 px-3 py-4 sm:px-6 md:px-8 lg:min-w-[150px] ${
+              category === "drink" ? activeCategoryStyle : "border-[#ffeaea]"
+            } `}
           >
             Drink
           </button>
@@ -132,8 +136,8 @@ function Order() {
       </p>
 
       {loading ? (
-        <div className="flex h-screen items-center justify-center bg-[#F9F9F9] px-20 pb-20 pt-40">
-          <p className="text-3xl font-bold">Loading...</p>
+        <div className="flex h-screen flex-col items-center gap-10 bg-[#F9F9F9] px-20 pb-20 pt-40">
+          <Loader />
         </div>
       ) : (
         <div className="flex w-[870px] flex-col gap-6 p-8">

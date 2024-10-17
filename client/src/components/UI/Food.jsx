@@ -12,6 +12,8 @@ import { useAuth } from "../../contexts/UserContext";
 
 import { toast, ToastContainer, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useMenu } from "../../contexts/MenuContext";
+import Loader from "./Loader";
 
 const toastProps = {
   position: "top-center",
@@ -32,6 +34,8 @@ function Food() {
 
   const { id } = useParams();
 
+  const { setMenu } = useMenu();
+
   const { user } = useAuth();
 
   const { getFood, food, loading: isFoodLoading } = useFood();
@@ -45,7 +49,7 @@ function Food() {
   if (isFoodLoading || food === null)
     return (
       <div className="flex h-screen items-center justify-center bg-[#F9F9F9] px-80 pb-20 pt-40">
-        <p className="text-3xl font-bold">Loading...</p>
+        <Loader />
       </div>
     );
 
@@ -78,10 +82,13 @@ function Food() {
     }
   };
 
-  const handleBuyNow = () => {
+  const handleBuyNow = async () => {
     if (!user) return;
 
+    console.log("Food Component: ", quantity);
+
     updateCart(food, quantity);
+    setMenu("cart");
     navigate("/cart");
   };
 

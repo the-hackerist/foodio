@@ -18,7 +18,7 @@ function OrderItem({ food }) {
   return (
     <div
       onClick={handleViewFood}
-      className="flex h-[450px] w-[250px] cursor-pointer flex-col items-center justify-evenly gap-2 rounded-md border border-red-200 p-6 text-center transition-all hover:scale-105 hover:bg-red-200"
+      className="flex h-[450px] w-[250px] cursor-pointer flex-col items-center justify-evenly gap-2 rounded-md border-2 border-[#ffeaea] p-6 text-center transition-all hover:scale-105 hover:bg-[#ffeaea]"
     >
       <div className="flex w-full flex-col items-center justify-center space-y-4">
         <div className="h-[180px] overflow-hidden rounded-md">

@@ -1,12 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useState } from "react";
+
 import { useAuth } from "../../contexts/UserContext";
+
+import Loader from "../UI/Loader";
 
 const profileImage =
   "https://images.pexels.com/photos/9117796/pexels-photo-9117796.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
 
 function Account() {
-  const { user, getUser, updateProfile } = useAuth();
+  const { user, getUser, updateProfile, loading } = useAuth();
 
   const [profile, setProfile] = useState({
     firstName: "",
@@ -46,92 +49,99 @@ function Account() {
       </div>
 
       <div className="flex w-[800px] divide-x divide-red-300 pt-8">
-        <form onSubmit={handleUpdateProfile} className="flex divide-x pr-8">
-          <table className="w-[500px]">
-            <tbody>
-              <tr>
-                <td className="px-2 py-4">
-                  <p className="text-end text-[#555555CC]">Email</p>
-                </td>
-                <td className="flex gap-2 px-2 py-4">
-                  <p>{user.email}</p>
-                </td>
-              </tr>
+        <form
+          onSubmit={handleUpdateProfile}
+          className="w- flex w-[530px] divide-x pr-8"
+        >
+          {loading ? (
+            <Loader />
+          ) : (
+            <table className="w-[500px]">
+              <tbody>
+                <tr>
+                  <td className="px-2 py-4">
+                    <p className="text-end text-[#555555CC]">Email</p>
+                  </td>
+                  <td className="flex gap-2 px-2 py-4">
+                    <p>{user.email}</p>
+                  </td>
+                </tr>
 
-              <tr>
-                <td className="px-2 py-4">
-                  <p className="text-end text-[#555555CC]">Username</p>
-                </td>
-                <td className="px-2">
-                  <input
-                    ref={inputRef}
-                    id="username"
-                    value={profile.username}
-                    onChange={onChangeProfile}
-                    className="w-full rounded-sm border border-[#888888] bg-transparent p-2"
-                    type="text"
-                  />
-                </td>
-              </tr>
+                <tr>
+                  <td className="px-2 py-4">
+                    <p className="text-end text-[#555555CC]">Username</p>
+                  </td>
+                  <td className="px-2">
+                    <input
+                      ref={inputRef}
+                      id="username"
+                      value={profile.username}
+                      onChange={onChangeProfile}
+                      className="w-full rounded-sm border border-[#888888] bg-transparent p-2"
+                      type="text"
+                    />
+                  </td>
+                </tr>
 
-              <tr>
-                <td className="px-2 py-4">
-                  <p className="text-end text-[#555555CC]">First Name</p>
-                </td>
-                <td className="px-2">
-                  <input
-                    ref={inputRef}
-                    id="firstName"
-                    value={profile.firstName}
-                    onChange={onChangeProfile}
-                    className="w-full rounded-sm border border-[#888888] bg-transparent p-2"
-                    type="text"
-                  />
-                </td>
-              </tr>
+                <tr>
+                  <td className="px-2 py-4">
+                    <p className="text-end text-[#555555CC]">First Name</p>
+                  </td>
+                  <td className="px-2">
+                    <input
+                      ref={inputRef}
+                      id="firstName"
+                      value={profile.firstName}
+                      onChange={onChangeProfile}
+                      className="w-full rounded-sm border border-[#888888] bg-transparent p-2"
+                      type="text"
+                    />
+                  </td>
+                </tr>
 
-              <tr>
-                <td className="px-2 py-4">
-                  <p className="text-end text-[#555555CC]">Last Name</p>
-                </td>
-                <td className="px-2">
-                  <input
-                    ref={inputRef}
-                    id="lastName"
-                    value={profile.lastName}
-                    onChange={onChangeProfile}
-                    className="w-full rounded-sm border border-[#888888] bg-transparent p-2"
-                    type="text"
-                  />
-                </td>
-              </tr>
+                <tr>
+                  <td className="px-2 py-4">
+                    <p className="text-end text-[#555555CC]">Last Name</p>
+                  </td>
+                  <td className="px-2">
+                    <input
+                      ref={inputRef}
+                      id="lastName"
+                      value={profile.lastName}
+                      onChange={onChangeProfile}
+                      className="w-full rounded-sm border border-[#888888] bg-transparent p-2"
+                      type="text"
+                    />
+                  </td>
+                </tr>
 
-              <tr>
-                <td className="px-2 py-4">
-                  <p className="text-end text-[#555555CC]"> Phone Number</p>
-                </td>
-                <td className="px-2">
-                  <input
-                    ref={inputRef}
-                    id="phone"
-                    value={profile.phone}
-                    onChange={onChangeProfile}
-                    className="w-full rounded-sm border border-[#888888] bg-transparent p-2"
-                    type="text"
-                  />
-                </td>
-              </tr>
+                <tr>
+                  <td className="px-2 py-4">
+                    <p className="text-end text-[#555555CC]"> Phone Number</p>
+                  </td>
+                  <td className="px-2">
+                    <input
+                      ref={inputRef}
+                      id="phone"
+                      value={profile.phone}
+                      onChange={onChangeProfile}
+                      className="w-full rounded-sm border border-[#888888] bg-transparent p-2"
+                      type="text"
+                    />
+                  </td>
+                </tr>
 
-              <tr>
-                <td className="px-2 py-4"></td>
-                <td className="flex gap-2 px-2 py-4">
-                  <button className="rounded-md bg-red-500 px-4 py-2 font-semibold text-white">
-                    Save
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                <tr>
+                  <td className="px-2 py-4"></td>
+                  <td className="flex gap-2 px-2 py-4">
+                    <button className="rounded-md bg-red-500 px-4 py-2 font-semibold text-white">
+                      Save
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          )}
         </form>
 
         <div className="flex w-[300px] flex-col items-center justify-center gap-6">

@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
+import { useMenu } from "../../contexts/MenuContext";
 
 function UnderConstruction() {
+  const { setMenu } = useMenu();
   return (
     <div className="flex h-screen flex-col items-center justify-center gap-2 rounded-lg bg-transparent p-8 text-center">
       <h1 className="mb-4 text-5xl font-bold text-gray-800">
@@ -14,6 +16,7 @@ function UnderConstruction() {
       <Link
         className="inline-block rounded bg-red-500 px-4 py-2 font-semibold text-white transition duration-300 hover:bg-red-600"
         to="/"
+        onClick={() => setMenu("home")}
       >
         Go Back to Home
       </Link>

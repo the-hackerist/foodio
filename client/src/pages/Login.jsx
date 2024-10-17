@@ -63,7 +63,7 @@ function Login() {
           />
 
           {error && (
-            <div className="rounded-lg border-2 border-red-500 bg-red-100 p-1">
+            <div className="self-start p-1">
               <p className="w-full text-center text-sm font-semibold text-red-500">
                 {error}
               </p>

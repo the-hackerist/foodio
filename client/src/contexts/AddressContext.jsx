@@ -206,7 +206,6 @@ function AddressProvider({ children }) {
       });
 
       const data = await res.json();
-
       dispatch({ type: "address/edit-address", payload: data });
     } catch (error) {
       dispatch({ type: "address/edit-address/fail", payload: error.message });

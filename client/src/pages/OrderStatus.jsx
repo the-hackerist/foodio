@@ -1,15 +1,23 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { PiNewspaperClipping } from "react-icons/pi";
 import { GrDeliver } from "react-icons/gr";
 import { FaRegStar, FaRegHandshake } from "react-icons/fa";
 import { IoMdCheckmark } from "react-icons/io";
-import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+
+import { useMenu } from "../contexts/MenuContext";
 
 function OrderStatus() {
   const [orderData, setOrderData] = useState(null);
 
   const params = useParams();
+
+  const navigate = useNavigate();
+
+  const { setMenu } = useMenu();
 
   const subTotal = orderData?.items?.reduce(
     (acc, curr) => acc + curr.price * curr.quantity,
@@ -44,7 +52,10 @@ function OrderStatus() {
     <div className="flex w-full flex-col p-80 pt-40">
       <header className="flex items-center justify-between rounded-md border border-dotted p-4">
         {/* header */}
-        <button className="flex items-center justify-center uppercase text-black text-opacity-50 hover:underline">
+        <button
+          className="flex items-center justify-center uppercase text-black text-opacity-50 hover:underline"
+          onClick={() => navigate(-1)}
+        >
           <span className="text-3xl">
             <MdKeyboardArrowLeft />
           </span>
@@ -158,10 +169,18 @@ function OrderStatus() {
           Thank you for shopping with Foodio!
         </p>
         <div className="flex gap-8">
-          <button className="w-[200px] rounded-md bg-red-500 py-2 font-semibold text-white">
+          <Link
+            to="/order"
+            onClick={() => setMenu("order")}
+            className="w-[200px] rounded-md bg-red-500 py-2 text-center font-semibold text-white"
+          >
             Order Again
-          </button>
-          <Link className="w-[200px] cursor-pointer rounded-md border border-[#00000015] bg-[#fff] py-2 text-center font-semibold text-[#555555]">
+          </Link>
+          <Link
+            to="/contact-us"
+            onClick={() => setMenu("contact-us")}
+            className="w-[200px] cursor-pointer rounded-md border border-[#00000015] bg-[#fff] py-2 text-center font-semibold text-[#555555]"
+          >
             Contact Restaurant
           </Link>
         </div>

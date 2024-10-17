@@ -14,6 +14,7 @@ import Account from "../components/UI/Account";
 import ChangePassword from "../components/UI/ChangePassword";
 import OrderProfile from "../components/UI/OrderProfile";
 import UnderConstruction from "../components/UI/UnderConstruction";
+import Loader from "../components/UI/Loader";
 // import { Link } from "react-router-dom";
 
 const profileImage =
@@ -45,8 +46,14 @@ function Profile() {
 
   const { getOrdersList } = useOrder();
 
-  const { address, createAddress, editAddress, deleteAddress, setDefault } =
-    useAddress();
+  const {
+    address,
+    createAddress,
+    editAddress,
+    deleteAddress,
+    setDefault,
+    loading,
+  } = useAddress();
 
   useEffect(() => {
     const fetch = async () => {
@@ -139,10 +146,7 @@ function Profile() {
   return (
     <div className="flex items-center justify-center gap-2 bg-[#F9F9F9] px-10 py-20 pt-40 md:px-20 lg:gap-10 xl:gap-20">
       {(isAddingAddress || isEditingAddress) && (
-        <div
-          className="absolute inset-0 flex justify-center bg-black bg-opacity-30 pt-[250px]"
-          // onClick={() => setIsAddingAddress(false)}
-        >
+        <div className="absolute inset-0 flex justify-center bg-black bg-opacity-30 pt-[250px]">
           <div className="flex h-fit w-[500px] flex-col gap-4 rounded-md bg-white p-6">
             <p className="text-lg font-semibold">
               {isEditingAddress ? "Edit Address" : "New Address"}
@@ -401,7 +405,9 @@ function Profile() {
               </div>
 
               <div className="flex max-h-[800px] flex-col gap-2 divide-y divide-red-200 overflow-y-auto py-4 pt-6">
-                {address.length ? (
+                {loading ? (
+                  <Loader />
+                ) : address.length ? (
                   address
                     .sort((a, b) => b.default - a.default)
                     .map(

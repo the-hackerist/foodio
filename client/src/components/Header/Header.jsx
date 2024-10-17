@@ -32,7 +32,7 @@ function Header() {
   }, [cart]);
 
   const handleActiveLink = (link) => {
-    if (link === "none") {
+    if (link === "cart") {
       setMenu("order");
       return;
     }
@@ -131,7 +131,10 @@ function Header() {
               </li>
 
               <li
-                onClick={() => handleActiveLink("log-in")}
+                onClick={() => {
+                  handleActiveLink("log-in");
+                  setMenu("log-in");
+                }}
                 className={
                   navigation === "log-in" &&
                   `${activeLinkStyle} border-none pb-0`
@@ -187,7 +190,7 @@ function Header() {
         className={`hidden items-center justify-between gap-4 lg:${user ? "hidden" : "flex"}`}
       >
         <Link
-          onClick={() => handleActiveLink("none")}
+          onClick={() => handleActiveLink("cart")}
           to="/cart"
           className="rounded-full p-3 text-slate-700"
         >
@@ -195,12 +198,13 @@ function Header() {
         </Link>
 
         <Link
-          onClick={() => handleActiveLink("none")}
+          onClick={() => handleActiveLink("log-in")}
           to="/log-in"
           className="rounded-xl bg-[#F54748] px-8 py-3 text-sm font-semibold text-white"
         >
           Log in
         </Link>
+
         {user && (
           <Link to="/profile" className="w-full text-lg font-bold">
             {user.username}
@@ -217,6 +221,7 @@ function Header() {
             <Link
               to="/profile"
               className="text-lg font-bold capitalize hover:underline"
+              onClick={() => setMenu("profile")}
             >
               {user.username}
             </Link>
@@ -224,7 +229,10 @@ function Header() {
         )}
 
         <Link
-          onClick={() => handleActiveLink("none")}
+          onClick={() => {
+            handleActiveLink("none");
+            setMenu("cart");
+          }}
           to="/cart"
           className="relative rounded-full p-3 text-slate-700"
         >

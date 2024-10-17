@@ -11,21 +11,8 @@ import { useCart } from "../contexts/CartContext";
 import { useAddress } from "../contexts/AddressContext";
 import { useOrder } from "../contexts/OrderContext";
 
-import AddressItem from "../components/UI/AddressItem";
-import OrderListItem from "../components/UI/OrderListItem";
 import FoodSummaryItem from "../components/UI/FoodSummaryItem";
-
-const initialState = {
-  firstName: "",
-  lastName: "",
-  address: "",
-  phone: "",
-  description: "",
-  default: false,
-};
-
-const isAnyPropertyEmpty = (objData) =>
-  Object.values(objData).some((val) => val === "");
+import { useMenu } from "../contexts/MenuContext";
 
 function Cart() {
   const [isCheckingOut, setIsCheckingOut] = useState(false);
@@ -37,14 +24,13 @@ function Cart() {
 
   const { tax, total, itemsTotal } = calculateTotal();
 
-  const { setDefault, address, createAddress, getAddress, editAddress } =
-    useAddress();
+  const { setMenu } = useMenu();
+
+  const { setDefault, address, getAddress } = useAddress();
 
   const currentDefaultAddress = address.find(
     (address) => address.default === true,
   );
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     getAddress();
@@ -150,8 +136,9 @@ function Cart() {
       {!isCheckingOut && (
         <div>
           <Link
+            to="/order"
             className="flex w-fit items-center gap-1 self-start pb-6 text-lg font-semibold hover:underline"
-            onClick={() => navigate(-1)}
+            onClick={() => setMenu("order")}
           >
             <MdKeyboardArrowLeft />
             Go back

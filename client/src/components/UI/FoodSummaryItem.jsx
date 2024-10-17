@@ -5,9 +5,12 @@ import { useEffect, useState } from "react";
 import { FaMinus, FaPlus, FaRegTrashAlt } from "react-icons/fa";
 
 import { useCart } from "../../contexts/CartContext";
+import { useNavigate } from "react-router-dom";
 
 function FoodSummaryItem({ food }) {
   const [quantity, setQuantity] = useState(food.quantity);
+
+  const navigate = useNavigate();
 
   const { updateCart } = useCart();
 
@@ -33,9 +36,10 @@ function FoodSummaryItem({ food }) {
     >
       <div className="flex w-[300px] items-center gap-4">
         <img
-          className="h-16 w-16 rounded-md object-cover"
+          className="h-16 w-16 cursor-pointer rounded-md object-cover transition-all hover:scale-110"
           src={food.image}
           alt={food.foodName}
+          onClick={() => navigate(`/order/menu/${food._id}`)}
         />
         <p className="font-semibold italic">{food.foodName}</p>
       </div>

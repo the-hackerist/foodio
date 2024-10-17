@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-refresh/only-export-components */
 /* eslint-disable react/prop-types */
 import { createContext, useContext, useEffect, useReducer } from "react";
@@ -38,7 +40,7 @@ function reducer(state, action) {
         ...state,
         user: state.user,
         error: "",
-        loading: false,
+        loading: true,
       };
 
     case "get-user":
@@ -244,7 +246,9 @@ function UserProvider({ children }) {
   };
 
   const signUp = async (user) => {
-    const { username, email, password, confirmPassword } = user;
+    const { username, email, password, confirmPass } = user;
+
+    console.log(user);
 
     try {
       dispatch({ type: "auth/sign-up/start" });
@@ -265,7 +269,7 @@ function UserProvider({ children }) {
         return;
       }
 
-      if (confirmPassword !== password) {
+      if (confirmPass !== password) {
         dispatch({
           type: "auth/sign-up/fail",
           payload: "Password do not match.",
@@ -303,7 +307,9 @@ function UserProvider({ children }) {
   const signOut = () => {
     localStorage.removeItem("auth");
     dispatch({ type: "auth/sign-out" });
-    resetMenu();
+    setMenu("log-in");
+
+    // resetMenu();
   };
 
   const resetError = () => dispatch({ type: "reset-error" });
