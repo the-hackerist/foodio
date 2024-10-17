@@ -29,9 +29,9 @@ function AboutUs() {
             <span className="text-red-500">Restaurant</span>
           </h2>
           <p className="mt-4 max-w-[350px] text-center text-xl text-[#5C4429] md:text-start md:text-lg">
-            This dish is full of flavor and nutrition! Quinoa is a complete
-            protein, providing all the essential amino acids your body needs,
-            and is also a good source of fiber.
+            Our menu features a variety of dishes, each thoughtfully crafted to
+            highlight the rich flavors and health benefits of wholesome
+            ingredients like quinoa.
           </p>
           <Link
             to="/order"
@@ -45,11 +45,12 @@ function AboutUs() {
 
       <div className="flex flex-col items-center justify-center gap-4 md:flex-row lg:gap-20">
         <p className="mt-4 max-w-[350px] text-center text-xl text-[#5C4429] md:text-start md:text-lg">
-          Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-          accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae
-          ab illo inventore veritatis et quasi architecto beatae vitae dicta
-          sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
-          aspernatur aut odit aut fugit.
+          Not only does quinoa serve as a versatile base for our meals, but it
+          also supports a balanced diet by offering essential amino acids,
+          fiber, and vital nutrients. We are committed to bringing you meals
+          that not only satisfy your cravings but also nourish your body. Join
+          us on a culinary journey that celebrates health and flavor in every
+          bite!
         </p>
 
         <div className="flex h-[350px] w-[350px] items-center justify-center rounded-full bg-[#F5F5F5] lg:h-[475px] lg:w-[475px]">
@@ -80,8 +81,11 @@ function AboutUs() {
           </h2>
           <p className="mt-4 w-full text-2xl md:text-2xl">Ismail Marzuki</p>
           <p className="mt-8 text-2xl font-thin italic leading-10">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            As a passionate advocate for healthy eating, I understand the
+            importance of quality ingredients in our daily diets. Our team is
+            dedicated to sourcing the finest ingredients, like nutrient-packed
+            quinoa, to ensure that every dish not only delights your taste buds
+            but also fuels your body.
           </p>
         </div>
       </div>

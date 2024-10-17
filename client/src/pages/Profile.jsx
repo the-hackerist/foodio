@@ -15,6 +15,8 @@ import ChangePassword from "../components/UI/ChangePassword";
 import OrderProfile from "../components/UI/OrderProfile";
 import UnderConstruction from "../components/UI/UnderConstruction";
 import Loader from "../components/UI/Loader";
+import { Link } from "react-router-dom";
+import { useMenu } from "../contexts/MenuContext";
 // import { Link } from "react-router-dom";
 
 const profileImage =
@@ -45,6 +47,8 @@ function Profile() {
   const { user, getUser } = useAuth();
 
   const { getOrdersList } = useOrder();
+
+  const { setMenu } = useMenu();
 
   const {
     address,
@@ -493,7 +497,15 @@ function Profile() {
                       ),
                     )
                 ) : (
-                  <p>No address saved</p>
+                  <div className="flex h-full w-full items-center justify-center">
+                    <p className="py-20 text-lg">
+                      You haven&apos;t added any{" "}
+                      <span className="font-semibold text-red-500">
+                        address
+                      </span>{" "}
+                      yet, start adding now.
+                    </p>
+                  </div>
                 )}
               </div>
             </div>
@@ -503,25 +515,25 @@ function Profile() {
             <ChangePassword />
           )}
 
-          {
-            view === "orders" &&
-              ordersList.length >= 1 &&
-              ordersList
+          {view === "orders" && ordersList.length >= 1
+            ? ordersList
                 .sort((a, b) => b.orderDate.localeCompare(a.orderDate))
                 .map((order) => <OrderProfile key={order._id} order={order} />)
-            /* <div className="flex h-full items-center justify-center">
-              <p>
-                Order{" "}
-                <Link
-                  to="/order"
-                  className="font-semibold text-blue-600 hover:underline"
-                >
-                  here
-                </Link>{" "}
-                to start tracking your orders.
-              </p>
-            </div> */
-          }
+            : view === "orders" && (
+                <div className="flex h-full w-full items-center justify-center">
+                  <p className="text-lg">
+                    Order{" "}
+                    <Link
+                      to="/order"
+                      onClick={() => setMenu("order")}
+                      className="cursor-pointer font-semibold text-blue-600 hover:underline"
+                    >
+                      here
+                    </Link>{" "}
+                    to start tracking your orders
+                  </p>
+                </div>
+              )}
 
           {view === "reservations" && <UnderConstruction />}
           {view === "vouchers" && <UnderConstruction />}

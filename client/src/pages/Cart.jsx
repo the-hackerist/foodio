@@ -14,9 +14,17 @@ import { useOrder } from "../contexts/OrderContext";
 import FoodSummaryItem from "../components/UI/FoodSummaryItem";
 import { useMenu } from "../contexts/MenuContext";
 
+const paymentMethods = [
+  { id: "cashOnDelivery", label: "Cash on Delivery" },
+  { id: "creditCard", label: "Credit Card" },
+  { id: "paypal", label: "PayPal" },
+  { id: "bankTransfer", label: "Bank Transfer" },
+];
+
 function Cart() {
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [isChangingAddress, setIsChangingAddress] = useState(false);
+  const [selectedMethod, setSelectedMethod] = useState("");
 
   const { cart, calculateTotal, resetCart } = useCart();
 
@@ -31,6 +39,10 @@ function Cart() {
   const currentDefaultAddress = address.find(
     (address) => address.default === true,
   );
+
+  const handleRadioChange = (e) => {
+    setSelectedMethod(e.target.value);
+  };
 
   useEffect(() => {
     getAddress();
@@ -385,6 +397,57 @@ function Cart() {
                 </div>
               </div>
             </div>
+          </div>
+
+          <div className="mt-4 flex w-full flex-col rounded-md border border-[#fcc6c6] px-8 py-6">
+            <h2 className="text-lg font-semibold">Voucher Code</h2>
+            <div className="mt-2">
+              <input
+                type="text"
+                // value={voucherCode}
+                // onChange={handleInputChange}
+                placeholder="Enter voucher code"
+                className="w-full rounded-md border p-2"
+                disabled={true} // Temporarily disabled
+              />
+              <p className="mt-2 pl-1 text-xs text-gray-500">
+                Vouchers are temporarily disabled. Please check back later.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex w-full flex-col gap-4 rounded-md border border-[#fcc6c6] px-8 py-6">
+            <h2 className="text-lg font-semibold">Payment Method</h2>
+            <div className="mt-2 flex gap-4">
+              {paymentMethods.map((method) => (
+                <div key={method.id} className="flex items-center">
+                  <input
+                    type="radio"
+                    id={method.id}
+                    name="paymentMethod"
+                    value={method.label}
+                    checked={method.label === "Cash on Delivery"}
+                    onChange={
+                      method.label === "Cash on Delivery"
+                        ? handleRadioChange
+                        : null
+                    }
+                    className="mr-2"
+                    disabled={method.label !== "Cash on Delivery"}
+                  />
+                  <label
+                    htmlFor={method.id}
+                    className={`text-sm ${method.label !== "Cash on Delivery" ? "text-gray-500" : ""}`}
+                  >
+                    {method.label}
+                  </label>
+                </div>
+              ))}
+            </div>
+            <p className="text-xs text-gray-500">
+              Only cash on delivery is available as of the moment. Please check
+              back later.
+            </p>
           </div>
 
           <button
