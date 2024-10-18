@@ -6,15 +6,17 @@ import { RiStarSLine, RiStarSFill } from "react-icons/ri";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 
+import { formatNumber } from "../../utils/NumberFormatter";
+
 import { useFood } from "../../contexts/FoodContext";
 import { useCart } from "../../contexts/CartContext";
 import { useAuth } from "../../contexts/UserContext";
+import { useMenu } from "../../contexts/MenuContext";
 
 import { toast, ToastContainer, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useMenu } from "../../contexts/MenuContext";
+
 import Loader from "./Loader";
-import { formatNumber } from "../../utils/NumberFormatter";
 
 const toastProps = {
   position: "top-center",
