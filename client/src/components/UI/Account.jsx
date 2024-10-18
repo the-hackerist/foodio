@@ -250,11 +250,8 @@ function Account() {
             </button>
           )}
 
-          <div>
-            <p className="text-md text-[#999999]">File size: maximum 1 MB</p>
-            <p className="text-md text-[#999999]">
-              File extension: .JPEG, .PNG
-            </p>
+          <div className="px-8">
+            <p className="text-md text-[#999999]">File size: maximum 2 MB</p>
           </div>
         </div>
       </div>

@@ -69,6 +69,10 @@ function Profile() {
     getUser();
   }, []);
 
+  useEffect(() => {
+    getUser();
+  }, [user]);
+
   const handleNewAddressFormData = (e) => {
     if (e.target.type === "text" || e.target.type === "textarea")
       setNewAddressFormData({
