@@ -1,7 +1,9 @@
 /* eslint-disable react/prop-types */
+import { useNavigate } from "react-router-dom";
+
 import { RiStarSLine, RiStarSFill } from "react-icons/ri";
 
-import { useNavigate } from "react-router-dom";
+import { formatNumber } from "../../utils/NumberFormatter";
 
 function OrderItem({ food }) {
   const navigate = useNavigate();
@@ -39,7 +41,7 @@ function OrderItem({ food }) {
 
       <p className="line-clamp-2 text-start text-sm">{food.description}</p>
       <p className="mt-4 text-base font-semibold">
-        ₱ {food.price.toLocaleString()}.00
+        ₱ {formatNumber(food.price)}
       </p>
     </div>
   );

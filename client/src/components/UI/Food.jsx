@@ -14,6 +14,7 @@ import { toast, ToastContainer, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useMenu } from "../../contexts/MenuContext";
 import Loader from "./Loader";
+import { formatNumber } from "../../utils/NumberFormatter";
 
 const toastProps = {
   position: "top-center",
@@ -134,7 +135,7 @@ function Food() {
           </div>
 
           <p className="w-full bg-[#F9F9F9] p-4 text-3xl font-semibold text-red-500">
-            <span>₱</span> {food.price.toLocaleString()}
+            <span>₱</span> {formatNumber(food.price)}
           </p>
 
           <div className="flex pt-4">

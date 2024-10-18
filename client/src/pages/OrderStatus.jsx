@@ -9,6 +9,7 @@ import { FaRegStar, FaRegHandshake } from "react-icons/fa";
 import { IoMdCheckmark } from "react-icons/io";
 
 import { useMenu } from "../contexts/MenuContext";
+import { formatNumber } from "../utils/NumberFormatter";
 
 function OrderStatus() {
   const [orderData, setOrderData] = useState(null);
@@ -230,7 +231,7 @@ function OrderStatus() {
 
               <div>
                 <p className="flex w-[80px] items-center justify-between">
-                  <span>₱</span> {item.price.toLocaleString()}.00
+                  <span>₱</span> {formatNumber(item.price)}
                 </p>
               </div>
             </div>
@@ -247,7 +248,7 @@ function OrderStatus() {
           <div className="border-l- w-[240px] border-l border-dotted px-2 py-3 text-opacity-10">
             <div className="flex justify-end">
               <p className="flex w-[80px] items-center justify-between">
-                <span>₱</span> {subTotal.toLocaleString()}.00
+                <span>₱</span> {formatNumber(subTotal)}
               </p>
             </div>
           </div>
@@ -261,7 +262,7 @@ function OrderStatus() {
           <div className="border-l- w-[240px] border-l border-dotted px-2 py-3 text-opacity-10">
             <div className="flex justify-end">
               <p className="flex w-[80px] items-center justify-between">
-                <span>₱</span> {orderData.deliveryFee}.00
+                <span>₱</span> {formatNumber(orderData.deliveryFee)}
               </p>
             </div>
           </div>
@@ -275,7 +276,7 @@ function OrderStatus() {
           <div className="border-l- w-[240px] border-l border-dotted px-2 py-3 text-opacity-10">
             <div className="flex justify-end">
               <p className="flex w-[80px] items-center justify-between">
-                <span>₱</span> 00.00
+                <span>₱</span> {formatNumber(0)}
               </p>
             </div>
           </div>
@@ -287,8 +288,8 @@ function OrderStatus() {
           </div>
 
           <div className="border-l- w-[240px] border-l border-dotted px-2 py-5 text-opacity-10">
-            <p className="text-3xl font-semibold">
-              ₱ {total.toLocaleString()}.00
+            <p className="text-3xl font-semibold text-red-500">
+              ₱ {formatNumber(total)}
             </p>
           </div>
         </div>

@@ -187,9 +187,9 @@ function CartProvider({ children }) {
     const total = itemsTotal + tax;
 
     return {
-      tax: tax.toFixed(2),
-      itemsTotal: itemsTotal.toFixed(2),
-      total: total.toFixed(2),
+      tax,
+      itemsTotal,
+      total,
     };
   };
 

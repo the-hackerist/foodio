@@ -5,6 +5,7 @@ import { RiStarSLine, RiStarSFill } from "react-icons/ri";
 
 import { useCart } from "../../contexts/CartContext.jsx";
 import { useOrder } from "../../contexts/OrderContext.jsx";
+import { formatNumber } from "../../utils/NumberFormatter.js";
 
 function MenuItem({ food }) {
   const { getOrder } = useOrder();
@@ -47,8 +48,9 @@ function MenuItem({ food }) {
 
         <div className="flex w-full items-center justify-center gap-4">
           <p className="text-nowrap text-xl font-semibold">
-            ₱ {food.price.toLocaleString()}.00
+            ₱ {formatNumber(food.price)}
           </p>
+
           {!isOnCart ? (
             <button
               onClick={handleOrder}

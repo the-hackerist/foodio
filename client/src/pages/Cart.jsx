@@ -13,6 +13,7 @@ import { useOrder } from "../contexts/OrderContext";
 
 import FoodSummaryItem from "../components/UI/FoodSummaryItem";
 import { useMenu } from "../contexts/MenuContext";
+import { formatNumber } from "../utils/NumberFormatter";
 
 const paymentMethods = [
   { id: "cashOnDelivery", label: "Cash on Delivery" },
@@ -195,8 +196,8 @@ function Cart() {
 
                 <div className="w-[240px] border-l border-dotted border-[#fcc6c6] px-2 py-3 text-opacity-10">
                   <div className="flex justify-end">
-                    <p className="flex w-[80px] items-center justify-between text-lg font-semibold">
-                      <span>₱</span> {itemsTotal}
+                    <p className="flex w-[80px] items-center justify-between gap-2 text-lg font-semibold">
+                      <span>₱</span> {formatNumber(itemsTotal)}
                     </p>
                   </div>
                 </div>
@@ -334,7 +335,9 @@ function Cart() {
 
                     <p className="flex flex-1 justify-center gap-2 text-center">
                       <span className="w-[20px]">₱</span>{" "}
-                      <span className="w-[50px] text-start">{food.price}</span>
+                      <span className="w-[50px] text-start">
+                        {formatNumber(food.price)}
+                      </span>
                     </p>
                   </div>
                 ))
@@ -352,8 +355,8 @@ function Cart() {
 
               <div className="w-[240px] border-l border-dotted border-[#fcc6c6] px-2 py-3 text-opacity-10">
                 <div className="flex justify-end">
-                  <p className="flex w-[90px] items-center justify-between text-lg font-semibold">
-                    <span>₱</span> {itemsTotal}
+                  <p className="flex w-[90px] items-center justify-between gap-2 text-lg font-semibold">
+                    <span>₱</span> {formatNumber(itemsTotal)}
                   </p>
                 </div>
               </div>
@@ -365,8 +368,8 @@ function Cart() {
 
               <div className="w-[240px] border-l border-dotted border-[#fcc6c6] px-2 py-3 text-opacity-10">
                 <div className="flex justify-end">
-                  <p className="flex w-[90px] items-center justify-between text-lg font-semibold">
-                    <span>₱</span> 49.00
+                  <p className="flex w-[90px] items-center justify-between gap-2 text-lg font-semibold">
+                    <span>₱</span> {formatNumber(49)}
                   </p>
                 </div>
               </div>
@@ -378,8 +381,8 @@ function Cart() {
 
               <div className="w-[240px] border-l border-dotted border-[#fcc6c6] px-2 py-3 text-opacity-10">
                 <div className="flex justify-end">
-                  <p className="flex w-[90px] items-center justify-between text-lg font-semibold">
-                    <span>₱</span> 00.00
+                  <p className="flex w-[90px] items-center justify-between gap-2 text-lg font-semibold">
+                    <span>₱</span> {formatNumber(0)}
                   </p>
                 </div>
               </div>
@@ -391,8 +394,8 @@ function Cart() {
 
               <div className="w-[240px] border-l border-dotted border-[#fcc6c6] px-2 py-3 text-opacity-10">
                 <div className="flex justify-end">
-                  <p className="flex w-[90px] items-center justify-between text-lg font-semibold">
-                    <span>₱</span> {+itemsTotal + 49}.00
+                  <p className="flex w-[90px] items-center justify-between gap-2 text-lg font-semibold">
+                    <span>₱</span> {formatNumber(+itemsTotal + 49)}
                   </p>
                 </div>
               </div>
@@ -407,7 +410,7 @@ function Cart() {
                 // value={voucherCode}
                 // onChange={handleInputChange}
                 placeholder="Enter voucher code"
-                className="w-full rounded-md border p-2"
+                className="w-full cursor-not-allowed rounded-md border p-2"
                 disabled={true} // Temporarily disabled
               />
               <p className="mt-2 pl-1 text-xs text-gray-500">
@@ -432,7 +435,7 @@ function Cart() {
                         ? handleRadioChange
                         : null
                     }
-                    className="mr-2"
+                    className={`${method.label !== "Cash on Delivery" ? "cursor-not-allowed" : ""} mr-2`}
                     disabled={method.label !== "Cash on Delivery"}
                   />
                   <label

@@ -2,10 +2,13 @@
 import { useEffect, useState } from "react";
 
 // import Pagination from "../components/UI/Pagination.jsx";
-import OrderItem from "../components/UI/OrderItem.jsx";
 
 import { useFood } from "../contexts/FoodContext.jsx";
+
+import OrderItem from "../components/UI/OrderItem.jsx";
 import Loader from "../components/UI/Loader.jsx";
+
+// import LoadingImage from "../components/UI/LoadingImage.jsx";
 
 function Order() {
   const [category, setCategory] = useState("all categories");
@@ -52,6 +55,21 @@ function Order() {
 
   const activeCategoryStyle = "text-white bg-red-500 border-red-500";
 
+  // const images = [
+  //   {
+  //     src: "https://images.pexels.com/photos/1055272/pexels-photo-1055272.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+  //     alt: "Image 1",
+  //   },
+  //   {
+  //     src: "https://images.pexels.com/photos/892649/pexels-photo-892649.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+  //     alt: "Image 2",
+  //   },
+  //   {
+  //     src: "https://images.pexels.com/photos/793763/pexels-photo-793763.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+  //     alt: "Image 3",
+  //   },
+  // ];
+
   if (loading) {
     return (
       <div className="flex h-screen flex-col items-center gap-10 bg-[#F9F9F9] px-20 pb-20 pt-40">
@@ -59,6 +77,19 @@ function Order() {
       </div>
     );
   }
+
+  // return (
+  //   <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+  //     {images.map((img, index) => (
+  //       <LoadingImage
+  //         key={index}
+  //         src={img.src}
+  //         alt={img.alt}
+  //         className="h-auto w-full rounded-lg shadow-lg"
+  //       />
+  //     ))}
+  //   </div>
+  // );
 
   return (
     <div className="flex flex-col items-center gap-10 bg-[#F9F9F9] px-20 pb-20 pt-40">

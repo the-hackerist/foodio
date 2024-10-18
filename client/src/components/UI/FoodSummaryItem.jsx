@@ -6,6 +6,7 @@ import { FaMinus, FaPlus, FaRegTrashAlt } from "react-icons/fa";
 
 import { useCart } from "../../contexts/CartContext";
 import { useNavigate } from "react-router-dom";
+import { formatNumber } from "../../utils/NumberFormatter";
 
 function FoodSummaryItem({ food }) {
   const [quantity, setQuantity] = useState(food.quantity);
@@ -65,7 +66,7 @@ function FoodSummaryItem({ food }) {
       </div>
       <p className="flex flex-1 justify-center gap-2 text-center">
         <span className="w-[20px]">₱</span>{" "}
-        <span className="w-[50px] text-start">{food.price}</span>
+        <span className="w-[50px] text-start">{formatNumber(food.price)}</span>
       </p>
       <p
         className="flex flex-1 cursor-pointer items-center justify-center gap-1 text-center text-sm font-semibold text-red-500 hover:underline"

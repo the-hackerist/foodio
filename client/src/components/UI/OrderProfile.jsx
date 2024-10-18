@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import { useMenu } from "../../contexts/MenuContext";
+import { formatNumber } from "../../utils/NumberFormatter";
 
 /* eslint-disable react/prop-types */
 function OrderProfile({ order }) {
-  const total = order.items
-    .reduce((acc, curr) => acc + curr.price * curr.quantity, 0)
-    .toFixed(2);
+  const total = order.items.reduce(
+    (acc, curr) => acc + curr.price * curr.quantity,
+    0,
+  );
 
   const { setMenu } = useMenu();
 
@@ -60,7 +62,7 @@ function OrderProfile({ order }) {
 
                 <div>
                   <p className="flex w-[80px] items-center justify-between">
-                    <span>₱</span> {orderItem.price}
+                    <span>₱</span> {formatNumber(orderItem.price)}
                   </p>
                 </div>
               </div>
@@ -70,9 +72,11 @@ function OrderProfile({ order }) {
 
         <div className="flex items-center justify-between rounded-md border border-dotted bg-[#FFFCF5] p-4">
           <div className="flex w-full flex-col gap-4">
-            <div className="flex w-[170px] items-end justify-between self-end">
+            <div className="flex w-[200px] items-end justify-between self-end">
               <p className="text-sm text-[#888888]">Order Total: </p>
-              <p className="text-xl font-semibold text-red-500">₱ {total}</p>
+              <p className="text-xl font-semibold text-red-500">
+                ₱ {formatNumber(total + 49)}
+              </p>
             </div>
 
             <div className="flex w-full justify-end">
