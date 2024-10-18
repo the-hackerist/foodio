@@ -1,24 +1,73 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useState } from "react";
 
+import { app } from "../../firebase";
+
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
+
 import { useAuth } from "../../contexts/UserContext";
+
+import defaultImage from "../../assets/defaultImage.png";
 
 import Loader from "../UI/Loader";
 
-const profileImage =
-  "https://images.pexels.com/photos/9117796/pexels-photo-9117796.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
-
 function Account() {
   const { user, getUser, updateProfile, loading } = useAuth();
+
+  const fileRef = useRef(null);
+
+  const [file, setFile] = useState(undefined);
+
+  const [fileUploadError, setFileUploadError] = useState(false);
+
+  const [filePercentage, setFilePercentage] = useState(0);
 
   const [profile, setProfile] = useState({
     firstName: "",
     lastName: "",
     phone: "",
     username: "",
+    profileImage: user.profileImage,
   });
 
   const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (file) {
+      handleFileUpload(file);
+    }
+  }, [file]);
+
+  const handleFileUpload = (file) => {
+    const storage = getStorage(app);
+    const fileName = `${new Date().getTime()}_${file.name}`;
+    const storageRef = ref(storage, fileName);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setFilePercentage(Math.round(progress));
+      },
+
+      (error) => {
+        setFileUploadError(error);
+      },
+
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) =>
+          setProfile({ ...profile, profileImage: downloadURL }),
+        );
+      },
+    );
+  };
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -39,6 +88,12 @@ function Account() {
     updateProfile(profile);
 
     inputRef.current.blur();
+  };
+
+  const handleSaveProfileImage = () => {
+    updateProfile({ ...user, profileImage: profile.profileImage });
+    setFilePercentage(0);
+    setFile(undefined);
   };
 
   return (
@@ -145,13 +200,55 @@ function Account() {
         </form>
 
         <div className="flex w-[300px] flex-col items-center justify-center gap-6">
-          <div className="h-[130px] w-[130px] cursor-pointer overflow-hidden rounded-full">
-            <img src={profileImage} alt="profile image" />
+          <div className="h-[130px] w-[130px] cursor-pointer overflow-hidden rounded-full object-cover">
+            <input
+              onChange={(e) => setFile(e.target.files[0])}
+              type="file"
+              ref={fileRef}
+              hidden
+              accept="image/*"
+            />
+            <img
+              className={`${!profile.profileImage ? "p-3" : ""} h-full w-full object-cover`}
+              onClick={() => fileRef.current.click()}
+              src={!profile.profileImage ? defaultImage : profile.profileImage}
+              alt="profile image"
+            />
           </div>
 
-          <button className="rounded-md border border-[#cccccc] bg-transparent px-4 py-2 text-[#555555]">
-            Select Image
-          </button>
+          {fileUploadError && (
+            <p className="text-sm font-semibold text-red-500">
+              Something went wrong!
+            </p>
+          )}
+
+          {filePercentage > 0 && filePercentage < 100 && (
+            <p className="text-sm font-semibold text-slate-500">
+              {`uploading ${filePercentage}%`}
+            </p>
+          )}
+
+          {filePercentage === 100 && (
+            <p className="text-sm font-semibold text-green-500">
+              Image was successfully uploaded!
+            </p>
+          )}
+
+          {file ? (
+            <button
+              onClick={handleSaveProfileImage}
+              className="rounded-md border bg-red-500 px-4 py-2 font-semibold text-white"
+            >
+              Save
+            </button>
+          ) : (
+            <button
+              onClick={() => fileRef.current.click()}
+              className="rounded-md border border-[#cccccc] bg-transparent px-4 py-2 text-[#555555]"
+            >
+              Select Image
+            </button>
+          )}
 
           <div>
             <p className="text-md text-[#999999]">File size: maximum 1 MB</p>

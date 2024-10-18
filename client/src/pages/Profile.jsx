@@ -19,8 +19,7 @@ import { Link } from "react-router-dom";
 import { useMenu } from "../contexts/MenuContext";
 // import { Link } from "react-router-dom";
 
-const profileImage =
-  "https://images.pexels.com/photos/9117796/pexels-photo-9117796.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
+import defaultImage from "../assets/defaultImage.png";
 
 const initialState = {
   firstName: "",
@@ -282,7 +281,11 @@ function Profile() {
         <aside className="flex flex-col divide-y divide-red-300 px-4 pt-4">
           <div className="flex items-center justify-center gap-4 p-4">
             <div className="h-12 w-12 cursor-pointer overflow-hidden rounded-full">
-              <img src={profileImage} alt="profile image" />
+              <img
+                className={`${!user.profileImage ? "p-3" : ""} h-full w-full object-cover`}
+                src={!user.profileImage ? defaultImage : user.profileImage}
+                alt="profile image"
+              />
             </div>
 
             <div className="flex flex-col">
