@@ -10,6 +10,7 @@ import { IoMdCheckmark } from "react-icons/io";
 
 import { useMenu } from "../contexts/MenuContext";
 import { formatNumber } from "../utils/NumberFormatter";
+import Loader from "../components/UI/Loader";
 
 function OrderStatus() {
   const [orderData, setOrderData] = useState(null);
@@ -47,7 +48,12 @@ function OrderStatus() {
     fetchListing();
   }, []);
 
-  if (!orderData) return <div>no data!</div>;
+  if (!orderData)
+    return (
+      <div className="flex w-full flex-col items-center justify-center p-80 pt-40">
+        <Loader />
+      </div>
+    );
 
   return (
     <div className="flex w-full flex-col p-80 pt-40">
