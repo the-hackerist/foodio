@@ -40,14 +40,27 @@ function Account() {
   useEffect(() => {
     if (file) {
       handleFileUpload(file);
+      // setFilePercentage(0);
     }
   }, [file]);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const userData = await getUser();
+
+      setProfile(userData);
+    };
+
+    fetchUser();
+  }, []);
 
   const handleFileUpload = (file) => {
     const storage = getStorage(app);
     const fileName = `${new Date().getTime()}_${file.name}`;
     const storageRef = ref(storage, fileName);
     const uploadTask = uploadBytesResumable(storageRef, file);
+
+    setFileUploadError(false);
 
     uploadTask.on(
       "state_changed",
@@ -62,22 +75,13 @@ function Account() {
       },
 
       () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) =>
-          setProfile({ ...profile, profileImage: downloadURL }),
-        );
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setProfile({ ...profile, profileImage: downloadURL });
+          setFileUploadError(false);
+        });
       },
     );
   };
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const userData = await getUser();
-
-      setProfile(userData);
-    };
-
-    fetchUser();
-  }, []);
 
   const onChangeProfile = (e) =>
     setProfile({ ...profile, [e.target.id]: e.target.value });
@@ -92,8 +96,14 @@ function Account() {
 
   const handleSaveProfileImage = () => {
     updateProfile({ ...user, profileImage: profile.profileImage });
-    setFilePercentage(0);
+    handleCancel();
+  };
+
+  const handleCancel = () => {
+    setProfile({ ...profile, profileImage: user.profileImage });
+    setFileUploadError(false);
     setFile(undefined);
+    setFilePercentage(0);
   };
 
   return (
@@ -216,35 +226,46 @@ function Account() {
             />
           </div>
 
-          {fileUploadError && (
-            <p className="text-sm font-semibold text-red-500">
-              Something went wrong!
-            </p>
-          )}
-
           {filePercentage > 0 && filePercentage < 100 && (
             <p className="text-sm font-semibold text-slate-500">
-              {`uploading ${filePercentage}%`}
+              {`Uploading ${filePercentage}%`}
             </p>
           )}
 
-          {filePercentage === 100 && (
+          {filePercentage === 100 && !fileUploadError ? (
             <p className="text-sm font-semibold text-green-500">
               Image was successfully uploaded!
             </p>
+          ) : (
+            fileUploadError && (
+              <p className="w-[200px] text-center text-sm font-semibold text-red-500">
+                Something went wrong! please check image size and try again.
+              </p>
+            )
           )}
 
-          {file ? (
-            <button
-              onClick={handleSaveProfileImage}
-              className="rounded-md border bg-red-500 px-4 py-2 font-semibold text-white"
-            >
-              Save
-            </button>
+          {!fileUploadError && filePercentage === 100 ? (
+            <div className="flex gap-2">
+              <button
+                onClick={handleSaveProfileImage}
+                className="w-[80px] rounded-md border bg-red-500 px-4 py-2 font-semibold text-white"
+              >
+                Save
+              </button>
+              <button
+                onClick={handleCancel}
+                className="w-[80px] rounded-md border border-[#cccccc] bg-transparent px-4 py-2 text-[#555555]"
+              >
+                Cancel
+              </button>
+            </div>
           ) : (
             <button
               onClick={() => fileRef.current.click()}
               className="rounded-md border border-[#cccccc] bg-transparent px-4 py-2 text-[#555555]"
+              disabled={
+                filePercentage > 0 && filePercentage < 100 ? true : false
+              }
             >
               Select Image
             </button>
