@@ -2,7 +2,7 @@
 
 # Foodio
 
-A website application of a restaurant where you can order food and book reservation.
+A web application to order food from a restaurant and book reservations.
 
 ## Tech Used
 
