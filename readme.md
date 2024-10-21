@@ -1,20 +1,24 @@
-![Logo](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/th5xamgrr6se0x5ro4g6.png)
+![Logo](https://firebasestorage.googleapis.com/v0/b/foodio-6cc6b.appspot.com/o/img_header_logo%20(1).svg?alt=media&token=cbbeb7b3-c21b-4593-8c4f-ce3e814c93d2)
 
 # Foodio
 
-A web application to order food from a restaurant and book reservations.
+A full stack web application where users can order food from a restaurant and book reservations.
 
 ## Tech Used
 
-**Client:** React, Context, TailwindCSS
+**Client:** React, TailwindCSS
 
 **Server:** Node, Express, Mongoose
 
 **Database:** MongoDB
 
+**Libraries:** react-router, react-toastify, firebase  
+
 ## Authors
 
-- [@the-hackerist](https://www.github.com/the-hackerist)
 - [@vincedp](https://www.github.com/vincedp)
 
+## Demo
+
+https://foodio-prn1.onrender.com
 
