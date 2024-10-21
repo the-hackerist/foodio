@@ -85,7 +85,8 @@ function ChangePassword() {
           <p className="text-sm">Manage or change your account password</p>
         </div>
 
-        <div className="flex w-[800px] divide-x divide-red-300 pt-8">
+        {/* <div className="flex divide-x divide-red-300 pt-8 sm:w-[800px]"> */}
+        <div className="flex divide-x divide-red-300 pt-8">
           <form
             onSubmit={
               isVerified
@@ -94,18 +95,33 @@ function ChangePassword() {
             }
             className="flex pr-8"
           >
-            <table className="w-[500px]">
-              <tbody>
+            <table className="sm:w-[500px]">
+              <tbody className="">
                 {!isVerified && (
                   <>
                     <tr>
-                      <td className="px-2 py-4">
-                        <p className="text-end text-[#555555CC]">
+                      <td className="px-2 py-4 text-sm sm:text-base">
+                        <p className="text-start text-[#555555CC] sm:text-end">
                           Current Password
                         </p>
                       </td>
 
-                      <td className="flex flex-col justify-center gap-2 px-2">
+                      <td className="hidden flex-col justify-center gap-2 px-2 sm:flex">
+                        <PasswordInput
+                          name={verifyPassword}
+                          handleFormData={(e) =>
+                            setVerifyPassword(e.target.value)
+                          }
+                          isVisible={isPassVisible}
+                          setIsVisible={setIsPassVisible}
+                          placeholder="current password"
+                          id="currentPassword"
+                        />
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td className="flex-col justify-center gap-2 px-2 sm:hidden">
                         <PasswordInput
                           name={verifyPassword}
                           handleFormData={(e) =>
@@ -121,24 +137,28 @@ function ChangePassword() {
 
                     {error && (
                       <tr>
-                        <td className="px-2 py-4">
+                        <td className="hidden px-2 py-4 sm:table-cell">
                           <p className="text-end text-[#555555CC]"></p>
                         </td>
-                        <td className="px-2">
+                        <td className="px-2 pt-2 sm:pt-0">
                           <p className="text-xs font-semibold text-red-500">
                             {error}
                           </p>
                         </td>
+                        <td className="px-2 py-4 sm:hidden">
+                          <p className="text-end text-[#555555CC]"></p>
+                        </td>
                       </tr>
                     )}
 
-                    <tr>
-                      <td className="px-2 py-4"></td>
+                    <tr className="">
+                      <td className="hidden px-2 py-4 sm:table-cell"></td>
                       <td className="flex px-2 py-4">
-                        <button className="w-[100px] rounded-md bg-red-500 px-4 py-2 font-semibold text-white">
+                        <button className="rounded-md bg-red-500 px-4 py-2 font-semibold text-white sm:w-[100px]">
                           Verify
                         </button>
                       </td>
+                      <td className="px-2 py-4 sm:hidden"></td>
                     </tr>
                   </>
                 )}
@@ -147,11 +167,24 @@ function ChangePassword() {
                   <>
                     <tr>
                       <td className="px-2 py-4">
-                        <p className="text-end text-[#555555CC]">
+                        <p className="text-start text-[#555555CC] sm:text-end">
                           New Password
                         </p>
                       </td>
-                      <td className="px-2">
+                      <td className="hidden px-2 sm:table-cell">
+                        <PasswordInput
+                          name={newPassword}
+                          handleFormData={(e) => setNewPassword(e.target.value)}
+                          isVisible={isPassVisible}
+                          setIsVisible={setIsPassVisible}
+                          placeholder="new password"
+                          id="newPassword"
+                        />
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td className="px-2 sm:hidden">
                         <PasswordInput
                           name={newPassword}
                           handleFormData={(e) => setNewPassword(e.target.value)}
@@ -165,11 +198,26 @@ function ChangePassword() {
 
                     <tr>
                       <td className="px-2 py-4">
-                        <p className="text-end text-[#555555CC]">
+                        <p className="text-start text-[#555555CC] sm:text-end">
                           Confirm Password
                         </p>
                       </td>
-                      <td className="px-2">
+                      <td className="hidden px-2 sm:table-cell">
+                        <PasswordInput
+                          name={confirmPassword}
+                          handleFormData={(e) =>
+                            setConfirmPassword(e.target.value)
+                          }
+                          isVisible={isConfirmPassVisible}
+                          setIsVisible={setIsConfirmPassVisible}
+                          placeholder="confirm password"
+                          id="confirmPassword"
+                        />
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td className="px-2 sm:hidden">
                         <PasswordInput
                           name={confirmPassword}
                           handleFormData={(e) =>
@@ -185,7 +233,7 @@ function ChangePassword() {
 
                     {error && (
                       <tr>
-                        <td className="px-2 py-4">
+                        <td className="hidden px-2 py-4 sm:table-cell">
                           <p className="text-end text-[#555555CC]"></p>
                         </td>
                         <td className="px-2">
@@ -193,12 +241,15 @@ function ChangePassword() {
                             {error}
                           </p>
                         </td>
+                        <td className="px-2 py-4 sm:hidden">
+                          <p className="text-end text-[#555555CC]"></p>
+                        </td>
                       </tr>
                     )}
 
                     <tr>
-                      <td className="px-2 py-4"></td>
-                      <td className="flex gap-6 px-2 py-4">
+                      <td className="hidden px-2 py-4 sm:table-cell"></td>
+                      <td className="flex gap-3 px-2 py-4 sm:gap-6">
                         <button className="w-[100px] rounded-md bg-red-500 px-4 py-2 font-semibold text-white">
                           Change
                         </button>
@@ -211,6 +262,7 @@ function ChangePassword() {
                           Cancel
                         </button>
                       </td>
+                      <td className="px-2 py-4 sm:hidden"></td>
                     </tr>
                   </>
                 )}

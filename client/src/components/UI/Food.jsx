@@ -94,30 +94,30 @@ function Food() {
   };
 
   return (
-    <div className="bg-[#F9F9F9] px-80 pb-20 pt-40">
+    <div className="bg-[#F9F9F9] px-8 pb-20 pt-40 md:px-20 lg:px-24 xl:px-48 2xl:px-80">
       <ToastContainer />
 
       <Link
-        className="flex w-fit items-center gap-1 pb-6 pl-8 text-lg font-semibold hover:underline"
+        className="flex w-fit items-center gap-1 pb-6 font-semibold hover:underline md:text-lg"
         onClick={() => navigate(-1)}
       >
         <MdKeyboardArrowLeft />
         Go back
       </Link>
 
-      <div className="flex w-full gap-8 bg-white p-8">
-        <div className="h-[300px] w-[40%]">
+      <div className="flex w-full flex-col gap-8 bg-white p-8 lg:flex-row">
+        <div className="h-[200px] w-full self-center md:h-[300px] lg:w-[500px] lg:self-start">
           <img
-            className="h-full rounded-md object-cover"
+            className="h-full w-full rounded-md object-cover"
             src={food.image}
             alt="Food image"
           />
         </div>
 
-        <div className="flex w-full flex-col gap-3">
-          <h1 className="text-2xl font-bold">{food.foodName}</h1>
+        <div className="flex w-full flex-col gap-3 md:text-start">
+          <h1 className="text-xl font-bold sm:text-2xl">{food.foodName}</h1>
 
-          <div className="flex items-center gap-2 text-red-500">
+          <div className="flex w-full items-center gap-2 text-red-500">
             <p className="border-b-[1px] border-red-500">
               {food.starRatings}.0
             </p>
@@ -136,19 +136,21 @@ function Food() {
             </div>
           </div>
 
-          <p className="w-full bg-[#F9F9F9] p-4 text-3xl font-semibold text-red-500">
+          <p className="w-full bg-[#F9F9F9] p-4 text-xl font-semibold text-red-500 sm:text-3xl">
             <span>₱</span> {formatNumber(food.price)}
           </p>
 
-          <div className="flex pt-4">
-            <p className="w-[200px] text-lg font-semibold">Food Description:</p>
-            <p className="line-clamp-3 w-[600px] pt-1">{food.description}</p>
+          <div className="flex w-full flex-col pt-4">
+            <p className="font-semibold sm:text-lg">Food Description:</p>
+            <p className="w-fit pt-1 text-sm sm:text-base">
+              {food.description}
+            </p>
           </div>
 
-          <div className="flex pt-4">
-            <p className="w-[200px] text-lg font-semibold">Quantity: </p>
+          <div className="flex flex-col pt-4">
+            <p className="font-semibold sm:text-lg">Quantity: </p>
 
-            <div className="flex items-center justify-center gap-6 font-thin">
+            <div className="flex items-center justify-center gap-6 self-start pt-4 font-thin">
               <button
                 onClick={() => handleQuantity("decrease")}
                 className="flex items-center justify-center rounded-full bg-slate-100 p-1 shadow-md"
@@ -169,9 +171,9 @@ function Food() {
             </div>
           </div>
 
-          <div className="flex items-center gap-4 pt-4">
+          <div className="flex flex-col items-center gap-4 pt-8 sm:flex-row">
             <button
-              className={`w-[150px] rounded-md py-3 font-semibold text-white transition-all ${loading ? "bg-[#888888aa]" : "bg-red-500 hover:bg-red-600"}`}
+              className={`w-full rounded-md py-3 font-semibold text-white transition-all lg:w-[150px] ${loading ? "bg-[#888888aa]" : "bg-red-500 hover:bg-red-600"}`}
               onClick={handleCart}
               disabled={loading}
             >
@@ -180,7 +182,7 @@ function Food() {
 
             <Link
               to="/cart"
-              className="w-[150px] rounded-md border border-red-500 py-3 text-center font-semibold text-red-500 transition-all hover:bg-[#F9F9F9]"
+              className="w-full rounded-md border border-red-500 py-3 text-center font-semibold text-red-500 transition-all hover:bg-[#F9F9F9] lg:w-[150px]"
               onClick={handleBuyNow}
             >
               Buy now

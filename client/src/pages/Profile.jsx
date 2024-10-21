@@ -151,9 +151,9 @@ function Profile() {
   };
 
   return (
-    <div className="flex items-center justify-center gap-2 bg-[#F9F9F9] px-10 py-20 pt-40 md:px-20 lg:gap-10 xl:gap-20">
+    <div className="flex items-center justify-center gap-2 bg-[#F9F9F9] px-8 pb-20 pt-40 md:px-20 lg:gap-10 lg:px-24 xl:gap-20 xl:px-48 2xl:px-80">
       {(isAddingAddress || isEditingAddress) && (
-        <div className="absolute inset-0 flex justify-center bg-black bg-opacity-30 pt-[250px]">
+        <div className="absolute inset-0 flex justify-center bg-black bg-opacity-30 px-8 pb-20 pt-60 md:px-20 lg:gap-10 lg:px-24 xl:gap-20 xl:px-48 2xl:px-8">
           <div className="flex h-fit w-[500px] flex-col gap-4 rounded-md bg-white p-6">
             <p className="text-lg font-semibold">
               {isEditingAddress ? "Edit Address" : "New Address"}
@@ -245,7 +245,7 @@ function Profile() {
                 }
                 rows={5}
                 className="max-h-[150px] min-h-[75px] w-full rounded-lg border p-3"
-                placeholder="landmarks near you..."
+                placeholder="Landmarks near you..."
               />
 
               {!isEditingAddress && (
@@ -281,16 +281,15 @@ function Profile() {
         </div>
       )}
 
-      <div className="flex gap-4 p-10">
-        <aside className="flex flex-col divide-y divide-red-300 px-4 pt-4">
-          <div className="flex items-center justify-center gap-4 p-4">
-            <div className="h-12 w-12 cursor-pointer overflow-hidden rounded-full">
-              <img
-                className={`${!user.profileImage ? "p-3" : ""} h-full w-full object-cover`}
-                src={!user.profileImage ? defaultImage : user.profileImage}
-                alt="profile image"
-              />
-            </div>
+      <div className="flex w-full max-w-[950px] flex-col gap-4 lg:flex-row">
+        {/* <aside className="flex w-full flex-col divide-y divide-red-300 self-start  px-4 pt-4 sm:w-[300px]"> */}
+        <aside className="relative flex w-full flex-col divide-y divide-red-300 self-start px-4 pt-4 lg:w-[240px]">
+          <div className="flex items-center gap-4 px-2 py-5">
+            <img
+              className={`${!user.profileImage ? "p-3" : ""} h-10 w-10 rounded-full object-cover`}
+              src={!user.profileImage ? defaultImage : user.profileImage}
+              alt="profile image"
+            />
 
             <div className="flex flex-col">
               <p className="text-md font-semibold">
@@ -298,7 +297,7 @@ function Profile() {
               </p>
 
               <p
-                className="flex cursor-pointer items-center gap-1 text-[#888888] hover:underline"
+                className="flex cursor-pointer items-center gap-1 text-nowrap text-xs text-[#888888] hover:underline"
                 onClick={() => {
                   setView("account");
                   setSubView("profile");
@@ -312,14 +311,14 @@ function Profile() {
             </div>
           </div>
 
-          <div className="text-md flex flex-col gap-1 pt-4">
-            <div className="">
+          <div className="text-md flex w-full gap-1 overflow-y-scroll py-4 pt-4 sm:overflow-y-auto lg:flex-col">
+            <div>
               <p
                 onClick={() => {
                   setView("account");
                   setSubView("profile");
                 }}
-                className="flex h-8 cursor-pointer items-center rounded-md px-2 hover:bg-[#faeded]"
+                className="flex h-8 cursor-pointer items-center text-nowrap rounded-md px-2 hover:bg-[#faeded]"
               >
                 <span className="w-[25px] text-red-400">
                   <FaRegUser />
@@ -328,7 +327,7 @@ function Profile() {
               </p>
 
               <ul
-                className={`${view === "account" ? "flex" : "hidden"} ml-8 flex-col gap-1 py-1 text-sm text-[#000000A6]`}
+                className={`${view === "account" ? "lg:flex" : "lg:hidden"} ml-8 hidden flex-col gap-1 py-1 text-sm text-[#000000A6]`}
               >
                 <li
                   onClick={() => setSubView("profile")}
@@ -344,7 +343,7 @@ function Profile() {
                 </li>
                 <li
                   onClick={() => setSubView("changePassword")}
-                  className={`cursor-pointer hover:text-red-400 ${subView === "changePassword" && "font-semibold text-red-400"}`}
+                  className={`cursor-pointer text-nowrap hover:text-red-400 ${subView === "changePassword" && "font-semibold text-red-400"}`}
                 >
                   Change Password
                 </li>
@@ -393,16 +392,41 @@ function Profile() {
               </p>
             </div>
           </div>
+
+          <div>
+            <ul
+              className={`${view === "account" ? "flex" : "hidden"} flex-wrap gap-2 py-4 text-sm text-[#000000A6] lg:hidden`}
+            >
+              <li
+                onClick={() => setSubView("profile")}
+                className={`flex-1 cursor-pointer rounded-md border border-red-200 p-1 px-8 text-center hover:text-red-400 ${subView === "profile" && "font-semibold text-red-400"}`}
+              >
+                Profile
+              </li>
+              <li
+                onClick={() => setSubView("address")}
+                className={`flex-1 cursor-pointer rounded-md border border-red-200 px-8 py-1 text-center hover:text-red-400 ${subView === "address" && "font-semibold text-red-400"}`}
+              >
+                Addresses
+              </li>
+              <li
+                onClick={() => setSubView("changePassword")}
+                className={`flex-1 cursor-pointer text-nowrap rounded-md border border-red-200 px-8 py-1 text-center hover:text-red-400 ${subView === "changePassword" && "font-semibold text-red-400"}`}
+              >
+                Change Password
+              </li>
+            </ul>
+          </div>
         </aside>
 
         <div
-          className={`min-h-[500px] w-[900px] space-y-4 rounded-md bg-[#faeded] pb-8 ${view === "orders" ? "p-8" : ""} ${view === "vouchers" || view === "reservations" ? "flex items-center justify-center" : ""}`}
+          className={`min-h-[500px] w-full space-y-4 rounded-md bg-[#faeded] pb-8 ${view === "orders" ? "p-8" : ""} ${view === "vouchers" || view === "reservations" ? "flex items-center justify-center" : ""}`}
         >
           {view === "account" && subView === "profile" && <Account />}
           {view === "account" && subView === "address" && (
             <div className="flex w-full flex-col divide-y divide-red-300 px-8 pb-8 pt-4">
-              <div className="flex items-center justify-between py-4">
-                <div className="">
+              <div className="flex flex-col items-start justify-between py-4 sm:flex-row sm:items-center">
+                <div className="pb-2 sm:pb-0">
                   <p className="text-xl font-semibold">My Addresses</p>
                   <p className="text-sm">Manage and check your addresses</p>
                 </div>
@@ -415,7 +439,7 @@ function Profile() {
                 </button>
               </div>
 
-              <div className="flex max-h-[800px] flex-col gap-2 divide-y divide-red-200 overflow-y-auto py-4 pt-6">
+              <div className="flex max-h-[800px] flex-col gap-2 divide-y divide-red-200 py-4 pt-6">
                 {loading ? (
                   <Loader />
                 ) : address.length ? (
@@ -433,16 +457,16 @@ function Profile() {
                       }) => (
                         <div
                           key={addressId}
-                          className="flex h-[140px] justify-between gap-4 py-[18px]"
+                          className="flex h-fit flex-col justify-between gap-4 py-[18px] sm:flex-row"
                         >
                           <div className="flex flex-col gap-2">
-                            <div className="flex divide-x divide-red-300">
-                              <p className="pr-2 font-semibold">{`${firstName} ${lastName}`}</p>
-                              <p className="pl-2 text-slate-600">
+                            <div className="flex flex-col divide-red-300 sm:flex-row sm:divide-x">
+                              <p className="font-semibold sm:pr-2">{`${firstName} ${lastName}`}</p>
+                              <p className="text-slate-600 sm:pl-2">
                                 (+63) {phone}
                               </p>
                             </div>
-                            <p className="w-[400px] text-xs text-slate-600">
+                            <p className="line-clamp-3 w-full text-xs text-slate-600 sm:w-[400px]">
                               {address}
                             </p>
 
@@ -453,7 +477,7 @@ function Profile() {
                             )}
                           </div>
 
-                          <div className="flex flex-col gap-3">
+                          <div className="flex justify-between gap-3 sm:flex-col sm:justify-start">
                             <div className="flex justify-end gap-3 text-sm">
                               <button
                                 onClick={() =>
@@ -505,7 +529,7 @@ function Profile() {
                     )
                 ) : (
                   <div className="flex h-full w-full items-center justify-center">
-                    <p className="py-20 text-lg">
+                    <p className="py-20 text-center text-lg sm:text-start">
                       You haven&apos;t added any{" "}
                       <span className="font-semibold text-red-500">
                         address

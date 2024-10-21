@@ -13,7 +13,6 @@ import Loader from "../components/UI/Loader.jsx";
 function Order() {
   const [category, setCategory] = useState("all categories");
   // const [activePage, setActivePage] = useState(1);
-  const [isOrderListOpen, setIsOrderListOpen] = useState(false);
   const [foodList, setFoodList] = useState(null);
 
   const { getAllFood, loading } = useFood();
@@ -72,7 +71,7 @@ function Order() {
 
   if (loading) {
     return (
-      <div className="flex h-screen flex-col items-center gap-10 bg-[#F9F9F9] px-20 pb-20 pt-40">
+      <div className="flex h-screen flex-col items-center gap-10 bg-[#F9F9F9] px-8 pb-20 pt-40 md:px-20 lg:px-24 xl:px-48 2xl:px-80">
         <Loader />
       </div>
     );
@@ -92,12 +91,12 @@ function Order() {
   // );
 
   return (
-    <div className="flex flex-col items-center gap-10 bg-[#F9F9F9] px-20 pb-20 pt-40">
+    <div className="flex flex-col items-center gap-10 bg-[#F9F9F9] px-8 pb-20 pt-40 md:px-20 lg:px-24 xl:px-48 2xl:px-80">
       <h2 className="text-center text-5xl font-bold leading-snug md:text-start">
         Our Popular Menu
       </h2>
 
-      <ul className="mt-4 flex flex-wrap items-center gap-2 text-lg sm:gap-4 md:gap-6">
+      <ul className="mt-4 flex flex-wrap items-center justify-center gap-2 text-lg sm:gap-4 md:gap-6">
         <li onClick={() => setCategory("all categories")}>
           <button
             className={`rounded-lg border-2 px-3 py-4 sm:px-6 md:px-8 lg:min-w-[150px] ${
@@ -155,31 +154,16 @@ function Order() {
         {category}
       </h3>
 
-      <p
-        className={`text-base font-semibold ${isOrderListOpen ? "text-red-500" : "text-slate-500"} hover:underline sm:text-lg lg:hidden`}
-        onClick={
-          isOrderListOpen
-            ? () => setIsOrderListOpen(false)
-            : () => setIsOrderListOpen(true)
-        }
-      >
-        {isOrderListOpen ? "Close " : "Open "} order summary
-      </p>
-
       {loading ? (
         <div className="flex h-screen flex-col items-center gap-10 bg-[#F9F9F9] px-20 pb-20 pt-40">
           <Loader />
         </div>
       ) : (
-        <div className="flex w-[870px] flex-col gap-6 p-8">
+        <div className="flex w-full flex-col gap-6">
           {/* <Pagination activePage={activePage} setActivePage={setActivePage} /> */}
 
           <div className="flex gap-6">
-            <div
-              className={`${
-                isOrderListOpen ? "hidden" : "flex"
-              } flex-wrap items-center gap-5 sm:flex`}
-            >
+            <div className="flex flex-wrap items-center justify-center gap-5">
               {foodList &&
                 foodList.map((menu) => (
                   <OrderItem key={menu._id} food={menu} />

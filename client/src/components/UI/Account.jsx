@@ -113,19 +113,21 @@ function Account() {
         <p className="text-sm">Manage and protect your account</p>
       </div>
 
-      <div className="flex w-[800px] divide-x divide-red-300 pt-8">
+      <div className="flex w-full flex-col justify-end gap-4 divide-y divide-red-300 pt-8 sm:flex-row sm:divide-x sm:divide-y-0">
         <form
           onSubmit={handleUpdateProfile}
-          className="w- flex w-[530px] divide-x pr-8"
+          className="flex w-full divide-x pr-8"
         >
           {loading ? (
             <Loader />
           ) : (
-            <table className="w-[500px]">
+            <table className="w-full">
               <tbody>
                 <tr>
                   <td className="px-2 py-4">
-                    <p className="text-end text-[#555555CC]">Email</p>
+                    <p className="text-end text-sm text-[#555555CC] sm:text-base">
+                      Email
+                    </p>
                   </td>
                   <td className="flex gap-2 px-2 py-4">
                     <p>{user.email}</p>
@@ -134,7 +136,9 @@ function Account() {
 
                 <tr>
                   <td className="px-2 py-4">
-                    <p className="text-end text-[#555555CC]">Username</p>
+                    <p className="text-end text-sm text-[#555555CC] sm:text-base">
+                      Username
+                    </p>
                   </td>
                   <td className="px-2">
                     <input
@@ -149,8 +153,10 @@ function Account() {
                 </tr>
 
                 <tr>
-                  <td className="px-2 py-4">
-                    <p className="text-end text-[#555555CC]">First Name</p>
+                  <td className="py-4 pr-2">
+                    <p className="text-end text-sm text-[#555555CC] sm:text-base">
+                      First Name
+                    </p>
                   </td>
                   <td className="px-2">
                     <input
@@ -165,8 +171,10 @@ function Account() {
                 </tr>
 
                 <tr>
-                  <td className="px-2 py-4">
-                    <p className="text-end text-[#555555CC]">Last Name</p>
+                  <td className="py-4 pr-2">
+                    <p className="text-end text-sm text-[#555555CC] sm:text-base">
+                      Last Name
+                    </p>
                   </td>
                   <td className="px-2">
                     <input
@@ -182,7 +190,10 @@ function Account() {
 
                 <tr>
                   <td className="px-2 py-4">
-                    <p className="text-end text-[#555555CC]"> Phone Number</p>
+                    <p className="text-end text-sm text-[#555555CC] sm:text-base">
+                      {" "}
+                      Phone
+                    </p>
                   </td>
                   <td className="px-2">
                     <input
@@ -198,8 +209,8 @@ function Account() {
 
                 <tr>
                   <td className="px-2 py-4"></td>
-                  <td className="flex gap-2 px-2 py-4">
-                    <button className="rounded-md bg-red-500 px-4 py-2 font-semibold text-white">
+                  <td colSpan="2" className="flex w-full gap-2 px-2 py-4">
+                    <button className="w-full rounded-md bg-red-500 px-4 py-2 font-semibold text-white sm:w-fit">
                       Save
                     </button>
                   </td>
@@ -209,7 +220,7 @@ function Account() {
           )}
         </form>
 
-        <div className="flex w-[300px] flex-col items-center justify-center gap-6">
+        <div className="flex flex-col items-center justify-center gap-6 px-10 pt-8 sm:w-[300px] sm:pt-0">
           <div className="h-[130px] w-[130px] cursor-pointer overflow-hidden rounded-full object-cover">
             <input
               onChange={(e) => setFile(e.target.files[0])}
@@ -233,7 +244,7 @@ function Account() {
           )}
 
           {filePercentage === 100 && !fileUploadError ? (
-            <p className="text-sm font-semibold text-green-500">
+            <p className="text-center text-sm font-semibold text-green-500 sm:text-start">
               Image was successfully uploaded!
             </p>
           ) : (
@@ -271,9 +282,9 @@ function Account() {
             </button>
           )}
 
-          <div className="px-8">
-            <p className="text-md text-[#999999]">File size: maximum 2 MB</p>
-          </div>
+          <p className="text-md text-center text-[#999999]">
+            File size: maximum 2 MB
+          </p>
         </div>
       </div>
     </div>

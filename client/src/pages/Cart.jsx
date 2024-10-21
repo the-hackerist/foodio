@@ -56,7 +56,8 @@ function Cart() {
   };
   return (
     <div
-      className={`flex flex-col items-center justify-center bg-[#F9F9F9] px-10 py-20 pt-40`}
+      // className={`flex flex-col items-center justify-center bg-[#F9F9F9] px-10 py-20 pt-40`}
+      className={`flex flex-col items-center justify-center bg-[#F9F9F9] px-8 pb-20 pt-40 md:px-20 lg:px-24 xl:px-48 2xl:px-80`}
     >
       {isCheckingOut && isChangingAddress && (
         <div className="absolute inset-0 flex w-full justify-center bg-black bg-opacity-30 pt-[350px]">
@@ -147,37 +148,45 @@ function Cart() {
       )}
 
       {!isCheckingOut && (
-        <div>
+        <div className="w-full">
           <Link
             to="/order"
-            className="flex w-fit items-center gap-1 self-start pb-6 text-lg font-semibold hover:underline"
+            className="flex w-fit items-center gap-1 self-start pb-6 font-semibold hover:underline sm:text-lg"
             onClick={() => setMenu("order")}
           >
             <MdKeyboardArrowLeft />
             Go back
           </Link>
 
-          <h3 className="px-10 pb-10 text-center text-5xl font-bold text-[#311F09]">
-            Order Summary
-          </h3>
+          {/* <div className="divide-y divide-[#fcc6c6] rounded-md bg-[#fef4f4] p-2 md:p-8 lg:w-[800px]"> */}
+          <div className="w-full divide-y divide-[#fcc6c6] rounded-md bg-[#fef4f4] p-2 md:p-8">
+            <h3 className="px-10 pb-6 pt-4 text-center text-3xl font-bold text-[#311F09] sm:pb-8 sm:text-5xl">
+              Order Summary
+            </h3>
 
-          <div className="w-[800px] divide-y divide-[#fcc6c6] rounded-md bg-[#fef4f4] p-8">
             <div className="flex w-full justify-between">
-              <p className="w-[300px] bg-[#fcc6c6] py-1 text-center text-lg font-semibold capitalize">
+              {/* <p className="w-[100px] bg-[#fcc6c6] py-1 text-center text-sm font-semibold capitalize md:w-[300px] md:text-lg"> */}
+              <p className="flex-[2] bg-[#fcc6c6] py-1 text-center text-sm font-semibold capitalize sm:text-lg">
                 food
               </p>
 
-              <p className="flex-1 bg-[#fdd4d4] py-1 text-center text-lg font-semibold capitalize">
+              <p className="hidden flex-1 bg-[#fdd4d4] py-1 text-center text-sm font-semibold capitalize sm:inline-block sm:text-lg">
                 quantity
               </p>
 
-              <p className="flex-1 bg-[#fee3e3] py-1 text-center text-lg font-semibold capitalize">
+              <p className="flex-1 bg-[#fdd4d4] py-1 text-center text-sm font-semibold capitalize sm:hidden sm:text-lg">
+                qty
+              </p>
+
+              <p className="flex-1 bg-[#fee3e3] py-1 text-center text-sm font-semibold capitalize sm:text-lg">
                 price
               </p>
 
-              <p className="flex-1 bg-[#fef1f1] py-1 text-center text-lg font-semibold capitalize">
+              <p className="hidden flex-1 bg-[#fef1f1] py-1 text-center text-sm font-semibold capitalize sm:inline-block sm:text-lg">
                 actions
               </p>
+
+              <p className="w-[25px] bg-[#fef1f1] py-1 text-center text-sm font-semibold capitalize sm:hidden sm:text-lg"></p>
             </div>
 
             {cart.length > 0 ? (
@@ -215,7 +224,7 @@ function Cart() {
                       onClick={() => {
                         setIsCheckingOut(true);
                       }}
-                      className={` ${cart.length < 1 ? "cursor-not-allowed bg-[#aaaaaa]" : "bg-red-500"} mb-2 mt-10 w-full rounded-lg p-2 text-2xl font-bold text-white`}
+                      className={` ${cart.length < 1 ? "cursor-not-allowed bg-[#aaaaaa]" : "bg-red-500"} mb-2 mt-4 w-[180px] rounded-lg p-2 text-lg font-bold text-white sm:mt-10 sm:w-full sm:text-2xl`}
                     >
                       Continue
                     </button>
@@ -228,7 +237,7 @@ function Cart() {
       )}
 
       {isCheckingOut && (
-        <div className="flex w-screen max-w-[500px] flex-col items-center justify-center gap-6">
+        <div className="flex w-full flex-col items-center justify-center gap-6">
           <Link
             className="flex w-fit items-center gap-1 self-start text-lg font-semibold hover:underline"
             onClick={() => setIsCheckingOut(false)}
@@ -237,7 +246,9 @@ function Cart() {
             Go back
           </Link>
 
-          <h2 className="mb-8 text-5xl font-bold text-[#311F09]">Checkout</h2>
+          <h2 className="mb-4 text-3xl font-bold text-[#311F09] sm:mb-8 sm:text-5xl">
+            Checkout
+          </h2>
 
           <div className="flex min-h-[200px] w-full flex-col gap-4 rounded-md bg-[#faeded] p-8">
             <div>
@@ -278,7 +289,7 @@ function Cart() {
                 </p>
               </div>
             ) : (
-              <div className="flex h-[300px] items-center justify-center">
+              <div className="flex h-[100px] items-center justify-center text-center">
                 <p>
                   Add an address{" "}
                   <Link
@@ -299,15 +310,19 @@ function Cart() {
               className="flex w-full flex-col divide-y divide-[#fcc6c6] rounded-md bg-[#fef4f4]"
             >
               <div className="flex w-full justify-between">
-                <p className="w-[300px] bg-[#fcc6c6] py-1 text-center text-lg font-semibold capitalize">
+                <p className="flex-[2] bg-[#fcc6c6] py-1 text-center text-base font-semibold capitalize sm:text-lg xl:flex-1">
                   food
                 </p>
 
-                <p className="flex-1 bg-[#fdd4d4] py-1 text-center text-lg font-semibold capitalize">
+                <p className="hidden flex-1 bg-[#fdd4d4] py-1 text-center text-base font-semibold capitalize sm:inline-block sm:text-lg">
                   quantity
                 </p>
 
-                <p className="flex-1 bg-[#fee3e3] py-1 text-center text-lg font-semibold capitalize">
+                <p className="flex-1 bg-[#fdd4d4] py-1 text-center text-base font-semibold capitalize sm:hidden sm:text-lg">
+                  qty
+                </p>
+
+                <p className="flex-1 bg-[#fee3e3] py-1 text-center text-base font-semibold capitalize sm:text-lg">
                   price
                 </p>
               </div>
@@ -318,13 +333,15 @@ function Cart() {
                     key={food._id}
                     className="flex w-full items-center justify-between py-4"
                   >
-                    <div className="flex w-[300px] items-center gap-4">
+                    <div className="flex flex-[2] items-center gap-4 xl:flex-1 xl:gap-8">
                       <img
-                        className="h-16 w-16 rounded-md object-cover"
+                        className="h-8 w-8 rounded-md object-cover sm:h-16 sm:w-16 xl:h-24 xl:w-24"
                         src={food.image}
                         alt={food.foodName}
                       />
-                      <p className="font-semibold italic">{food.foodName}</p>
+                      <p className="line-clamp-1 text-xs font-semibold italic sm:text-base xl:text-lg">
+                        {food.foodName}
+                      </p>
                     </div>
 
                     <div className="flex flex-1 items-center justify-center gap-6 font-thin">
@@ -333,9 +350,9 @@ function Cart() {
                       </span>
                     </div>
 
-                    <p className="flex flex-1 justify-center gap-2 text-center">
-                      <span className="w-[20px]">₱</span>{" "}
-                      <span className="w-[50px] text-start">
+                    <p className="flex flex-1 justify-center gap-1 text-center text-sm sm:gap-2 xl:text-base">
+                      <span className="sm:w-[20px]">₱</span>{" "}
+                      <span className="text-start sm:w-[50px]">
                         {formatNumber(food.price)}
                       </span>
                     </p>
@@ -353,7 +370,7 @@ function Cart() {
                 <p>Subtotal</p>
               </div>
 
-              <div className="w-[240px] border-l border-dotted border-[#fcc6c6] px-2 py-3 text-opacity-10">
+              <div className="w-[140px] border-l border-dotted border-[#fcc6c6] px-2 py-3 text-opacity-10 sm:w-[240px]">
                 <div className="flex justify-end">
                   <p className="flex w-[90px] items-center justify-between gap-2 text-lg font-semibold">
                     <span>₱</span> {formatNumber(itemsTotal)}
@@ -366,7 +383,7 @@ function Cart() {
                 <p>Delivery Fee</p>
               </div>
 
-              <div className="w-[240px] border-l border-dotted border-[#fcc6c6] px-2 py-3 text-opacity-10">
+              <div className="w-[140px] border-l border-dotted border-[#fcc6c6] px-2 py-3 text-opacity-10 sm:w-[240px]">
                 <div className="flex justify-end">
                   <p className="flex w-[90px] items-center justify-between gap-2 text-lg font-semibold">
                     <span>₱</span> {formatNumber(49)}
@@ -379,7 +396,7 @@ function Cart() {
                 <p>Voucher</p>
               </div>
 
-              <div className="w-[240px] border-l border-dotted border-[#fcc6c6] px-2 py-3 text-opacity-10">
+              <div className="w-[140px] border-l border-dotted border-[#fcc6c6] px-2 py-3 text-opacity-10 sm:w-[240px]">
                 <div className="flex justify-end">
                   <p className="flex w-[90px] items-center justify-between gap-2 text-lg font-semibold">
                     <span>₱</span> {formatNumber(0)}
@@ -392,9 +409,9 @@ function Cart() {
                 <p>Total</p>
               </div>
 
-              <div className="w-[240px] border-l border-dotted border-[#fcc6c6] px-2 py-3 text-opacity-10">
+              <div className="w-[140px] border-l border-dotted border-[#fcc6c6] px-2 py-3 text-opacity-10 sm:w-[240px]">
                 <div className="flex justify-end">
-                  <p className="flex w-[90px] items-center justify-between gap-2 text-lg font-semibold">
+                  <p className="flex w-[90px] items-center justify-between gap-2 text-lg font-semibold text-red-500">
                     <span>₱</span> {formatNumber(+itemsTotal + 49)}
                   </p>
                 </div>
@@ -421,7 +438,7 @@ function Cart() {
 
           <div className="flex w-full flex-col gap-4 rounded-md border border-[#fcc6c6] px-8 py-6">
             <h2 className="text-lg font-semibold">Payment Method</h2>
-            <div className="mt-2 flex gap-4">
+            <div className="mt-2 flex flex-col gap-4 sm:flex-row">
               {paymentMethods.map((method) => (
                 <div key={method.id} className="flex items-center">
                   <input
