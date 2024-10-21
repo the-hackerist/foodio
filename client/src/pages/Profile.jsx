@@ -106,9 +106,13 @@ function Profile() {
 
     if (isAnyPropertyEmpty(newAddressFormData)) return;
 
-    createAddress(newAddressFormData);
+    let finalNewAddress = newAddressFormData;
 
-    // reset state values
+    if (address.length < 1)
+      finalNewAddress = { ...newAddressFormData, default: true };
+
+    createAddress(finalNewAddress);
+
     setNewAddressFormData(initialState);
     setIsAddingAddress(false);
     setCurrentAddressId(null);
