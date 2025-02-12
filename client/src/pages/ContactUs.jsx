@@ -1,6 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // import { useEffect, useState } from "react";
-import UnderConstruction from "../components/UI/UnderConstruction";
+// import UnderConstruction from "../components/UI/UnderConstruction";
+
+import { useState } from "react";
+import emailjs from "@emailjs/browser";
 
 // import nodemailer from "nodemailer";
 // import dotenv from "dotenv";
@@ -10,22 +13,60 @@ import UnderConstruction from "../components/UI/UnderConstruction";
 
 // dotenv.config();
 
-// const initialState = {
-//   firstName: "",
-//   lastName: "",
-//   email: "",
-//   subject: "",
-//   message: "",
-// };
+const initialState = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  subject: "",
+  message: "",
+};
 
 // const isAnyPropertyEmpty = (objData) =>
 //   Object.values(objData).some((val) => val === "");
 
 function ContactUs() {
-  //   const [contactFormData, setContactFormData] = useState(initialState);
-  //   const [result, setResult] = useState("");
-  //   const [error, setError] = useState("");
+  const [{ firstName, lastName, email, subject, message }, setContactFormData] =
+    useState(initialState);
+  const [isSending, setIsSending] = useState(false);
+  // const [result, setResult] = useState("");
+  // const [error, setError] = useState(false);
   //   const { user } = useAuth();
+
+  const handleContactForm = (e) => {
+    e.preventDefault();
+
+    if (!firstName || !lastName || !subject || !message || !email)
+      return alert("Input fields should not be empty!, try again. 🤔");
+
+    const serviceId = "service_r1fyi0r";
+    const templateId = "template_d01181a";
+    const publicKey = "kSzGYIPW1ej9rW9jK";
+
+    const templateParams = {
+      from_name: `${firstName} ${lastName}`,
+      from_email: email,
+      subject: subject,
+      to_name: "Foodio",
+      message: message,
+    };
+
+    setIsSending(true);
+
+    emailjs
+      .send(serviceId, templateId, templateParams, publicKey)
+      .then((res) => {
+        console.log("Email sent successfully", res);
+        alert("Email sent successfully");
+      })
+      .catch((err) => {
+        console.log("Error sending email: ", err);
+        alert("Email sent successfully");
+      })
+      .finally(() => {
+        setContactFormData(initialState);
+        setIsSending(false);
+      });
+  };
 
   //   useEffect(() => {
   //     setContactFormData({
@@ -120,11 +161,11 @@ function ContactUs() {
   //   }
   // };
 
-  return <UnderConstruction />;
+  // return <UnderConstruction />;
 
   return (
     <div
-      onSubmit={handleContactForm}
+      // onSubmit={handleContactForm}
       className="mx-auto flex max-w-[800px] flex-col items-center justify-center p-20 pt-40"
     >
       <div className="flex flex-col items-center justify-center gap-10">
@@ -143,8 +184,13 @@ function ContactUs() {
         className="flex w-full max-w-[400px] flex-col justify-between gap-6"
       >
         <input
-          onChange={onChangeContactFormData}
-          value={contactFormData.firstName}
+          onChange={(e) =>
+            setContactFormData((prev) => ({
+              ...prev,
+              firstName: e.target.value,
+            }))
+          }
+          value={firstName}
           className="rounded-lg border px-6 py-2 text-base"
           id="firstName"
           name="firstName"
@@ -153,8 +199,13 @@ function ContactUs() {
         />
 
         <input
-          onChange={onChangeContactFormData}
-          value={contactFormData.lastName}
+          onChange={(e) =>
+            setContactFormData((prev) => ({
+              ...prev,
+              lastName: e.target.value,
+            }))
+          }
+          value={lastName}
           className="rounded-lg border px-6 py-2 text-base"
           id="lastName"
           name="lastName"
@@ -163,8 +214,10 @@ function ContactUs() {
         />
 
         <input
-          onChange={onChangeContactFormData}
-          value={contactFormData.email}
+          onChange={(e) =>
+            setContactFormData((prev) => ({ ...prev, email: e.target.value }))
+          }
+          value={email}
           className="rounded-lg border px-6 py-2 text-base"
           id="email"
           name="email"
@@ -173,8 +226,10 @@ function ContactUs() {
         />
 
         <input
-          onChange={onChangeContactFormData}
-          value={contactFormData.subject}
+          onChange={(e) =>
+            setContactFormData((prev) => ({ ...prev, subject: e.target.value }))
+          }
+          value={subject}
           className="rounded-lg border px-6 py-2 text-base"
           id="subject"
           name="subject"
@@ -183,8 +238,10 @@ function ContactUs() {
         />
 
         <textarea
-          onChange={onChangeContactFormData}
-          value={contactFormData.message}
+          onChange={(e) =>
+            setContactFormData((prev) => ({ ...prev, message: e.target.value }))
+          }
+          value={message}
           className="max-h-[200px] min-h-[150px] rounded-lg border px-6 py-2 text-base"
           id="message"
           name="message"
@@ -193,13 +250,17 @@ function ContactUs() {
           placeholder="Message"
         />
 
-        {error && <p className="text-sm font-semibold text-red-500">{error}</p>}
+        {/* {error && <p className="text-sm font-semibold text-red-500">{error}</p>}
 
         {result && (
           <p className="text-sm font-semibold text-green-500">{result}</p>
-        )}
+        )} */}
 
-        <button className="rounded-xl bg-red-500 p-4 text-xl font-semibold text-white">
+        <button
+          type="submit"
+          className={`rounded-xl bg-red-500 p-4 text-xl font-semibold text-white ${isSending ? "cursor-not-allowed bg-gray-400" : ""}`}
+          disabled={isSending}
+        >
           Submit
         </button>
       </form>
