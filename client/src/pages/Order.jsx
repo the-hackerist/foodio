@@ -38,7 +38,7 @@ function Order() {
         return;
       }
       if (category === "drink") {
-        foodArray = data.filter((item) => item.category === "drinks");
+        foodArray = data.filter((item) => item.category === "drink");
         setFoodList(foodArray);
         return;
       }
